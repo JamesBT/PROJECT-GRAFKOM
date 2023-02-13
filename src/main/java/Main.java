@@ -27,13 +27,14 @@ public class Main {
 
         objects.add(new Object2d(
                 Arrays.asList(
-                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER),new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
                 ), new ArrayList<>(
-                        List.of(
-                                new Vector3f(0.0f,0.5f,0.0f),
-                                new Vector3f(-0.5f,-0.5f,0.0f),
-                                new Vector3f(0.5f,-0.5f,0.0f)
-                        )
+                    List.of(
+                        new Vector3f(0.0f,0.5f,0.0f),
+                        new Vector3f(-0.5f,-0.5f,0.0f),
+                        new Vector3f(0.5f,-0.5f,0.0f)
+                    )
                 )
             )
         );
@@ -43,11 +44,13 @@ public class Main {
         while(window.isOpen()){
             window.update();
             //warna dibagi 255 (r/255,g/255,b/255)
-            glClearColor(0.0f,1.0f,0.0f,0.0f);
+            glClearColor(0.0f,0.0f,0.0f,0.0f);
             GL.createCapabilities();
             //code
             //dibawah createcapabilities
-
+            for(Object2d object:objects){
+                object.draw();
+            }
 
 
             //diatas disablevertex+pollevent

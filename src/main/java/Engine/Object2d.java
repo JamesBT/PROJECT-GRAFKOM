@@ -40,6 +40,12 @@ public class Object2d extends ShaderProgram{
         drawSetup();
         glLineWidth(1);
         glPointSize(0);
+        //GL_TRIANGLES
+        //GL_LINE_LOOP
+        //GL_LINE_STRIP
+        //GL_LINES
+        //GL_POINTS
+        //GL_TRIANGLE_FAN
         glDrawArrays(GL_TRIANGLES,0,vertices.size());
     }
 }
