@@ -7,7 +7,7 @@ import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 //jangan pakai gl30
 
 public class Main {
-    private Window window =  new Window(800,800,"Hello World!");
+    private Window window =  new Window(1366,768,"Hello World!");
     public void run(){
         init();
         loop();
@@ -16,15 +16,27 @@ public class Main {
     public void init(){
         window.init();
         GL.createCapabilities();
+        //jika buat harus dibuat dibawah GL.createCapabilities
+        //code
     }
 
     public void loop(){
         while(window.isOpen()){
             window.update();
-            glClearColor(0.0f,0.0f,0.0f,0.0f);
+            //warna dibagi 255 (r/255,g/255,b/255)
+            glClearColor(1.0f,0.0f,0.0f,0.0f);
             GL.createCapabilities();
+            //code
+            //dibawah createcapabilities
+
+
+
+            //diatas disablevertex+pollevent
             glDisableVertexAttribArray(0);
             glfwPollEvents();
         }
+    }
+    public static void main(String[] args){
+        new Main().run();
     }
 }
