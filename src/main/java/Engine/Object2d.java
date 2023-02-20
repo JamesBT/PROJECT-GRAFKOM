@@ -70,8 +70,32 @@ public class Object2d extends ShaderProgram{
         glVertexAttribPointer(0,3,GL_FLOAT,false,0,0);
     }
 
+    public void drawSetupwithVerticesColor(){
+        bind();
+        //bind vbo
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER,vbo);
+        glVertexAttribPointer(0,3,GL_FLOAT,false,0,0);
+        //bind VBOColor
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER,vboColor);
+        glVertexAttribPointer(1,3,GL_FLOAT,false,0,0);
+    }
+
     public void draw(){
         drawSetup();
+        glLineWidth(1);
+        glPointSize(0);
+        //GL_TRIANGLES
+        //GL_LINE_LOOP
+        //GL_LINE_STRIP
+        //GL_LINES
+        //GL_POINTS
+        //GL_TRIANGLE_FAN
+        glDrawArrays(GL_TRIANGLES,0,vertices.size());
+    }
+    public void drawwithVerticesColor(){
+        drawSetupwithVerticesColor();
         glLineWidth(1);
         glPointSize(0);
         //GL_TRIANGLES
