@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL20.*;
 //jangan pakai gl30
 
 public class Main {
-    private Window window =  new Window(1366,768,"Hello World!");
+    private Window window =  new Window(800,800,"Hello World!");
 
     ArrayList<Object2d> objects = new ArrayList<>();
 
