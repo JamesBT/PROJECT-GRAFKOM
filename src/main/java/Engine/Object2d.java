@@ -1,6 +1,7 @@
 package Engine;
 
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import java.util.List;
 
@@ -11,10 +12,16 @@ public class Object2d extends ShaderProgram{
     List<Vector3f> vertices;
     int vao;
     int vbo;
-    public Object2d(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices) {
+
+    Vector4f color;
+    UniformsMap uniformsMap;
+    public Object2d(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices,Vector4f color) {
         super(shaderModuleDataList);
         this.vertices = vertices;
         setupVAOVBO();
+        this.color = color;
+        uniformsMap = new UniformsMap(getProgramId());
+        uniformsMap.createUniform("uni_color");
     }
 
     public void setupVAOVBO(){
@@ -30,6 +37,7 @@ public class Object2d extends ShaderProgram{
 
     public void drawSetup(){
         bind();
+        uniformsMap.setUniform("uni_color",color);
         //bind vbo
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER,vbo);
