@@ -15,6 +15,9 @@ public class Object2d extends ShaderProgram{
 
     Vector4f color;
     UniformsMap uniformsMap;
+    List<Vector3f> verticesColor;
+    int vboColor;
+
     public Object2d(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices,Vector4f color) {
         super(shaderModuleDataList);
         this.vertices = vertices;
@@ -22,6 +25,13 @@ public class Object2d extends ShaderProgram{
         this.color = color;
         uniformsMap = new UniformsMap(getProgramId());
         uniformsMap.createUniform("uni_color");
+    }
+
+    public Object2d(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices,List<Vector3f> verticesColor) {
+        super(shaderModuleDataList);
+        this.vertices = vertices;
+        this.verticesColor = verticesColor;
+        setupVAOVBOwithVerticesColor();
     }
 
     public void setupVAOVBO(){
@@ -33,6 +43,22 @@ public class Object2d extends ShaderProgram{
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         //kirim data ke shader
         glBufferData(GL_ARRAY_BUFFER,Utils.listoFloat(vertices),GL_STATIC_DRAW);
+    }
+
+    public void setupVAOVBOwithVerticesColor(){
+        //set vao
+        vao = glGenVertexArrays();
+        glBindVertexArray(vao);
+        //set vbo
+        vbo = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        //kirim data ke shader
+        glBufferData(GL_ARRAY_BUFFER,Utils.listoFloat(vertices),GL_STATIC_DRAW);
+        //set vboColor
+        vboColor = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, vboColor);
+        //kirim data ke shader
+        glBufferData(GL_ARRAY_BUFFER,Utils.listoFloat(verticesColor),GL_STATIC_DRAW);
     }
 
     public void drawSetup(){
