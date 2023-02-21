@@ -60,21 +60,38 @@ public class Main {
 //                        )
 //                )
 //        );
-        objectsRectangle.add(new Rectangle(
-                Arrays.asList(
-                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
-                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
-                ), new ArrayList<>(
-                    List.of(
-                        new Vector3f(0.0f,0.0f,0.0f),
-                        new Vector3f(0.5f,0.0f,0.0f),
-                        new Vector3f(0.0f,0.5f,0.0f),
-                        new Vector3f(0.5f,0.5f,0.0f)
-                    )
+//        objectsCircle.add(new Circle(
+//                Arrays.asList(
+//                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+//                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+//                ), new ArrayList<>(
+//                    List.of(
+//                        new Vector3f(0.0f,0.0f,0.0f),
+//                        new Vector3f(0.5f,0.0f,0.0f),
+//                        new Vector3f(0.0f,0.5f,0.0f),
+//                        new Vector3f(0.5f,0.5f,0.0f)
+//                    )
+//                ),
+//                new Vector4f(0.0f,1.0f,1.0f,1.0f),
+//                0.7,0,0
+//            )
+//        );
+
+        objectsCircle.add(new Circle(
+                        Arrays.asList(
+                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+                                ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+                        ), new ArrayList<>(
+                        List.of(
+                                new Vector3f(0.0f,0.0f,0.0f),
+                                new Vector3f(0.5f,0.0f,0.0f),
+                                new Vector3f(0.0f,0.5f,0.0f),
+                                new Vector3f(0.5f,0.5f,0.0f)
+                        )
                 ),
-                new Vector4f(0.0f,1.0f,1.0f,1.0f),
-                Arrays.asList(0,1,2,1,2,3)
-            )
+                        new Vector4f(0.0f,1.0f,1.0f,1.0f),
+                        0.1,1.5,0,0
+                )
         );
     }
 
@@ -89,7 +106,7 @@ public class Main {
 //            for(Object2d object:objects){
 //                object.drawwithVerticesColor();
 //            }
-            for(Rectangle object2:objectsRectangle){
+            for(Circle object2:objectsCircle){
                 object2.draw();
             }
 

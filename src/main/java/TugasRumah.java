@@ -25,59 +25,6 @@ public class TugasRumah {
     public void init(){
         window.init();
         GL.createCapabilities();
-        //jika buat harus dibuat dibawah GL.createCapabilities
-        //code
-
-//        objects.add(new Object2d(
-//                Arrays.asList(
-//                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
-//                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
-//                ), new ArrayList<>(
-//                    List.of(
-//                        new Vector3f(0.0f,0.5f,0.0f),
-//                        new Vector3f(-0.5f,-0.5f,0.0f),
-//                        new Vector3f(0.5f,-0.5f,0.0f)
-//                    )
-//                ),
-//                new Vector4f(0.0f,1.0f,1.0f,1.0f)
-//            )
-//        );
-        //with vertices color
-//        objects.add(new Object2d(
-//                        Arrays.asList(
-//                            new ShaderProgram.ShaderModuleData("resources/shaders/sceneWithVerticesColor.vert",GL_VERTEX_SHADER)
-//                            ,new ShaderProgram.ShaderModuleData("resources/shaders/sceneWithVerticesColor.frag",GL_FRAGMENT_SHADER)
-//                        ), new ArrayList<>(
-//                            List.of(
-//                                new Vector3f(0.0f,0.5f,0.0f),
-//                                new Vector3f(-0.5f,-0.5f,0.0f),
-//                                new Vector3f(0.5f,-0.5f,0.0f)
-//                            )
-//                        ), new ArrayList<>(
-//                                List.of(
-//                                        new Vector3f(1.0f,0.0f,0.0f),
-//                                        new Vector3f(0.0f,1.0f,0.0f),
-//                                        new Vector3f(0.0f,0.0f,1.0f)
-//                                )
-//                        )
-//                )
-//        );
-//        objectsRectangle.add(new Rectangle(
-//                Arrays.asList(
-//                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
-//                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
-//                ), new ArrayList<>(
-//                    List.of(
-//                        new Vector3f(0.0f,0.0f,0.0f),
-//                        new Vector3f(0.5f,0.0f,0.0f),
-//                        new Vector3f(0.0f,0.5f,0.0f),
-//                        new Vector3f(0.5f,0.5f,0.0f)
-//                    )
-//                ),
-//                new Vector4f(0.0f,1.0f,1.0f,1.0f),
-//                Arrays.asList(0,1,2,1,2,3)
-//            )
-//        );
 
         //persegi hijau
         objectsRectangle.add(new Rectangle(
@@ -217,11 +164,11 @@ public class TugasRumah {
                                 ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
                         ), new ArrayList<>(
                         List.of(
-                                new Vector3f(-0.65f,0.45f,0.0f),
-                                new Vector3f(-0.69f,0.38f,0.0f),
-                                new Vector3f(-0.62f,0.41f,0.0f),
-                                new Vector3f(-0.70f,0.43f,0.0f),
-                                new Vector3f(-0.65f,0.375f,0.0f)
+                                new Vector3f(-0.25f,0.45f,0.0f),
+                                new Vector3f(-0.29f,0.38f,0.0f),
+                                new Vector3f(-0.22f,0.41f,0.0f),
+                                new Vector3f(-0.30f,0.43f,0.0f),
+                                new Vector3f(-0.25f,0.375f,0.0f)
                         )
                 ),
                         new Vector4f(1.0f,1.0f,0.0f,1.0f),
@@ -266,6 +213,92 @@ public class TugasRumah {
                         Arrays.asList(0,1,1,2,2,3,3,4,4,0)
                 )
         );
+
+        //bulan
+        objectsCircle.add(new Circle(
+                        Arrays.asList(
+                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+                                ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+                        ), new ArrayList<>(
+                        List.of(
+                                new Vector3f(0.0f,0.0f,0.0f),
+                                new Vector3f(0.5f,0.0f,0.0f),
+                                new Vector3f(0.0f,0.5f,0.0f),
+                                new Vector3f(0.5f,0.5f,0.0f)
+                        )
+                ),
+                        new Vector4f(1.0f,1.0f,0.0f,1.0f),
+                        0.1f,-0.7,0.7
+                )
+        );
+        objectsCircle.add(new Circle(
+                        Arrays.asList(
+                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+                                ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+                        ), new ArrayList<>(
+                        List.of(
+                                new Vector3f(0.0f,0.0f,0.0f),
+                                new Vector3f(0.5f,0.0f,0.0f),
+                                new Vector3f(0.0f,0.5f,0.0f),
+                                new Vector3f(0.5f,0.5f,0.0f)
+                        )
+                ),
+                        new Vector4f(0.2f,0.196f,0.898f,1.0f),
+                        0.1f,-0.65,0.7
+                )
+        );
+
+        //asap 1
+        objectsCircle.add(new Circle(
+                        Arrays.asList(
+                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+                                ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+                        ), new ArrayList<>(
+                        List.of(
+                                new Vector3f(0.0f,0.0f,0.0f),
+                                new Vector3f(0.5f,0.0f,0.0f),
+                                new Vector3f(0.0f,0.5f,0.0f),
+                                new Vector3f(0.5f,0.5f,0.0f)
+                        )
+                ),
+                        new Vector4f(0.502f,0.502f,0.502f,1.0f),
+                        0.075,1.5,0.25,0.35
+                )
+        );
+        //asap2
+        objectsCircle.add(new Circle(
+                        Arrays.asList(
+                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+                                ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+                        ), new ArrayList<>(
+                        List.of(
+                                new Vector3f(0.0f,0.0f,0.0f),
+                                new Vector3f(0.5f,0.0f,0.0f),
+                                new Vector3f(0.0f,0.5f,0.0f),
+                                new Vector3f(0.5f,0.5f,0.0f)
+                        )
+                ),
+                        new Vector4f(0.502f,0.502f,0.502f,1.0f),
+                        0.15,2,0.35,0.4
+                )
+        );
+        //asap3
+        objectsCircle.add(new Circle(
+                        Arrays.asList(
+                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+                                ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+                        ), new ArrayList<>(
+                        List.of(
+                                new Vector3f(0.0f,0.0f,0.0f),
+                                new Vector3f(0.5f,0.0f,0.0f),
+                                new Vector3f(0.0f,0.5f,0.0f),
+                                new Vector3f(0.5f,0.5f,0.0f)
+                        )
+                ),
+                        new Vector4f(0.502f,0.502f,0.502f,1.0f),
+                        0.25,3,0.52,0.48
+                )
+        );
     }
 
 
@@ -281,8 +314,11 @@ public class TugasRumah {
             for(Bintang object:objectsBintang){
                 object.draw();
             }
-            for(Rectangle object2:objectsRectangle){
+            for(Circle object2:objectsCircle){
                 object2.draw();
+            }
+            for(Rectangle object3:objectsRectangle){
+                object3.draw();
             }
 
 
