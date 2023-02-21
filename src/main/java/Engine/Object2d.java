@@ -92,7 +92,7 @@ public class Object2d extends ShaderProgram{
         //GL_LINES
         //GL_POINTS
         //GL_TRIANGLE_FAN
-        glDrawArrays(GL_TRIANGLES,0,vertices.size());
+        glDrawArrays(GL_LINES,0,vertices.size());
     }
     public void drawwithVerticesColor(){
         drawSetupwithVerticesColor();
