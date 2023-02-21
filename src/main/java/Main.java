@@ -1,7 +1,4 @@
-import Engine.Object2d;
-import Engine.Rectangle;
-import Engine.ShaderProgram;
-import Engine.Window;
+import Engine.*;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL;
@@ -21,6 +18,7 @@ public class Main {
     ArrayList<Object2d> objects = new ArrayList<>();
     ArrayList<Rectangle> objectsRectangle = new ArrayList<>();
 
+    ArrayList<Circle> objectsCircle = new ArrayList<>();
 
     public void init(){
         window.init();
@@ -62,22 +60,22 @@ public class Main {
 //                        )
 //                )
 //        );
-//        objectsRectangle.add(new Rectangle(
-//                Arrays.asList(
-//                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
-//                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
-//                ), new ArrayList<>(
-//                    List.of(
-//                        new Vector3f(0.0f,0.0f,0.0f),
-//                        new Vector3f(0.5f,0.0f,0.0f),
-//                        new Vector3f(0.0f,0.5f,0.0f),
-//                        new Vector3f(0.5f,0.5f,0.0f)
-//                    )
-//                ),
-//                new Vector4f(0.0f,1.0f,1.0f,1.0f),
-//                Arrays.asList(0,1,2,1,2,3)
-//            )
-//        );
+        objectsRectangle.add(new Rectangle(
+                Arrays.asList(
+                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+                ), new ArrayList<>(
+                    List.of(
+                        new Vector3f(0.0f,0.0f,0.0f),
+                        new Vector3f(0.5f,0.0f,0.0f),
+                        new Vector3f(0.0f,0.5f,0.0f),
+                        new Vector3f(0.5f,0.5f,0.0f)
+                    )
+                ),
+                new Vector4f(0.0f,1.0f,1.0f,1.0f),
+                Arrays.asList(0,1,2,1,2,3)
+            )
+        );
     }
 
     public void loop(){

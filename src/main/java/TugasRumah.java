@@ -18,6 +18,7 @@ public class TugasRumah {
     ArrayList<Object2d> objects = new ArrayList<>();
 
     ArrayList<Bintang> objectsBintang = new ArrayList<>();
+    ArrayList<Circle> objectsCircle = new ArrayList<>();
     ArrayList<Rectangle> objectsRectangle = new ArrayList<>();
 
 
