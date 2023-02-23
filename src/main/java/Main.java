@@ -90,7 +90,7 @@ public class Main {
                         )
                 ),
                         new Vector4f(0.0f,1.0f,1.0f,1.0f),
-                        0.1,1.5,0,0
+                        0.5,0,0,Arrays.asList(0,1,1,2,2,3,3,4,4,0)
                 )
         );
     }
@@ -107,7 +107,7 @@ public class Main {
 //                object.drawwithVerticesColor();
 //            }
             for(Circle object2:objectsCircle){
-                object2.draw();
+                object2.drawBintang();
             }
 
 

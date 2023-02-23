@@ -7,9 +7,12 @@ import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_LINES;
+import static org.lwjgl.opengl.GL15.*;
 
 public class Circle extends Object2d{
     double x, y, r, cx, cy,ratio;
+    int ibo;
+    List<Integer> index;
     public Circle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, double r,double cx,double cy)
 
     {
@@ -22,6 +25,19 @@ public class Circle extends Object2d{
 //        createSegitiga();
 //        createStar();
 //        ->segilima
+        setupVAOVBO();
+    }
+
+    // GAMBAR BINTANG
+    public Circle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color,double besar, double cx,double cy, List<Integer> index)
+    {
+        super(shaderModuleDataList, vertices, color);
+        this.r = besar;
+        this.cx = cx;
+        this.cy = cy;
+        this.index=index;
+        ibo = glGenBuffers();
+        createStar();
         setupVAOVBO();
     }
 
@@ -114,6 +130,11 @@ public class Circle extends Object2d{
         glDrawArrays(GL_POLYGON,0,vertices.size());
     }
 
+    public void drawBintang(){
+        drawSetup();
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ibo);
+        glDrawElements(GL_LINES,index.size(),GL_UNSIGNED_INT,0);
+    }
 
 
 
