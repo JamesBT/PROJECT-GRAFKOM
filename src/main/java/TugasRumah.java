@@ -163,16 +163,10 @@ public class TugasRumah {
                                 new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
                                 ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
                         ), new ArrayList<>(
-                        List.of(
-                                new Vector3f(-0.25f,0.45f,0.0f),
-                                new Vector3f(-0.29f,0.38f,0.0f),
-                                new Vector3f(-0.22f,0.41f,0.0f),
-                                new Vector3f(-0.30f,0.43f,0.0f),
-                                new Vector3f(-0.25f,0.375f,0.0f)
-                        )
+                        List.of()
                 ),
                         new Vector4f(1.0f,1.0f,0.0f,1.0f),
-                        Arrays.asList(0,1,1,2,2,3,3,4,4,0)
+                        0.05,-0.4,0.3,Arrays.asList(0, 3, 3, 1, 1, 4, 4, 2, 2, 0)
                 )
         );
 
@@ -182,35 +176,22 @@ public class TugasRumah {
                                 new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
                                 ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
                         ), new ArrayList<>(
-                        List.of(
-                                new Vector3f(-0.05f,0.85f,0.0f),
-                                new Vector3f(-0.03f,0.8f,0.0f),
-                                new Vector3f(-0.08f,0.83f,0.0f),
-                                new Vector3f(-0.02f,0.83f,0.0f),
-                                new Vector3f(-0.07f,0.8f,0.0f)
-                        )
+                        List.of()
                 ),
                         new Vector4f(1.0f,1.0f,0.0f,1.0f),
-                        Arrays.asList(0,1,1,2,2,3,3,4,4,0)
+                        0.02,-0.05,0.9,Arrays.asList(0, 3, 3, 1, 1, 4, 4, 2, 2, 0)
                 )
         );
 
-        //bintang kanan
         objectsBintang.add(new Bintang(
                         Arrays.asList(
                                 new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
                                 ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
                         ), new ArrayList<>(
-                        List.of(
-                                new Vector3f(0.85f,0.65f,0.0f),
-                                new Vector3f(0.89f,0.58f,0.0f),
-                                new Vector3f(0.82f,0.61f,0.0f),
-                                new Vector3f(0.90f,0.63f,0.0f),
-                                new Vector3f(0.85f,0.575f,0.0f)
-                        )
+                        List.of()
                 ),
                         new Vector4f(1.0f,1.0f,0.0f,1.0f),
-                        Arrays.asList(0,1,1,2,2,3,3,4,4,0)
+                        0.05,0.85,0.6,Arrays.asList(0, 3, 3, 1, 1, 4, 4, 2, 2, 0)
                 )
         );
 
@@ -221,10 +202,6 @@ public class TugasRumah {
                                 ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
                         ), new ArrayList<>(
                         List.of(
-                                new Vector3f(0.0f,0.0f,0.0f),
-                                new Vector3f(0.5f,0.0f,0.0f),
-                                new Vector3f(0.0f,0.5f,0.0f),
-                                new Vector3f(0.5f,0.5f,0.0f)
                         )
                 ),
                         new Vector4f(1.0f,1.0f,0.0f,1.0f),
@@ -237,10 +214,7 @@ public class TugasRumah {
                                 ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
                         ), new ArrayList<>(
                         List.of(
-                                new Vector3f(0.0f,0.0f,0.0f),
-                                new Vector3f(0.5f,0.0f,0.0f),
-                                new Vector3f(0.0f,0.5f,0.0f),
-                                new Vector3f(0.5f,0.5f,0.0f)
+
                         )
                 ),
                         new Vector4f(0.2f,0.196f,0.898f,1.0f),

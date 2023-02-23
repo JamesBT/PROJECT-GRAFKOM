@@ -20,9 +20,9 @@ public class Circle extends Object2d{
         this.r = r;
         this.cx = cx;
         this.cy = cy;
-        createCircle();
+//        createCircle();
 //        createRectangle();
-//        createSegitiga();
+        createSegitiga();
 //        createStar();
 //        ->segilima
         setupVAOVBO();
