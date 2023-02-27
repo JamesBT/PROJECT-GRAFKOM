@@ -17,42 +17,38 @@ public class Main {
     private Window window =  new Window(800,800,"Hello World!");
 
     ArrayList<Object2d> objects = new ArrayList<>();
+    ArrayList<Object2d> objectsPointsControl = new ArrayList<>();
+    ArrayList<Object2d> kotak = new ArrayList<>();
     ArrayList<Rectangle> objectsRectangle = new ArrayList<>();
     ArrayList<Bintang> objectsBintang = new ArrayList<>();
 
-    ArrayList<Circle> objectsCircle = new ArrayList<>();
+
 
     public void init(){
         window.init();
         GL.createCapabilities();
         //jika buat harus dibuat dibawah GL.createCapabilities
         //code
-        objectsBintang.add(new Bintang(
-                        Arrays.asList(
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
-                                ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
-                        ), new ArrayList<>(
-                        List.of()//gak pake list soalnya nti kau tambah sendiri di looping
-                //yes
-                ),
-                        new Vector4f(1.0f,1.0f,0.0f,1.0f),
-                        0.05,-0.4,0.3,Arrays.asList(0, 3, 3, 1, 1, 4, 4, 2, 2, 0)
-                )
+        objectsPointsControl.add(new Object2d(
+                Arrays.asList(
+                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+                ), new ArrayList<>(),
+                new Vector4f(0.0f,1.0f,1.0f,1.0f)
+            )
         );
-
-//        objectsBintang.add(new Bintang(
-//                        Arrays.asList(
-//                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
-//                                ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
-//                        ), new ArrayList<>(
-//                        List.of()
-//                        ),
-//                        new Vector4f(0.0f,1.0f,1.0f,1.0f),
-//                        0.5,0,0,Arrays.asList(0, 3, 3, 1, 1, 4, 4, 2, 2, 0)
-//                )
-//        );
     }
     public void input(){
+        Kotak ktk;
+        List<ShaderProgram.ShaderModuleData> shader = Arrays.asList(
+                //shaderFile lokasi menyesuaikan objectnya
+                new ShaderProgram.ShaderModuleData
+                        ("resources/shaders/scene.vert"
+                                , GL_VERTEX_SHADER),
+                new ShaderProgram.ShaderModuleData
+                        ("resources/shaders/scene.frag"
+                                , GL_FRAGMENT_SHADER)
+        );
         if(window.isKeyPressed(GLFW_KEY_W)){
             System.out.println("W");
         }
@@ -62,8 +58,22 @@ public class Main {
             pos.x = (pos.x - (window.getWidth())/2.0f) / (window.getWidth()/2.0f);
             pos.y = (pos.y - (window.getWidth())/2.0f) / (-window.getHeight()/2.0f);
 //            System.out.println("x: "+pos.x+" y : "+pos.y);
-            if((!(pos.x > 1 || pos.x < -1) && !(pos.y > 1 || pos.y < -1))){
+            if((!(pos.x > 1 || pos.x < -0.97) && !(pos.y > 0.97 || pos.y < -1))){
                 System.out.println("x: "+pos.x+" y : "+pos.y);
+                objectsPointsControl.get(0).addVertices(new Vector3f(pos.x,pos.y,0));
+
+                kotak.add(new Kotak(
+                        shader,new ArrayList<>(),new Vector4f(0.996f,0.0f,0.0f,1.0f),
+                        pos.x,pos.y,0.05,0.05));
+
+                for(Object2d object : kotak){
+                    if(object instanceof Kotak){
+                        ktk = (Kotak) object;
+//                        ktk.getCx();
+                        System.out.println("REEEE");
+                    }
+                }
+
             }
         }
     }
@@ -76,10 +86,10 @@ public class Main {
             input();
             //code
             //dibawah createcapabilities
-//            for(Circle object:objectsCircle){
-//                object.draw();
-//            }
-            for(Bintang object2:objectsBintang){
+            for(Object2d object:objectsPointsControl){
+                object.drawLine();
+            }
+            for(Object2d object2:kotak){
                 object2.draw();
             }
 
