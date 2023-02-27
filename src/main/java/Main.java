@@ -1,4 +1,5 @@
 import Engine.*;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL;
@@ -51,13 +52,28 @@ public class Main {
 //                )
 //        );
     }
-
+    public void input(){
+        if(window.isKeyPressed(GLFW_KEY_W)){
+            System.out.println("W");
+        }
+        if(window.getMouseInput().isLeftButtonPressed()){
+            Vector2f pos = window.getMouseInput().getCurrentPos();
+//            System.out.println("x: "+pos.x+" y : "+pos.y);
+            pos.x = (pos.x - (window.getWidth())/2.0f) / (window.getWidth()/2.0f);
+            pos.y = (pos.y - (window.getWidth())/2.0f) / (-window.getHeight()/2.0f);
+//            System.out.println("x: "+pos.x+" y : "+pos.y);
+            if((!(pos.x > 1 || pos.x < -1) && !(pos.y > 1 || pos.y < -1))){
+                System.out.println("x: "+pos.x+" y : "+pos.y);
+            }
+        }
+    }
     public void loop(){
         while(window.isOpen()){
             window.update();
             //warna dibagi 255 (r/255,g/255,b/255)
             glClearColor(0.0f,0.0f,1.0f,0.0f);
             GL.createCapabilities();
+            input();
             //code
             //dibawah createcapabilities
 //            for(Circle object:objectsCircle){
