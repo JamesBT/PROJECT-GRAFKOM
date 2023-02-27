@@ -26,17 +26,17 @@ public class Main {
         GL.createCapabilities();
         //jika buat harus dibuat dibawah GL.createCapabilities
         //code
-            objectsCircle.add(new Circle(
-                Arrays.asList(
-                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
-                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
-                ), new ArrayList<>(
-                    List.of(
-                    )
+        objectsBintang.add(new Bintang(
+                        Arrays.asList(
+                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+                                ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+                        ), new ArrayList<>(
+                        List.of()//gak pake list soalnya nti kau tambah sendiri di looping
+                //yes
                 ),
-                new Vector4f(0.0f,1.0f,1.0f,1.0f),
-                0.7,0,0
-            )
+                        new Vector4f(1.0f,1.0f,0.0f,1.0f),
+                        0.05,-0.4,0.3,Arrays.asList(0, 3, 3, 1, 1, 4, 4, 2, 2, 0)
+                )
         );
 
 //        objectsBintang.add(new Bintang(
@@ -60,12 +60,12 @@ public class Main {
             GL.createCapabilities();
             //code
             //dibawah createcapabilities
-            for(Circle object:objectsCircle){
-                object.draw();
-            }
-//            for(Bintang object2:objectsBintang){
-//                object2.draw();
+//            for(Circle object:objectsCircle){
+//                object.draw();
 //            }
+            for(Bintang object2:objectsBintang){
+                object2.draw();
+            }
 
 
             //diatas disablevertex+pollevent

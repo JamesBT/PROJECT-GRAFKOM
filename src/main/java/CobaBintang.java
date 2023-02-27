@@ -23,23 +23,23 @@ public class CobaBintang {
         //jika buat harus dibuat dibawah GL.createCapabilities
         //code
 
-        objects.add(new Bintang(
-                Arrays.asList(
-                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
-                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
-                ), new ArrayList<>(
-                    List.of(
-                            new Vector3f(-0.85f,0.85f,0.0f),
-                            new Vector3f(-0.8f,0.75f,0.0f),
-                            new Vector3f(-0.95f,0.8f,0.0f),
-                            new Vector3f(-0.75f,0.8f,0.0f),
-                            new Vector3f(-0.9f,0.75f,0.0f)
-                    )
-                ),
-                new Vector4f(0.0f,1.0f,1.0f,1.0f),
-                Arrays.asList(0,1,1,2,2,3,3,4,4,0)
-            )
-        );
+//        objects.add(new Bintang(
+//                Arrays.asList(
+//                    new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert",GL_VERTEX_SHADER)
+//                    ,new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag",GL_FRAGMENT_SHADER)
+//                ), new ArrayList<>(
+//                    List.of(
+//                            new Vector3f(-0.85f,0.85f,0.0f),
+//                            new Vector3f(-0.8f,0.75f,0.0f),
+//                            new Vector3f(-0.95f,0.8f,0.0f),
+//                            new Vector3f(-0.75f,0.8f,0.0f),
+//                            new Vector3f(-0.9f,0.75f,0.0f)
+//                    )
+//                ),
+//                new Vector4f(0.0f,1.0f,1.0f,1.0f),
+//                Arrays.asList(0,1,1,2,2,3,3,4,4,0)
+//            )
+//        );
 
 
 
