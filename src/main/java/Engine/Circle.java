@@ -3,174 +3,96 @@ package Engine;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_LINES;
-import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
 public class Circle extends Object2d{
-    double x, y, r, cx, cy,ratio;
-    int ibo;
-    List<Integer> index;
-    public Circle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, double r,double cx,double cy)
+    String tipe;
+    public Circle(List<ShaderModuleData> shaderModuleDataList, Vector4f color, String tipe, double titikPusatx,
+                  double titikpusaty , double jari2x, double jari2y) {
+        super(shaderModuleDataList);
+        this.vertices = new ArrayList<>();this.color = color;
+        uniformsMap = new UniformsMap(getProgramId());
+        uniformsMap.createUniform("uni_color");
+        this.tipe = tipe;
+        createCircle(titikPusatx,titikpusaty,jari2x, jari2y);
+        setupVAOVBO();
 
-    {
-        super(shaderModuleDataList, vertices, color);
-        this.r = r;
-        this.cx = cx;
-        this.cy = cy;
-        createCircle();
-//        createRectangle();
-//        createSegitiga();
-//        createStar();
-//        ->segilima
+    }
+
+    public String getTipe() {
+        return tipe;
+    }
+
+    public void setTipe(String tipe) {
+        this.tipe = tipe;
+    }
+
+    public void createCircle(double titikpusatx, double titikpusaty, double jari2x, double jari2y){
+        if (tipe.equals("circle")) {
+            for (double i = 0; i < 360; i += 360 / 360) {
+                float x = (float) (titikpusatx + (jari2x * Math.round(Math.cos(Math.toRadians(i)) * 100) / 100));
+                float y = (float) (titikpusaty + (jari2y * Math.round(Math.sin(Math.toRadians(i)) * 100) / 100));
+                vertices.add(new Vector3f(x, y, 0.0f));
+            }
+        }else if (tipe.equals("triangle")){
+            for (double i = 0; i < 360; i += 360 / 3) {
+                float x = (float) (titikpusatx + (jari2x * Math.round(Math.cos(Math.toRadians(i)) * 100) / 100));
+                float y = (float) (titikpusaty + (jari2y * Math.round(Math.sin(Math.toRadians(i)) * 100) / 100));
+                vertices.add(new Vector3f(x, y, 0.0f));
+            }
+        }else if (tipe.equals("square")){
+            for (double i = 45; i < 360+45; i += 90) {
+                float x = (float) (titikpusatx + (jari2x * Math.round(Math.cos(Math.toRadians(i)) * 100) / 100));
+                float y = (float) (titikpusaty + (jari2y * Math.round(Math.sin(Math.toRadians(i)) * 100) / 100));
+                vertices.add(new Vector3f(x, y, 0.0f));
+            }
+        }
+
+    }
+
+    public void changeCircle(double titikpusatx, double titikpusaty, double jari2x, double jari2y){
+        this.vertices = new ArrayList<>();
+        if (tipe.equals("circle")) {
+            for (double i = 0; i < 360; i += 360 / 360) {
+                float x = (float) (titikpusatx + (jari2x * Math.round(Math.cos(Math.toRadians(i)) * 100) / 100));
+                float y = (float) (titikpusaty + (jari2y * Math.round(Math.sin(Math.toRadians(i)) * 100) / 100));
+                vertices.add(new Vector3f(x, y, 0.0f));
+            }
+        }else if (tipe.equals("triangle")){
+            for (double i = 0; i < 360; i += 360 / 3) {
+                float x = (float) (titikpusatx + (jari2x * Math.round(Math.cos(Math.toRadians(i)) * 100) / 100));
+                float y = (float) (titikpusaty + (jari2y * Math.round(Math.sin(Math.toRadians(i)) * 100) / 100));
+                vertices.add(new Vector3f(x, y, 0.0f));
+            }
+        }else if (tipe.equals("square")){
+            for (double i = 45; i < 360+45; i += 90) {
+                float x = (float) (titikpusatx + (jari2x * Math.round(Math.cos(Math.toRadians(i)) * 100) / 100));
+                float y = (float) (titikpusaty + (jari2y * Math.round(Math.sin(Math.toRadians(i)) * 100) / 100));
+                vertices.add(new Vector3f(x, y, 0.0f));
+            }
+        }
         setupVAOVBO();
     }
 
-    // GAMBAR BINTANG
-    public Circle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color,double besar, double cx,double cy, List<Integer> index)
-    {
-        super(shaderModuleDataList, vertices, color);
-        this.r = besar;
-        this.cx = cx;
-        this.cy = cy;
-        this.index=index;
-        ibo = glGenBuffers();
-        createStar();
-        setupVAOVBO();
-    }
-
-    public Circle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, double r,double ratio, double cx,double cy)
-    {
-        super(shaderModuleDataList, vertices, color);
-        this.r = r;
-        this.ratio = ratio;
-        this.cx = cx;
-        this.cy = cy;
-        createEclipse();
-        setupVAOVBO();
-    }
-
-    public void createCircle()
-    {
-        //clear vertices
-        vertices.clear();
-
-        for (float i = 0; i < 360; i+=0.1)
-        {
-            x = cx + r * Math.cos(Math.toRadians(i));
-            y = cy + r * Math.sin(Math.toRadians(i));
-            vertices.add(new Vector3f((float) x, (float) y, 0.0f));
-        }
-    }
-
-    public void createEclipse()
-    {
-        //clear vertices
-        vertices.clear();
-
-        for (float i = 0; i < 360; i+=0.1)
-        {
-            x = cx + r * Math.cos(Math.toRadians(i));
-            y = cy + r/ratio * Math.sin(Math.toRadians(i));
-            vertices.add(new Vector3f((float) x, (float) y, 0.0f));
-        }
-    }
-
-    public void createSegitiga()
-    {
-        //clear vertices
-        vertices.clear();
-
-        for (float i = 90; i < 360; i+=120)
-        {
-            x = cx + r * Math.cos(Math.toRadians(i));
-            y = cy + r * Math.sin(Math.toRadians(i));
-            vertices.add(new Vector3f((float) x, (float) y, 0.0f));
-        }
-    }
-
-    public void createRectangle()
-    {
-        //clear vertices
-        vertices.clear();
-
-        for (float i = 45; i < 360; i+=90)
-        {
-            x = cx + r * Math.cos(Math.toRadians(i));
-            y = cy + r * Math.sin(Math.toRadians(i));
-            vertices.add(new Vector3f((float) x, (float) y, 0.0f));
-        }
-    }
-
-    public void createStar()
-    {
-        //clear vertices
-        vertices.clear();
-
-        for (float i = 0; i < 360; i+=72)
-        {
-            x = cx + r * Math.cos(Math.toRadians(i));
-            y = cy + r * Math.sin(Math.toRadians(i));
-            vertices.add(new Vector3f((float) x, (float) y, 0.0f));
-        }
-    }
-    @Override
     public void draw(){
         drawSetup();
-        glLineWidth(1);
-        glPointSize(0);
-        //GL_TRIANGLES
-        //GL_LINE_LOOP
-        //GL_LINE_STRIP
-        //GL_LINES
-        //GL_POINTS
-        //GL_TRIANGLE_FAN
-        glDrawArrays(GL_POLYGON,0,vertices.size());
-    }
+        // Draw the vertices
+        //optional
+        glLineWidth(10); //ketebalan garis
+        glPointSize(10); //besar kecil vertex
+        if (tipe.equals("circle")){
+            glDrawArrays(GL_TRIANGLE_FAN,0, vertices.size());
+        }else if (tipe.equals("triangle")){
+            glDrawArrays(GL_TRIANGLES,0, vertices.size());
+        }else if (tipe.equals("square")){
+            glDrawArrays(GL_TRIANGLE_FAN,0, vertices.size());
+        }
 
-    public void drawBintang(){
-        drawSetup();
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ibo);
-        glDrawElements(GL_LINES,index.size(),GL_UNSIGNED_INT,0);
     }
 
 
-
-
-
-
-
-
-
-//    public Circle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color) {
-//        super(shaderModuleDataList, vertices, color);
-//    }
-//
-//    public void createCircle(){
-//        //vertices di clear
-//        //untuk lingkaran
-//        for(double i=0;i<360;i+=0.01f){
-////            r*cos(teta)
-//            //gak pakai math.round
-////            x = centerpoint.x + r*cos(teta);
-////            y = centerpoint.y + r*sin(teta);
-////            vertices.add(new Vector3f(x,y,0.0f));
-//        }
-//
-//        //untuk persegi
-//        int degree = 45;
-//        //awalnya 45 terus ditambah 90 dst
-//        for(double i=0;i<360;i+=0.01f){
-////            r*cos(teta)
-//            //gak pakai math.round
-////            x = centerpoint.x + r*cos(teta);
-////            y = centerpoint.y + r*sin(teta);
-////            vertices.add(new Vector3f(x,y,0.0f));
-//        }
-//        //untuk segitiga
-//        //awalnya 90 kemudian ditambah 135 kemudian 90
-//
-//    }
 }

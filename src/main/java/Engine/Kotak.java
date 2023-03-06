@@ -12,7 +12,6 @@ public class Kotak extends Object2d{
     double cx,cy,panjang,lebar;
     double x,y;
 
-
     public Kotak(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color,
                  double cx, double cy, double panjang, double lebar) {
         super(shaderModuleDataList, vertices, color);
@@ -63,7 +62,14 @@ public class Kotak extends Object2d{
         }
 
 
+    }
 
+    public void pindahKotak(double cx, double cy, double panjang, double lebar){
+        for (float i = 45; i < 405; i+=90) {
+            x = cx + ((panjang) * Math.cos(Math.toRadians(i)));
+            y = cy + ((lebar) * Math.sin(Math.toRadians(i)));
+            vertices.add(new Vector3f((float) x, (float) y, 0.0f));
+        }
     }
 
     public void draw(){
