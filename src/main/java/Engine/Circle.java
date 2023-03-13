@@ -8,8 +8,15 @@ import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 
-public class Circle extends Object2d{
+public class Circle extends Object{
+
+    List<Float> centerPoint;
+    Float radiusX;
+    Float radiusY;
+
     String tipe;
     public Circle(List<ShaderModuleData> shaderModuleDataList, Vector4f color, String tipe, double titikPusatx,
                   double titikpusaty , double jari2x, double jari2y) {
@@ -22,7 +29,16 @@ public class Circle extends Object2d{
         setupVAOVBO();
 
     }
-
+    public Circle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint,Float radiusX,Float radiusY) {
+        super(shaderModuleDataList, vertices, color);
+        this.centerPoint = centerPoint;
+        this.radiusX = radiusX;
+        this.radiusY = radiusY;
+//        createCircle();
+        setupVAOVBO();
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ibo);
+//        glBufferData(GL_ELEMENT_ARRAY_BUFFER,Utils.listoInt(index), GL_STATIC_DRAW);
+    }
     public String getTipe() {
         return tipe;
     }
