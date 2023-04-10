@@ -13,6 +13,14 @@ import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 
 public class Circle extends Object{
 
+    public List<Float> getCenterPoint() {
+        return centerPoint;
+    }
+
+    public void setCenterPoint(List<Float> centerPoint) {
+        this.centerPoint = centerPoint;
+    }
+
     List<Float> centerPoint;
     Float radiusX;
     Float radiusY;
@@ -94,21 +102,21 @@ public class Circle extends Object{
         setupVAOVBO();
     }
 
-    public void draw(){
-        drawSetup();
-        // Draw the vertices
-        //optional
-        glLineWidth(10); //ketebalan garis
-        glPointSize(10); //besar kecil vertex
-        if (tipe.equals("circle")){
-            glDrawArrays(GL_TRIANGLE_FAN,0, vertices.size());
-        }else if (tipe.equals("triangle")){
-            glDrawArrays(GL_TRIANGLES,0, vertices.size());
-        }else if (tipe.equals("square")){
-            glDrawArrays(GL_TRIANGLE_FAN,0, vertices.size());
-        }
-
-    }
+//    public void draw(){
+//        drawSetup();
+//        // Draw the vertices
+//        //optional
+//        glLineWidth(10); //ketebalan garis
+//        glPointSize(10); //besar kecil vertex
+//        if (tipe.equals("circle")){
+//            glDrawArrays(GL_TRIANGLE_FAN,0, vertices.size());
+//        }else if (tipe.equals("triangle")){
+//            glDrawArrays(GL_TRIANGLES,0, vertices.size());
+//        }else if (tipe.equals("square")){
+//            glDrawArrays(GL_TRIANGLE_FAN,0, vertices.size());
+//        }
+//
+//    }
 
 
 }

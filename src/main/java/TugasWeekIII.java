@@ -23,7 +23,8 @@ public class TugasWeekIII
     ArrayList<Object2dCopy> line = new ArrayList<>();
 
     CircleCopy target;
-    Vector2f pos;
+    //ambil posisi
+    Vector2f pos = getPosition(window);
     boolean collisionFree = true, curveMode = true;
     double jarak;
     int index;
@@ -66,9 +67,6 @@ public class TugasWeekIII
     {
         if(window.getMouseInput().isLeftButtonPressed())
         {
-            //ambil posisi
-            pos = getPosition(window);
-
 
 
             //if buat cek kalo value lebih dari 1/-1 tidak usah ditampilkan

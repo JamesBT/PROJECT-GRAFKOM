@@ -1,5 +1,6 @@
 package Engine;
 
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -22,16 +23,23 @@ public class Sphere extends Circle{
         this.radiusZ = radiusZ;
         this.stackCount = stackCount;
         this.sectorCount = sectorCount;
-//        createBox();
+        createBox();
 //        createSpheregithub();
 //        createElipsoid();
 //        createHyper1();
 //        createHyper2();
 //        createEllipticCone();
 //        createParaboloid();
-        createHyperboloid();
+//        createHyperboloid();
         setupVAOVBO();
-
+    }
+    @Override
+    public void setCenterPoint(List<Float> centerPoint) {
+        super.setCenterPoint(centerPoint);
+    }
+    @Override
+    public List<Float> getCenterPoint() {
+        return super.getCenterPoint();
     }
     public void createBox(){
         Vector3f temp = new Vector3f();
@@ -117,30 +125,6 @@ public class Sphere extends Circle{
         vertices.add(tempVertices.get(7));
         vertices.add(tempVertices.get(6));
     }
-    public void draw(){
-        drawSetup();
-        glLineWidth(10); //ketebalan garis
-        glPointSize(10); //besar kecil vertex
-        glDrawArrays(GL_POLYGON,
-                0,
-                vertices.size());
-    }
-
-    public void drawIndices(){
-        drawSetup();
-        glLineWidth(10); //ketebalan garis
-        glPointSize(10); //besar kecil vertex
-        glDrawArrays(GL_LINE_STRIP,
-                0,
-                vertices.size());
-    }
-
-//    public void draw(){
-//        drawSetup();
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ibo);
-//        glDrawElements(GL_TRIANGLES,index.size(),GL_UNSIGNED_INT,0);
-//    }
-
     public void createSpheregithub(){
         float pi = (float)Math.PI;
 
@@ -180,7 +164,6 @@ public class Sphere extends Circle{
         }
         vertices = temp;
     }
-
     public void createHyper1() {
         vertices.clear();
         ArrayList<Vector3f> temp = new ArrayList<>();
@@ -195,7 +178,6 @@ public class Sphere extends Circle{
         }
         vertices = temp;
     }
-
     public void createHyper2() {
         vertices.clear();
         ArrayList<Vector3f> temp = new ArrayList<>();
@@ -216,7 +198,6 @@ public class Sphere extends Circle{
         }
         vertices = temp;
     }
-
     public void createEllipticCone() {
         vertices.clear();
         ArrayList<Vector3f> temp = new ArrayList<>();
@@ -231,7 +212,6 @@ public class Sphere extends Circle{
         }
         vertices = temp;
     }
-
     public void createParaboloid() {
         vertices.clear();
         ArrayList<Vector3f> temp = new ArrayList<>();
@@ -246,7 +226,6 @@ public class Sphere extends Circle{
         }
         vertices = temp;
     }
-
     public void createHyperboloid() {
         vertices.clear();
         ArrayList<Vector3f> temp = new ArrayList<>();
@@ -260,5 +239,27 @@ public class Sphere extends Circle{
             }
         }
         vertices = temp;
+    }
+    public void rotateObjectOnPoint(float degree, float offsetX, float offsetY, float offsetZ, float rotateX, float rotateY)
+    {
+        translateObject(-rotateX, -rotateY, 0.0f);
+
+        model = new Matrix4f().rotate(degree, offsetX, offsetY, offsetZ).mul(new Matrix4f(model));
+//        centrals = new Matrix4f().rotate(degree, offsetX, offsetY, offsetZ).mul(new Matrix4f(centrals));
+//
+//
+//        cpx = centrals.get(0, 0);
+//        cpx = centrals.get(0, 1);
+
+        float newcpx =(float) (centerPoint.get(0) * Math.cos((double) degree) - centerPoint.get(1) * Math.sin((double) degree));
+        float newcpy =(float) (centerPoint.get(0) * Math.sin((double) degree) + centerPoint.get(1) * Math.cos((double) degree));
+
+        centerPoint.set(0,newcpx);
+        centerPoint.set(1,newcpy);
+
+//        System.out.println(newcpx);
+//        System.out.println(newcpy);
+
+        translateObject(rotateX, rotateY, 0.0f);
     }
 }
