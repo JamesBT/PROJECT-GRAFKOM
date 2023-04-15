@@ -1,6 +1,8 @@
 import Engine.ObjectJames;
 import Engine.*;
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL;
 
@@ -21,7 +23,11 @@ public class Projek {
 
     float degreexcamera = 0f;
     float degreeycamera = 0f;
-    float degreezcamera = 2.5f;
+    float degreezcamera = 0f;
+
+    float tempdegreexcamera = 0f;
+    float tempdegreeycamera = 0f;
+    float tempdegreezcamera = 0f;
     float degreekakikiri =0f;
     float degreekakikanan = 0f;
     float degreetanganbawah = 0f;
@@ -29,12 +35,11 @@ public class Projek {
     float degreekepala = 0f;
     float degree =0.5f;
     float degree2 = 0.005f;
+    float degree3 =0.05f;
     float arahkakikiri = -1.0f;
     float arahkakikanan = 1.0f;
-    float sudutkamera=0.0f;
-
-    boolean keyJditekan = true;
-    boolean keyIditekan = true;
+    boolean keyEditekan = true;
+    boolean keyQditekan = true;
     boolean keyAditekan = true;
     boolean keySditekan = true;
     boolean keyDditekan = true;
@@ -318,50 +323,6 @@ public class Projek {
         );
         obj.get(0).getChildObject().get(1).scaleObject(0.25f,0.25f,0.25f);
         obj.get(0).getChildObject().get(1).translateObject(-0.25f,0.225f,0.0f);
-        //tabung tangan kiri
-        obj.get(0).getChildObject().get(1).getChildObject().add(
-                new SphereJames(
-                        Arrays.asList(
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
-                        ),
-                        new ArrayList<>(),
-                        new Vector4f(1.0f,1.0f,1.0f,1.0f),
-//                        new Vector4f(0.768627451f,0.862745098f,0.831372549f,1.0f),
-                        Arrays.asList(0.0f,0.0f,0.0f),
-                        0.5f,
-                        0.5f,
-                        0.5f,
-                        36,
-                        18,
-                        1
-                )
-        );
-        obj.get(0).getChildObject().get(1).getChildObject().get(0).scaleObject(0.175f,0.175f,0.5f);
-        obj.get(0).getChildObject().get(1).getChildObject().get(0).translateObject(-0.35f,0.0f,-0.13f);
-        obj.get(0).getChildObject().get(1).getChildObject().get(0).rotateObject((float)Math.toRadians(270f),1.0f,0.0f,0.0f);
-        obj.get(0).getChildObject().get(1).getChildObject().get(0).rotateObject((float)Math.toRadians(-45f),0.0f,0.0f,1.0f);
-        //bola tangan kiri
-        obj.get(0).getChildObject().get(1).getChildObject().add(
-                new SphereJames(
-                        Arrays.asList(
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
-                        ),
-                        new ArrayList<>(),
-                        new Vector4f(1.0f,0.0f,0.0f,1.0f),
-//                        new Vector4f(0.768627451f,0.862745098f,0.831372549f,1.0f),
-                        Arrays.asList(0.0f,0.0f,0.0f),
-                        0.5f,
-                        0.5f,
-                        0.5f,
-                        36,
-                        18,
-                        2
-                )
-        );
-        obj.get(0).getChildObject().get(1).getChildObject().get(1).scaleObject(0.175f,0.175f,0.175f);
-        obj.get(0).getChildObject().get(1).getChildObject().get(1).translateObject(-0.4225f,0.07f,0.0f);
         //paraboloid tangan kiri
         obj.get(0).getChildObject().get(1).getChildObject().add(
                 new SphereJames(
@@ -381,11 +342,9 @@ public class Projek {
                         4
                 )
         );
-        obj.get(0).getChildObject().get(1).getChildObject().get(2).scaleObject(0.025f,0.025f,0.015f);
-        obj.get(0).getChildObject().get(1).getChildObject().get(2).translateObject(-0.255f,0.0f,0.075f);
-        obj.get(0).getChildObject().get(1).getChildObject().get(2).rotateObject((float)Math.toRadians(270f),1.0f,0.0f,0.0f);
-        obj.get(0).getChildObject().get(1).getChildObject().get(2).rotateObject((float)Math.toRadians(45f),0.0f,0.0f,1.0f);
-
+        obj.get(0).getChildObject().get(1).getChildObject().get(0).scaleObject(0.035f,0.035f,0.03f);
+        obj.get(0).getChildObject().get(1).getChildObject().get(0).translateObject(-0.275f,0.0f,-0.35f);
+        obj.get(0).getChildObject().get(1).getChildObject().get(0).rotateObject((float)Math.toRadians(270f),1.0f,0.0f,0.0f);
 
         //tangan kanan
         obj.get(0).getChildObject().add(
@@ -407,49 +366,6 @@ public class Projek {
         );
         obj.get(0).getChildObject().get(2).scaleObject(0.25f,0.25f,0.25f);
         obj.get(0).getChildObject().get(2).translateObject(0.25f,0.225f,0.0f);
-        //tabung tangan kanan
-        obj.get(0).getChildObject().get(2).getChildObject().add(
-                new SphereJames(
-                        Arrays.asList(
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
-                        ),
-                        new ArrayList<>(),
-//                        new Vector4f(1.0f,1.0f,1.0f,1.0f),
-                        new Vector4f(0.768627451f,0.862745098f,0.831372549f,1.0f),
-                        Arrays.asList(0.0f,0.0f,0.0f),
-                        0.5f,
-                        0.5f,
-                        0.5f,
-                        36,
-                        18,
-                        1
-                )
-        );
-        obj.get(0).getChildObject().get(2).getChildObject().get(0).scaleObject(0.175f,0.175f,0.5f);
-        obj.get(0).getChildObject().get(2).getChildObject().get(0).translateObject(0.35f,0.0f,-0.13f);
-        obj.get(0).getChildObject().get(2).getChildObject().get(0).rotateObject((float)Math.toRadians(270f),1.0f,0.0f,0.0f);
-        obj.get(0).getChildObject().get(2).getChildObject().get(0).rotateObject((float)Math.toRadians(45f),0.0f,0.0f,1.0f);
-        //bola tangan kanan
-        obj.get(0).getChildObject().get(2).getChildObject().add(
-                new SphereJames(
-                        Arrays.asList(
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
-                        ),
-                        new ArrayList<>(),
-                        new Vector4f(0.768627451f,0.862745098f,0.831372549f,1.0f),
-                        Arrays.asList(0.0f,0.0f,0.0f),
-                        0.5f,
-                        0.5f,
-                        0.5f,
-                        36,
-                        18,
-                        2
-                )
-        );
-        obj.get(0).getChildObject().get(2).getChildObject().get(1).scaleObject(0.175f,0.175f,0.175f);
-        obj.get(0).getChildObject().get(2).getChildObject().get(1).translateObject(0.4225f,0.07f,0.0f);
         //paraboloid tangan kanan
         obj.get(0).getChildObject().get(2).getChildObject().add(
                 new SphereJames(
@@ -458,8 +374,8 @@ public class Projek {
                                 new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
                         ),
                         new ArrayList<>(),
-//                        new Vector4f(1.0f,1.0f,1.0f,1.0f),
-                        new Vector4f(0.768627451f,0.862745098f,0.831372549f,1.0f),
+                        new Vector4f(1.0f,0.0f,0.0f,1.0f),
+//                        new Vector4f(0.768627451f,0.862745098f,0.831372549f,1.0f),
                         Arrays.asList(0.0f,0.0f,0.0f),
                         0.5f,
                         0.5f,
@@ -469,10 +385,9 @@ public class Projek {
                         4
                 )
         );
-        obj.get(0).getChildObject().get(2).getChildObject().get(2).scaleObject(0.025f,0.025f,0.015f);
-        obj.get(0).getChildObject().get(2).getChildObject().get(2).translateObject(0.255f,0.0f,0.075f);
-        obj.get(0).getChildObject().get(2).getChildObject().get(2).rotateObject((float)Math.toRadians(270f),1.0f,0.0f,0.0f);
-        obj.get(0).getChildObject().get(2).getChildObject().get(2).rotateObject((float)Math.toRadians(315f),0.0f,0.0f,1.0f);
+        obj.get(0).getChildObject().get(2).getChildObject().get(0).scaleObject(0.035f,0.035f,0.03f);
+        obj.get(0).getChildObject().get(2).getChildObject().get(0).translateObject(0.275f,0.0f,-0.35f);
+        obj.get(0).getChildObject().get(2).getChildObject().get(0).rotateObject((float)Math.toRadians(270f),1.0f,0.0f,0.0f);
 
         //perut bagian kiri bawah
         obj.get(0).getChildObject().add(
@@ -546,8 +461,8 @@ public class Projek {
                                 new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
                         ),
                         new ArrayList<>(),
-                                                new Vector4f(1f,0f,0f,1.0f),
-//                        new Vector4f(0.768627451f,0.862745098f,0.831372549f,1.0f),
+//                                                new Vector4f(1f,0f,0f,1.0f),
+                        new Vector4f(0.768627451f,0.862745098f,0.831372549f,1.0f),
                         Arrays.asList(0.0f,0.0f,0.0f),
                         0.5f,
                         0.5f,
@@ -694,7 +609,54 @@ public class Projek {
         obj.get(0).getChildObject().get(4).getChildObject().get(0).getChildObject().get(1).translateObject(0.0f,-1.1f,-0.6f);
         obj.get(0).getChildObject().get(4).getChildObject().get(0).getChildObject().get(1).rotateObject((float)Math.toRadians(315),0.0f,1f,0f);
 
+        //alis mata
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().add(new ObjectJames(
+                Arrays.asList(
+                        //Nama file disini bisa di custom (yang bagian secene.vart atau scene.frag)
+                        new ShaderProgram.ShaderModuleData(
+                                "resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData(
+                                "resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                new ArrayList<>()
+                ,new Vector4f(0.0f, 0.0f, 0.0f, 1.0f)
+        ));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).addVertices(new Vector3f(-0.05f, 1.03f, 0.4f));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).addVertices(new Vector3f(0.0f, 1.045f, 0.4f));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).addVertices(new Vector3f(0.05f, 1.03f, 0.4f));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).updateCurve(obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getVertices());
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).setThickness(1);
 
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().add(new ObjectJames(
+                Arrays.asList(
+                        //Nama file disini bisa di custom (yang bagian secene.vart atau scene.frag)
+                        new ShaderProgram.ShaderModuleData(
+                                "resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData(
+                                "resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                new ArrayList<>()
+                ,new Vector4f(0.0f, 0.0f, 0.0f, 1.0f)
+        ));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(1).addVertices(new Vector3f(-0.1f, 1.04f, 0.4f));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(1).addVertices(new Vector3f(0.0f, 1.07f, 0.4f));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(1).addVertices(new Vector3f(0.1f, 1.04f, 0.4f));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(1).updateCurve(obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(1).getVertices());
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(1).setThickness(1);
+
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().add(new ObjectJames(
+                Arrays.asList(
+                        //Nama file disini bisa di custom (yang bagian secene.vart atau scene.frag)
+                        new ShaderProgram.ShaderModuleData(
+                                "resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData(
+                                "resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                new ArrayList<>()
+                ,new Vector4f(0.0f, 0.0f, 0.0f, 1.0f)
+        ));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(2).addVertices(new Vector3f(-0.075f, 1.07f, 0.4f));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(2).addVertices(new Vector3f(0.0f, 1.09f, 0.4f));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(2).addVertices(new Vector3f(0.075f, 1.07f, 0.4f));
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(2).updateCurve(obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(1).getVertices());
+        obj.get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(0).getChildObject().get(2).setThickness(1);
 
     }
 
@@ -710,26 +672,27 @@ public class Projek {
             }
         }
 
+        //aksi 2 - praise the sun
         if(window.isKeyPressed(GLFW_KEY_E)){
-            if(keyJditekan){
-                keyJditekan = false;
-            }if(window.isKeyPressed(GLFW_KEY_E) &&!keyJditekan){
-                System.out.println("dikembalikan "+derajatsebelumnya);
+            if(keyEditekan){
+                keyEditekan = false;
+            }if(window.isKeyPressed(GLFW_KEY_E) &&!keyEditekan){
                 if(derajatsebelumnya != 0){
                     obj.get(0).rotateObject((float)Math.toRadians(-derajatsebelumnya),0.0f,1.0f,0.0f);
                 }
+
                 //gerakkan kepala ke bawah
                 float x1 = obj.get(0).getChildObject().get(0).getChildObject().get(0).getMatrix().get(3,0);
                 float x2 = obj.get(0).getChildObject().get(0).getChildObject().get(0).getMatrix().get(3,1);
                 float x3 = obj.get(0).getChildObject().get(0).getChildObject().get(0).getMatrix().get(3,2);
                 obj.get(0).getChildObject().get(0).getChildObject().get(0).translateObject(-x1, -x2, -x3);
-                if(degreekepala > 0){
+                if(degreekepala > -0f){
                     obj.get(0).getChildObject().get(0).getChildObject().get(0).rotateObject((float)Math.toRadians(degreekepala),1.0f,0.0f,0.0f);
                     degreekepala -= degree2;
                 }
                 obj.get(0).getChildObject().get(0).getChildObject().get(0).translateObject(x1, x2, x3);
 
-                //tangan ke bawah
+                //gerakkan tangan ke bawah
                 x1 = obj.get(0).getChildObject().get(1).getMatrix().get(3,0);
                 x2 = obj.get(0).getChildObject().get(1).getMatrix().get(3,1);
                 x3 = obj.get(0).getChildObject().get(1).getMatrix().get(3,2);
@@ -738,71 +701,40 @@ public class Projek {
                 float x6 = obj.get(0).getChildObject().get(2).getMatrix().get(3,2);
                 obj.get(0).getChildObject().get(1).translateObject(-x1, -x2, -x3);
                 obj.get(0).getChildObject().get(2).translateObject(-x4, -x5, -x6);
-                if (degreetanganbawah > 0) {
+                if (degreetanganbawah > 0.0f) {
                     obj.get(0).getChildObject().get(1).rotateObject((float) Math.toRadians(degreetanganbawah), 1.0f, 0.0f, 0.0f);
                     obj.get(0).getChildObject().get(2).rotateObject((float) Math.toRadians(degreetanganbawah), 1.0f, 0.0f, 0.0f);
                     degreetanganbawah -= degree2;
                 }
+//                if (degreetanganatas > 0.0f) {
+//                    obj.get(0).getChildObject().get(1).rotateObject((float) Math.toRadians(degreetanganatas), 0.0f, 0.0f, 1.0f);
+//                    obj.get(0).getChildObject().get(2).rotateObject((float) Math.toRadians(degreetanganatas), 0.0f, 0.0f, 1.0f);
+//                    degreetanganatas -= degree2;
+//                }
                 obj.get(0).getChildObject().get(1).translateObject(x1, x2, x3);
                 obj.get(0).getChildObject().get(2).translateObject(x4, x5, x6);
-
-                //lipat tangan ke dalam
-                x1 = obj.get(0).getChildObject().get(1).getChildObject().get(1).getMatrix().get(3,0);
-                x2 = obj.get(0).getChildObject().get(1).getChildObject().get(1).getMatrix().get(3,1);
-                x3 = obj.get(0).getChildObject().get(1).getChildObject().get(1).getMatrix().get(3,2);
-                x4 = obj.get(0).getChildObject().get(2).getChildObject().get(1).getMatrix().get(3,0);
-                x5 = obj.get(0).getChildObject().get(2).getChildObject().get(1).getMatrix().get(3,1);
-                x6 = obj.get(0).getChildObject().get(2).getChildObject().get(1).getMatrix().get(3,2);
-                obj.get(0).getChildObject().get(1).getChildObject().get(2).translateObject(-x1, -x2, -x3);
-                obj.get(0).getChildObject().get(2).getChildObject().get(2).translateObject(-x4, -x5, -x6);
-                if (degreetanganatas >0 ) {
-                    obj.get(0).getChildObject().get(1).getChildObject().get(2).rotateObject(-(float) Math.toRadians(degreetanganatas), 1.0f, 0.0f, 1.0f);
-                    obj.get(0).getChildObject().get(2).getChildObject().get(2).rotateObject(-(float) Math.toRadians(degreetanganatas), 1.0f, 0.0f, 0.0f);
-                    obj.get(0).getChildObject().get(2).getChildObject().get(2).rotateObject((float) Math.toRadians(degreetanganatas), 0.0f, 0.0f, 1.0f);
-                    degreetanganatas -= degree2;
-                }
-                obj.get(0).getChildObject().get(1).getChildObject().get(2).translateObject(x1, x2, x3);
-                obj.get(0).getChildObject().get(2).getChildObject().get(2).translateObject(x4, x5, x6);
-
                 obj.get(0).rotateObject((float)Math.toRadians(derajatsebelumnya),0.0f,1.0f,0.0f);
 
                 if(degreetanganatas<=0 && degreetanganbawah <= 0 &&degreekepala <=0){
-                    keyJditekan = true;
+                    keyQditekan = true;
                 }
             }
-
         }
 //        pindahkan objek
         if(window.isKeyPressed(GLFW_KEY_Q)){
-            if(keyIditekan){
-                keyIditekan = false;
+            if(keyQditekan){
+                keyQditekan = false;
+                keyEditekan = true;
             }
-            if(window.isKeyPressed(GLFW_KEY_Q) && !keyIditekan){
-                //gerakkan tangan (semuanya)
+            if(window.isKeyPressed(GLFW_KEY_Q) && !keyQditekan){
                 if(derajatsebelumnya != 0){
                     obj.get(0).rotateObject((float)Math.toRadians(-derajatsebelumnya),0.0f,1.0f,0.0f);
                 }
-                float x1 = obj.get(0).getChildObject().get(1).getMatrix().get(3,0);
-                float x2 = obj.get(0).getChildObject().get(1).getMatrix().get(3,1);
-                float x3 = obj.get(0).getChildObject().get(1).getMatrix().get(3,2);
-                float x4 = obj.get(0).getChildObject().get(2).getMatrix().get(3,0);
-                float x5 = obj.get(0).getChildObject().get(2).getMatrix().get(3,1);
-                float x6 = obj.get(0).getChildObject().get(2).getMatrix().get(3,2);
-                float derajattgn =1.125f;
-                obj.get(0).getChildObject().get(1).translateObject(-x1, -x2, -x3);
-                obj.get(0).getChildObject().get(2).translateObject(-x4, -x5, -x6);
-                if (degreetanganbawah < derajattgn) {
-                    obj.get(0).getChildObject().get(1).rotateObject(-(float) Math.toRadians(degreetanganbawah), 1.0f, 0.0f, 0.0f);
-                    obj.get(0).getChildObject().get(2).rotateObject(-(float) Math.toRadians(degreetanganbawah), 1.0f, 0.0f, 0.0f);
-                    degreetanganbawah += degree2;
-                }
-                obj.get(0).getChildObject().get(1).translateObject(x1, x2, x3);
-                obj.get(0).getChildObject().get(2).translateObject(x4, x5, x6);
 
                 //gerakkan kepala ke atas
-                x1 = obj.get(0).getChildObject().get(0).getChildObject().get(0).getMatrix().get(3,0);
-                x2 = obj.get(0).getChildObject().get(0).getChildObject().get(0).getMatrix().get(3,1);
-                x3 = obj.get(0).getChildObject().get(0).getChildObject().get(0).getMatrix().get(3,2);
+                float x1 = obj.get(0).getChildObject().get(0).getChildObject().get(0).getMatrix().get(3,0);
+                float x2 = obj.get(0).getChildObject().get(0).getChildObject().get(0).getMatrix().get(3,1);
+                float x3 = obj.get(0).getChildObject().get(0).getChildObject().get(0).getMatrix().get(3,2);
                 obj.get(0).getChildObject().get(0).getChildObject().get(0).translateObject(-x1, -x2, -x3);
                 float derajatkepala = 0.55f;
                 if(degreekepala < derajatkepala){
@@ -811,37 +743,117 @@ public class Projek {
                 }
                 obj.get(0).getChildObject().get(0).getChildObject().get(0).translateObject(x1, x2, x3);
 
-                //gerakkan tangan dari siku ke atas
-                x1 = obj.get(0).getChildObject().get(1).getChildObject().get(1).getMatrix().get(3,0);
-                x2 = obj.get(0).getChildObject().get(1).getChildObject().get(1).getMatrix().get(3,1);
-                x3 = obj.get(0).getChildObject().get(1).getChildObject().get(1).getMatrix().get(3,2);
-                x4 = obj.get(0).getChildObject().get(2).getChildObject().get(1).getMatrix().get(3,0);
-                x5 = obj.get(0).getChildObject().get(2).getChildObject().get(1).getMatrix().get(3,1);
-                x6 = obj.get(0).getChildObject().get(2).getChildObject().get(1).getMatrix().get(3,2);
-                obj.get(0).getChildObject().get(1).getChildObject().get(2).translateObject(-x1, -x2, -x3);
-                obj.get(0).getChildObject().get(2).getChildObject().get(2).translateObject(-x4, -x5, -x6);
-                if (degreetanganatas < 1.33f) {
-                    obj.get(0).getChildObject().get(1).getChildObject().get(2).rotateObject((float) Math.toRadians(degreetanganatas), 1.0f, 0.0f, 1.0f);
-                    obj.get(0).getChildObject().get(2).getChildObject().get(2).rotateObject((float) Math.toRadians(degreetanganatas), 1.0f, 0.0f, 0.0f);
-                    obj.get(0).getChildObject().get(2).getChildObject().get(2).rotateObject(-(float) Math.toRadians(degreetanganatas), 0.0f, 0.0f, 1.0f);
-                    degreetanganatas += degree2;
+                //gerakkan tangan
+                x1 = obj.get(0).getChildObject().get(1).getMatrix().get(3,0);
+                x2 = obj.get(0).getChildObject().get(1).getMatrix().get(3,1);
+                x3 = obj.get(0).getChildObject().get(1).getMatrix().get(3,2);
+                float x4 = obj.get(0).getChildObject().get(2).getMatrix().get(3,0);
+                float x5 = obj.get(0).getChildObject().get(2).getMatrix().get(3,1);
+                float x6 = obj.get(0).getChildObject().get(2).getMatrix().get(3,2);
+                float derajattgn =1.10f;
+                obj.get(0).getChildObject().get(1).translateObject(-x1, -x2, -x3);
+                obj.get(0).getChildObject().get(2).translateObject(-x4, -x5, -x6);
+                if (degreetanganbawah < derajattgn) {
+                    obj.get(0).getChildObject().get(1).rotateObject(-(float) Math.toRadians(degreetanganbawah), 1.0f, 0.0f, 0.0f);
+                    obj.get(0).getChildObject().get(2).rotateObject(-(float) Math.toRadians(degreetanganbawah), 1.0f, 0.0f, 0.0f);
+                    degreetanganbawah += degree2;
                 }
-                obj.get(0).getChildObject().get(1).getChildObject().get(2).translateObject(x1, x2, x3);
-                obj.get(0).getChildObject().get(2).getChildObject().get(2).translateObject(x4, x5, x6);
-                System.out.println(derajatsebelumnya);
-
+//                if (degreetanganatas < 0.75f) {
+//                    obj.get(0).getChildObject().get(1).rotateObject(-(float) Math.toRadians(degreetanganatas), 0.0f, 0.0f, 1.0f);
+//                    obj.get(0).getChildObject().get(2).rotateObject((float) Math.toRadians(degreetanganatas), 0.0f, 0.0f, 1.0f);
+//                    degreetanganatas += degree2;
+//                }
+                obj.get(0).getChildObject().get(1).translateObject(x1, x2, x3);
+                obj.get(0).getChildObject().get(2).translateObject(x4, x5, x6);
                 obj.get(0).rotateObject((float)Math.toRadians(derajatsebelumnya),0.0f,1.0f,0.0f);
+            }
+        }
+
+        if(window.isKeyPressed(GLFW_KEY_V)){
+            if(degreexcamera != 0 || degreeycamera!=0 || degreezcamera != 0){
+                while(degreexcamera!=0.0f){
+                    if(degreexcamera >0){
+                        for(float i=0;i<degreexcamera;i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(-0.05f, 1f, 0f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                            System.out.println("masuk loop x positif");
+                        }
+                    }
+                    if(degreexcamera<0){
+                        for(float i=0;i<Math.abs(degreexcamera);i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(0.05f, 1f, 0f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                            System.out.println("masuk loop x negatif");
+                        }
+                    }
+                    if(degreexcamera >= 0.0001f || degreexcamera <= 0.0001f){
+                        degreexcamera = 0f;
+                    }
+                }
+                tempdegreexcamera = degreexcamera;
+                degreexcamera = 0;
+                while(degreeycamera!=0.0f){
+                    if(degreeycamera > 0){
+                        for(float i=0;i<degreeycamera;i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(-0.05f, 0f, 1f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                            System.out.println("masuk loop y positif");
+                        }
+                    }
+                    if(degreeycamera<0){
+                        for(float i=0;i<Math.abs(degreeycamera);i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(0.05f, 0f, 1f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                            System.out.println("masuk loop y negatif");
+                        }
+                    }
+
+                    if(degreeycamera >= 0.0001f || degreeycamera <= 0.0001f){
+                        degreeycamera = 0f;
+                    }
+                }
+                System.out.println("degree y: "+degreeycamera);
+                tempdegreeycamera = degreeycamera;
+                degreeycamera = 0;
+
+                while(degreezcamera != 0.0f){
+                    if(degreezcamera >0){
+                        for(float i=0f;i<degreezcamera;i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(-0.05f, 0f, 0f, 1f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                            System.out.println("masuk loop z positif");
+                        }
+                    }
+                    if(degreezcamera <0){
+                        for(float i=0;i<Math.abs(degreezcamera);i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(0.05f, 0f, 0f, 1f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                            System.out.println("masuk loop z negatif");
+                        }
+                    }
+
+                    if(degreezcamera >= 0.0001f || degreezcamera <= 0.0001f){
+                        degreezcamera = 0f;
+                    }
+                }
+                System.out.println("degree z: "+degreezcamera);
+                tempdegreezcamera = degreezcamera;
+                degreezcamera = 0;
 
             }
-
-
-
-
         }
+
 
         //aksi 1 - gerak kaki (depan, kiri, belakang, kanan)
         if(window.isKeyPressed(GLFW_KEY_W)){
             if(keyWditekan){
+                System.out.println(degreekakikiri);
                 //perbaiki posisi kaki
                 float x1 = obj.get(0).getChildObject().get(3).getMatrix().get(3,0);
                 float x2 = obj.get(0).getChildObject().get(3).getMatrix().get(3,1);
@@ -859,9 +871,7 @@ public class Projek {
                         }
                         obj.get(0).getChildObject().get(3).rotateObject(arahkakikiri*(float)Math.toRadians(degree), 1.0f, 0.0f, 0.0f);
                         degreekakikiri+=arahkakikiri*degree;
-
                         obj.get(0).getChildObject().get(3).translateObject(x1,x2,x3);
-
                         if(degreekakikiri == 0.0f){
                             break;
                         }
@@ -888,6 +898,60 @@ public class Projek {
                     }
                 }
 
+                //rotasi objek terhadap sumbu x
+                if(degreexcamera != 0 || degreeycamera!=0 || degreezcamera != 0){
+                    if(degreexcamera >0){
+                        for(float i=0;i<degreexcamera;i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(-0.005f, 1f, 0f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                        }
+                    }else if(degreexcamera<0){
+                        for(float i=0;i<Math.abs(degreexcamera);i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(0.005f, 1f, 0f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                        }
+                    }
+
+                    if(degreeycamera > 0){
+                        for(float i=0;i<degreeycamera;i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(-0.005f, 0f, 1f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                        }
+                    }else if(degreeycamera<0){
+                        for(float i=0;i<Math.abs(degreeycamera);i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(0.005f, 0f, 1f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                        }
+                    }
+
+                    if(degreezcamera >0){
+                        for(float i=0f;i<degreezcamera;i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(-0.005f, 0f, 0f, 1f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                        }
+                    }else if(degreezcamera <0){
+                        for(float i=0;i<Math.abs(degreezcamera);i+=0.05f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(0.005f, 0f, 0f, 1f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                        }
+                    }
+
+                    tempdegreexcamera = degreexcamera;
+                    tempdegreeycamera = degreeycamera;
+                    tempdegreezcamera = degreezcamera;
+                    degreexcamera = 0;
+                    degreeycamera = 0;
+                    degreezcamera = 0;
+
+                }
+
+
 
 
                 if(derajatsebelumnya != 0){
@@ -899,6 +963,7 @@ public class Projek {
             }
             if(window.isKeyPressed(GLFW_KEY_W) && !keyWditekan)
             {
+                System.out.println("tahan W"+degreekakikiri);
                 float x1 = obj.get(0).getChildObject().get(3).getMatrix().get(3,0);
                 float x2 = obj.get(0).getChildObject().get(3).getMatrix().get(3,1);
                 float x3 = obj.get(0).getChildObject().get(3).getMatrix().get(3,2);
@@ -931,13 +996,31 @@ public class Projek {
                     objek.translateObject(x1,x2,x3);
                     obj.get(0).getChildObject().get(4).translateObject(x4,x5,x6);
                 }
+
+                if(tempdegreezcamera != 0){
+                    if(tempdegreezcamera >0){
+                        for(float i=0f;i<tempdegreezcamera;i+=0.5f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(0.5f, 0f, 0f, 1f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                        }
+                    }else if(tempdegreezcamera <0){
+                        for(float i=0;i<Math.abs(tempdegreezcamera);i+=0.5f){
+                            for(ObjectJames objek:obj){
+                                ((SphereJames)objek).rotateObjectOnPoint(-0.5f, 0f, 0f, 1f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                            }
+                        }
+                    }
+                    degreezcamera = tempdegreezcamera;
+                    tempdegreezcamera = 0;
+                }
+
                 keyAditekan = true;
                 keySditekan = true;
                 keyDditekan = true;
             }
         }
         if(window.isKeyPressed(GLFW_KEY_A)){
-//            camera.moveLeft(cameraspeed);
             if(keyAditekan){
                 //perbaiki posisi kaki
                 float x1 = obj.get(0).getChildObject().get(3).getMatrix().get(3,0);
@@ -946,6 +1029,7 @@ public class Projek {
                 float x4 = obj.get(0).getChildObject().get(4).getMatrix().get(3,0);
                 float x5 = obj.get(0).getChildObject().get(4).getMatrix().get(3,1);
                 float x6 = obj.get(0).getChildObject().get(4).getMatrix().get(3,2);
+                System.out.println(degreekakikiri);
                 if(degreekakikiri != 0f){
                     while(degreekakikiri < -0.6f || degreekakikiri > 0.6f ){
                         obj.get(0).getChildObject().get(3).translateObject(-x1,-x2,-x3);
@@ -994,6 +1078,7 @@ public class Projek {
             }
             if(window.isKeyPressed(GLFW_KEY_A) && !keyAditekan)
             {
+                System.out.println("tahan A"+degreekakikiri);
                 float x1 = obj.get(0).getChildObject().get(3).getMatrix().get(3,0);
                 float x2 = obj.get(0).getChildObject().get(3).getMatrix().get(3,1);
                 float x3 = obj.get(0).getChildObject().get(3).getMatrix().get(3,2);
@@ -1225,31 +1310,64 @@ public class Projek {
         }
 
         if(window.isKeyPressed(GLFW_KEY_I)){
-            camera.setPosition(degreexcamera,degreeycamera,degreezcamera);
-            degreeycamera-=0.005f;
+            for(ObjectJames objek:obj){
+                if(objek instanceof SphereJames){
+                    ((SphereJames)objek).rotateObjectOnPoint(0.05f, 0f, 0f, 1f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                    degreezcamera+=degree3;
+                }
+                System.out.println("degreez"+degreezcamera);
+            }
         }
         if(window.isKeyPressed(GLFW_KEY_J)){
-            camera.setPosition(degreexcamera,degreeycamera,degreezcamera);
-            degreexcamera+=0.005f;
+            for(ObjectJames objek:obj){
+                if(objek instanceof SphereJames){
+                    ((SphereJames)objek).rotateObjectOnPoint(-0.05f, 0f, 0f, 1f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                    degreezcamera-=degree3;
+                }
+
+                System.out.println("degreez"+degreezcamera);
+            }
         }
         if(window.isKeyPressed(GLFW_KEY_K)){
-            camera.setPosition(degreexcamera,degreeycamera,degreezcamera);
-            degreeycamera+=0.005f;
+            for(ObjectJames objek:obj){
+                if(objek instanceof SphereJames){
+                    ((SphereJames)objek).rotateObjectOnPoint(0.05f, 1f, 0f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                    degreexcamera+=degree3;
+                }
+
+                System.out.println("degreex"+degreexcamera);
+            }
         }
         if(window.isKeyPressed(GLFW_KEY_L)){
-            camera.setPosition(degreexcamera,degreeycamera,degreezcamera);
-            degreexcamera-=0.005f;
+            for(ObjectJames objek:obj){
+                if(objek instanceof SphereJames){
+                    ((SphereJames)objek).rotateObjectOnPoint(-0.05f, 1f, 0f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                    degreexcamera-=degree3;
+                }
+
+                System.out.println("degreex"+degreexcamera);
+            }
         }
         if(window.isKeyPressed(GLFW_KEY_U)){
-            camera.setPosition(degreexcamera,degreeycamera,degreezcamera);
-            degreezcamera+=0.005f;
+            for(ObjectJames objek:obj){
+                if(objek instanceof SphereJames){
+                    ((SphereJames)objek).rotateObjectOnPoint(0.05f, 0f, 1f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                    degreeycamera+=degree3;
+                }
+
+                System.out.println("degreey"+degreeycamera);
+            }
         }
         if(window.isKeyPressed(GLFW_KEY_O)){
-            camera.setPosition(degreexcamera,degreeycamera,degreezcamera);
-            degreezcamera-=0.005f;
+            for(ObjectJames objek:obj){
+                if(objek instanceof SphereJames){
+                    ((SphereJames)objek).rotateObjectOnPoint(-0.05f, 0f, 1f, 0f, obj.get(0).getMatrix().get(3,0), obj.get(0).getMatrix().get(3,1),obj.get(0).getMatrix().get(3,2));
+                    degreeycamera-=degree3;
+                }
+
+                System.out.println("degreey"+degreeycamera);
+            }
         }
-
-
     }
 
     public void loop(){

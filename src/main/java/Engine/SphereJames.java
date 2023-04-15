@@ -278,16 +278,11 @@ public class SphereJames extends Circle{
         }
         vertices = temp;
     }
-    public void rotateObjectOnPoint(float degree, float offsetX, float offsetY, float offsetZ, float rotateX, float rotateY)
+    public void rotateObjectOnPoint(float degree, float offsetX, float offsetY, float offsetZ, float rotateX, float rotateY,float rotateZ)
     {
-        translateObject(-rotateX, -rotateY, 0.0f);
+        translateObject(-rotateX, -rotateY, -rotateZ);
 
         model = new Matrix4f().rotate(degree, offsetX, offsetY, offsetZ).mul(new Matrix4f(model));
-//        centrals = new Matrix4f().rotate(degree, offsetX, offsetY, offsetZ).mul(new Matrix4f(centrals));
-//
-//
-//        cpx = centrals.get(0, 0);
-//        cpx = centrals.get(0, 1);
 
         float newcpx =(float) (centerPoint.get(0) * Math.cos((double) degree) - centerPoint.get(1) * Math.sin((double) degree));
         float newcpy =(float) (centerPoint.get(0) * Math.sin((double) degree) + centerPoint.get(1) * Math.cos((double) degree));
@@ -295,7 +290,13 @@ public class SphereJames extends Circle{
         centerPoint.set(0,newcpx);
         centerPoint.set(1,newcpy);
 
+        translateObject(rotateX, rotateY, rotateZ);
+        for (ObjectJames i: childObjectJames)
+        {
+            if(i instanceof SphereJames) {
+                ((SphereJames) i).rotateObjectOnPoint(degree, offsetX, offsetY, offsetZ, rotateX, rotateY, rotateZ);
+            }
+        }
 
-        translateObject(rotateX, rotateY, 0.0f);
     }
 }

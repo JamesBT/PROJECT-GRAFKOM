@@ -14,14 +14,14 @@ public class ObjectJames extends ShaderProgram{
     List<Vector3f> vertices;
     int vao;
     int vbo;
-
+    int thickness = 10;
     Vector4f color;
     UniformsMap uniformsMap;
     List<Vector3f> verticesColor;
     int vboColor;
     Matrix4f model;
 
-
+    List<Vector3f> curveVertices = new ArrayList<>();
 
     List<ObjectJames> childObjectJames;
 
@@ -141,6 +141,9 @@ public class ObjectJames extends ShaderProgram{
         for(ObjectJames child: childObjectJames){
             child.draw(camera,projection);
         }
+        if (curveVertices.size() > 0){
+            drawCurve(camera, projection);
+        }
     }
 
     public void drawIndices(){
@@ -152,51 +155,68 @@ public class ObjectJames extends ShaderProgram{
             child.drawIndices();
         }
     }
-    public void drawwithVerticesColor(){
-        drawSetupwithVerticesColor();
-        glLineWidth(1);
-        glPointSize(0);
-        //GL_TRIANGLES
-        //GL_LINE_LOOP
-        //GL_LINE_STRIP
-        //GL_LINES
-        //GL_POINTS
-        //GL_TRIANGLE_FAN
-        glDrawArrays(GL_TRIANGLES,0,vertices.size());
+    public void drawCurve(Camera camera, Projection projection){
+        if(vertices.size()<3) {
+            if(vertices.size()==2){
+                curveVertices.addAll(vertices);
+            }
+            return;
+        }
+        setupVAOVBOCurve();
+        drawSetup(camera, projection);
+        glLineWidth(thickness);
+        glPointSize(thickness);
+        glDrawArrays(GL_LINE_STRIP, 0, curveVertices.size());
     }
-    public void drawLine(){
-//        drawSetup();
-        glLineWidth(10);
-        glPointSize(10);
-        //GL_TRIANGLES
-        //GL_LINE_LOOP
-        //GL_LINE_STRIP
-        //GL_LINES
-        //GL_POINTS
-        //GL_TRIANGLE_FAN
-        glDrawArrays(GL_LINE_STRIP,0,vertices.size());
-    }
-
-    public void drawSphere(){
-//        drawSetup();
-        glLineWidth(10); //ketebalan garis
-        glPointSize(10); //besar kecil vertex
-        glDrawArrays(GL_POLYGON,
-                0,
-                vertices.size());
+    public void setupVAOVBOCurve(){
+        // set vao
+        vao = glGenVertexArrays();
+        glBindVertexArray(vao);
+        // set vbo
+        vbo = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        // mengirim vertices
+        glBufferData(GL_ARRAY_BUFFER, Utils.listoFloat(curveVertices), GL_STATIC_DRAW);
     }
 
-    public void drawSphereIndices(){
-//        drawSetup();
-        glLineWidth(10); //ketebalan garis
-        glPointSize(10); //besar kecil vertex
-        glDrawArrays(GL_LINE_STRIP,
-                0,
-                vertices.size());
-    }
     public void addVertices(Vector3f newVector){
         vertices.add(newVector);
         setupVAOVBO();
+    }
+    public void updateCurve(List<Vector3f> points){
+        if(vertices.size() < 2) return;
+        curveVertices.clear();
+        curveVertices.add(vertices.get(0));
+        double interval = 0.02;
+        for (double i = 0; i <= 1; i += interval) {
+            curveVertices.add(new Vector3f(calculateBezierPoint((float) i, points)));
+        }
+        curveVertices.add(vertices.get(vertices.size()-1));
+    }
+    public static Vector3f calculateBezierPoint(float t, List<Vector3f> points) {
+        int n = points.size() - 1;
+        float x = 0, y = 0, z = 0;
+
+        for (int i = 0; i <= n; i++) {
+            double coefficient = calculateCoefficient(n, i, t);
+            x += coefficient * points.get(i).x;
+            y += coefficient * points.get(i).y;
+            z += coefficient * points.get(i).z;
+        }
+
+        return new Vector3f(x, y, z);
+    }
+
+    private static double calculateCoefficient(int n, int i, double t) {
+        return binomialCoefficient(n, i) * Math.pow(t, i) * Math.pow(1 - t, n - i);
+    }
+
+    private static int binomialCoefficient(int n, int k) {
+        if (k == 0 || k == n) {
+            return 1;
+        } else {
+            return binomialCoefficient(n - 1, k - 1) + binomialCoefficient(n - 1, k);
+        }
     }
 
     public void translateObject(Float offsetX, Float offsetY, Float offsetZ){
@@ -231,5 +251,10 @@ public class ObjectJames extends ShaderProgram{
     public void setChildObject(List<ObjectJames> childObjectJames) {
         this.childObjectJames = childObjectJames;
     }
-
+    public void setThickness(int thickness) {
+        this.thickness = thickness;
+    }
+    public List<Vector3f> getVertices() {
+        return vertices;
+    }
 }
