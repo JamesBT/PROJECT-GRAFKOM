@@ -10,7 +10,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL30.*;
 
-public class Object extends ShaderProgram{
+public class ObjectJames extends ShaderProgram{
     List<Vector3f> vertices;
     int vao;
     int vbo;
@@ -23,14 +23,14 @@ public class Object extends ShaderProgram{
 
 
 
-    List<Object> childObject;
+    List<ObjectJames> childObjectJames;
 
     public Vector3f updateCenterPoint(){
         Vector3f centerTemp = new Vector3f();
         model.transformPosition(0.0f,0.0f,0.0f,centerTemp);
         return centerTemp;
     }
-    public Object(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices,Vector4f color) {
+    public ObjectJames(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color) {
         super(shaderModuleDataList);
         this.vertices = vertices;
         setupVAOVBO();
@@ -38,18 +38,20 @@ public class Object extends ShaderProgram{
         uniformsMap = new UniformsMap(getProgramId());
         uniformsMap.createUniform("uni_color");
         uniformsMap.createUniform("model");
+        uniformsMap.createUniform("view");
+        uniformsMap.createUniform("projection");
         model = new Matrix4f();
-        childObject = new ArrayList<>();
+        childObjectJames = new ArrayList<>();
     }
 
-    public Object(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices,List<Vector3f> verticesColor) {
+    public ObjectJames(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, List<Vector3f> verticesColor) {
         super(shaderModuleDataList);
         this.vertices = vertices;
         this.verticesColor = verticesColor;
         setupVAOVBOwithVerticesColor();
     }
 
-    public Object(List<ShaderModuleData> shaderModuleDataList) {
+    public ObjectJames(List<ShaderModuleData> shaderModuleDataList) {
         super(shaderModuleDataList);
     }
 
@@ -80,10 +82,23 @@ public class Object extends ShaderProgram{
         glBufferData(GL_ARRAY_BUFFER,Utils.listoFloat(verticesColor),GL_STATIC_DRAW);
     }
 
-    public void drawSetup(){
+//    public void drawSetup(){
+//        bind();
+//        uniformsMap.setUniform("uni_color",color);
+//        uniformsMap.setUniform("model",model);
+//        //bind vbo
+//        glEnableVertexAttribArray(0);
+//        glBindBuffer(GL_ARRAY_BUFFER,vbo);
+//        glVertexAttribPointer(0,3,GL_FLOAT,false,0,0);
+//    }
+
+    public void drawSetup(Camera camera,Projection projection){
         bind();
         uniformsMap.setUniform("uni_color",color);
         uniformsMap.setUniform("model",model);
+        uniformsMap.setUniform("view",camera.getViewMatrix());
+        uniformsMap.setUniform("projection",projection.getProjMatrix());
+
         //bind vbo
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER,vbo);
@@ -103,7 +118,7 @@ public class Object extends ShaderProgram{
     }
 
     public void draw(){
-        drawSetup();
+//        drawSetup();
         glLineWidth(1);
         glPointSize(0);
         //GL_TRIANGLES
@@ -113,23 +128,27 @@ public class Object extends ShaderProgram{
         //GL_POINTS
         //GL_TRIANGLE_FAN
         glDrawArrays(GL_POLYGON,0,vertices.size());
-        for(Object child:childObject){
+        for(ObjectJames child: childObjectJames){
             child.draw();
         }
     }
 
-    public void drawIndices(){
-        drawSetup();
+    public void draw(Camera camera,Projection projection){
+        drawSetup(camera,projection);
         glLineWidth(1);
         glPointSize(0);
-        //GL_TRIANGLES
-        //GL_LINE_LOOP
-        //GL_LINE_STRIP
-        //GL_LINES
-        //GL_POINTS
-        //GL_TRIANGLE_FAN
-        glDrawArrays(GL_LINE_STRIP,0,vertices.size());
-        for(Object child:childObject){
+        glDrawArrays(GL_POLYGON,0,vertices.size());
+        for(ObjectJames child: childObjectJames){
+            child.draw(camera,projection);
+        }
+    }
+
+    public void drawIndices(){
+//        drawSetup();
+        glLineWidth(1);
+        glPointSize(0);
+        glDrawArrays(GL_POLYGON,0,vertices.size());
+        for(ObjectJames child: childObjectJames){
             child.drawIndices();
         }
     }
@@ -146,7 +165,7 @@ public class Object extends ShaderProgram{
         glDrawArrays(GL_TRIANGLES,0,vertices.size());
     }
     public void drawLine(){
-        drawSetup();
+//        drawSetup();
         glLineWidth(10);
         glPointSize(10);
         //GL_TRIANGLES
@@ -159,7 +178,7 @@ public class Object extends ShaderProgram{
     }
 
     public void drawSphere(){
-        drawSetup();
+//        drawSetup();
         glLineWidth(10); //ketebalan garis
         glPointSize(10); //besar kecil vertex
         glDrawArrays(GL_POLYGON,
@@ -168,7 +187,7 @@ public class Object extends ShaderProgram{
     }
 
     public void drawSphereIndices(){
-        drawSetup();
+//        drawSetup();
         glLineWidth(10); //ketebalan garis
         glPointSize(10); //besar kecil vertex
         glDrawArrays(GL_LINE_STRIP,
@@ -182,21 +201,21 @@ public class Object extends ShaderProgram{
 
     public void translateObject(Float offsetX, Float offsetY, Float offsetZ){
         model = new Matrix4f().translate(offsetX,offsetY,offsetZ).mul(new Matrix4f(model));
-        for(Object child:childObject){
+        for(ObjectJames child: childObjectJames){
             child.translateObject(offsetX,offsetY,offsetZ);
         }
     }
 
     public void rotateObject(Float degree, Float offsetX, Float offsetY, Float offsetZ){
         model = new Matrix4f().rotate(degree,offsetX,offsetY,offsetZ).mul(new Matrix4f(model));
-        for(Object child:childObject){
+        for(ObjectJames child: childObjectJames){
             child.rotateObject(degree,offsetX,offsetY,offsetZ);
         }
     }
 
     public void scaleObject(Float x, Float y, Float z){
         model = new Matrix4f().scale(x,y,z).mul(new Matrix4f(model));
-        for(Object child:childObject){
+        for(ObjectJames child: childObjectJames){
             child.scaleObject(x,y,z);
         }
     }
@@ -205,11 +224,12 @@ public class Object extends ShaderProgram{
         return model;
     }
 
-    public List<Object> getChildObject() {
-        return childObject;
+    public List<ObjectJames> getChildObject() {
+        return childObjectJames;
     }
 
-    public void setChildObject(List<Object> childObject) {
-        this.childObject = childObject;
+    public void setChildObject(List<ObjectJames> childObjectJames) {
+        this.childObjectJames = childObjectJames;
     }
+
 }

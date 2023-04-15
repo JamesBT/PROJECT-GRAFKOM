@@ -1,5 +1,5 @@
-import Engine.*;
 import Engine.ObjectJames;
+import Engine.*;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL;
@@ -11,7 +11,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL30.*;
 
-public class Main {
+public class TugasMinggu7 {
     private final Window window = new Window(800, 800, "Tugas III");
 
     private ArrayList<Object2d> objects = new ArrayList<>();
@@ -24,15 +24,9 @@ public class Main {
     float derajat = 0.0f;
     Vector2f pos;
 
-    Camera camera = new Camera();
-    Projection projection = new Projection(window.getWidth(),window.getHeight());
-
     public void init(){
         window.init();
         GL.createCapabilities();
-
-        camera.setPosition(0,0,0.25f);
-        camera.setRotation((float)Math.toRadians(0.0f),(float)Math.toRadians(30.0f));
 //        matahari
         objkotak.add(new SphereJames(
                 Arrays.asList(
@@ -200,7 +194,7 @@ public class Main {
             input();
             //code
             for(ObjectJames objectJames : objkotak){
-                objectJames.draw(camera,projection);
+                objectJames.drawIndices();
             }
 
 
@@ -225,7 +219,7 @@ public class Main {
         glfwSetErrorCallback(null).free();
     }
     public static void main(String[] args) {
-        new Main().run();
+        new TugasMinggu7().run();
     }
 
     public Vector2f getPosition(Window window)

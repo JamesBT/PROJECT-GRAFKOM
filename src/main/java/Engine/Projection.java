@@ -13,7 +13,7 @@ public class Projection {
         updateProjMatrix(width, height);
     }
 
-    private float FOV = (float) Math.toRadians(60.0f);
+    private float FOV = (float) Math.toRadians(90.0f);
     private static final float Z_FAR = 1000.f;
     private static final float Z_NEAR = 0.01f;
     private int width, height;
@@ -33,5 +33,6 @@ public class Projection {
         this.width = width;
         this.height = height;
         projMatrix.setPerspective(FOV, (float) width / height, Z_NEAR, Z_FAR);
+//        projMatrix.setOrtho(FOV, (float) width / height, Z_NEAR, Z_FAR);
     }
 }

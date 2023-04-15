@@ -7,30 +7,36 @@ import org.joml.Vector4f;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_POLYGON;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
-
-public class Sphere extends Circle{
+public class SphereJames extends Circle{
     float radiusZ;
     int stackCount;
     int sectorCount;
 
-    public Sphere(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY, Float radiusZ,
-                  int sectorCount,int stackCount) {
+    public SphereJames(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY, Float radiusZ,
+                       int sectorCount, int stackCount, int choice) {
         super(shaderModuleDataList, vertices, color, centerPoint, radiusX, radiusY);
         this.radiusZ = radiusZ;
         this.stackCount = stackCount;
         this.sectorCount = sectorCount;
-        createBox();
-//        createSpheregithub();
-//        createElipsoid();
-//        createHyper1();
-//        createHyper2();
-//        createEllipticCone();
-//        createParaboloid();
-//        createHyperboloid();
+        if(choice == 0){
+            //buat kotak
+            createBox();
+        }else if(choice == 1){
+            //buat tabung
+            createTube(radiusX,radiusY);
+//            createTube2();
+        }else if(choice == 2){
+            //buat bola
+            createSphere();
+        }else if(choice == 3){
+            //buat elipsoid
+            createElipsoid(radiusX,radiusY,radiusZ);
+        }else if(choice == 4){
+            //buat paraboloid
+            createParaboloid(radiusX,radiusY,radiusZ);
+        }else if(choice == 5){
+            createHyperboloid();
+        }
         setupVAOVBO();
     }
     @Override
@@ -125,9 +131,40 @@ public class Sphere extends Circle{
         vertices.add(tempVertices.get(7));
         vertices.add(tempVertices.get(6));
     }
-    public void createSpheregithub(){
+    public void createSphere(){
+        vertices.clear();
+        ArrayList<Vector3f> temp = new ArrayList<>();
+
+        for(double v = -Math.PI/2; v<= Math.PI/2; v+=Math.PI/60){
+            for(double u = -Math.PI; u<= Math.PI; u+=Math.PI/60){
+                float x = radiusX * (float)(Math.cos(v) * Math.cos(u));
+                float y = radiusY * (float)(Math.cos(v) * Math.sin(u));
+                float z = radiusZ * (float)(Math.sin(v));
+                temp.add(new Vector3f(x,y,z));
+            }
+        }
+        vertices = temp;
+    }
+    public void createTube(float radius, float height){
+        vertices.clear();
+        ArrayList<Vector3f> temp = new ArrayList<>();
+
+        for(double v = 0; v<= 360; v+=0.1){
+            float x = radius * (float)(Math.cos(Math.toRadians(v)));
+            float y = radius * (float)(Math.sin(Math.toRadians(v)));
+            temp.add(new Vector3f(x,y,-(height)/2.0f));
+            temp.add(new Vector3f(x,y,height/2.0f));
+        }
+        vertices = temp;
+
+
+    }
+
+    public void createTube2(){
         float pi = (float)Math.PI;
 
+        //stackcount = 18
+        //sectorcount = 36
         float sectorStep = 2 * (float)Math.PI / sectorCount;
         float stackStep = (float)Math.PI / stackCount;
         float sectorAngle, StackAngle, x, y, z;
@@ -143,22 +180,23 @@ public class Sphere extends Circle{
             {
                 sectorAngle = j * sectorStep;
                 Vector3f temp_vector = new Vector3f();
-                temp_vector.x = centerPoint.get(0) + x * (float)Math.cos(sectorAngle);
-                temp_vector.y = centerPoint.get(1) + y * (float)Math.sin(sectorAngle);
+                temp_vector.x = centerPoint.get(0) + x * (float)Math.sin(sectorAngle);
+                temp_vector.y = centerPoint.get(1) + y ;
                 temp_vector.z = centerPoint.get(2) + z;
                 vertices.add(temp_vector);
             }
         }
     }
-    public void createElipsoid() {
+
+    public void createElipsoid(float radiusx,float radiusy, float radiusz) {
         vertices.clear();
         ArrayList<Vector3f> temp = new ArrayList<>();
 
         for(double v = -Math.PI/2; v<= Math.PI/2; v+=Math.PI/60){
             for(double u = -Math.PI; u<= Math.PI; u+=Math.PI/60){
-                float x = 0.5f * (float)(Math.cos(v) * Math.cos(u));
-                float y = 0.5f * (float)(Math.cos(v) * Math.sin(u));
-                float z = 0.5f * (float)(Math.sin(v));
+                float x = radiusx * (float)(Math.cos(v) * Math.cos(u));
+                float y = radiusy * (float)(Math.cos(v) * Math.sin(u));
+                float z = radiusz * (float)(Math.sin(v) / 2);
                 temp.add(new Vector3f(x,y,z));
             }
         }
@@ -212,15 +250,15 @@ public class Sphere extends Circle{
         }
         vertices = temp;
     }
-    public void createParaboloid() {
+    public void createParaboloid(float iptx,float ipty,float iptz) {
         vertices.clear();
         ArrayList<Vector3f> temp = new ArrayList<>();
 
         for(double v = 0; v<= 2*Math.PI; v+=Math.PI/60){
             for(double u = -Math.PI; u<= Math.PI; u+=Math.PI/60){
-                float x = 0.5f * (float)(v * Math.cos(u));
-                float y = 0.5f * (float)(v * Math.sin(u));
-                float z = 0.5f * (float)(v*v);
+                float x = iptx * (float)(v * Math.cos(u));
+                float y = ipty * (float)(v * Math.sin(u));
+                float z = iptz * (float)(v*v);
                 temp.add(new Vector3f(x,y,z));
             }
         }
@@ -257,8 +295,6 @@ public class Sphere extends Circle{
         centerPoint.set(0,newcpx);
         centerPoint.set(1,newcpy);
 
-//        System.out.println(newcpx);
-//        System.out.println(newcpy);
 
         translateObject(rotateX, rotateY, 0.0f);
     }
