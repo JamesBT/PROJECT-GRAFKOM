@@ -1,9 +1,8 @@
 package Engine;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
+import org.joml.*;
 
+import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,11 @@ public class ObjectJames extends ShaderProgram{
     List<Vector3f> curveVertices = new ArrayList<>();
 
     List<ObjectJames> childObjectJames;
+
+    Quaternionf quat;
+    Vector3f derajat;
+    boolean isExclude = false;
+
 
     public Vector3f updateCenterPoint(){
         Vector3f centerTemp = new Vector3f();
@@ -82,15 +86,6 @@ public class ObjectJames extends ShaderProgram{
         glBufferData(GL_ARRAY_BUFFER,Utils.listoFloat(verticesColor),GL_STATIC_DRAW);
     }
 
-//    public void drawSetup(){
-//        bind();
-//        uniformsMap.setUniform("uni_color",color);
-//        uniformsMap.setUniform("model",model);
-//        //bind vbo
-//        glEnableVertexAttribArray(0);
-//        glBindBuffer(GL_ARRAY_BUFFER,vbo);
-//        glVertexAttribPointer(0,3,GL_FLOAT,false,0,0);
-//    }
 
     public void drawSetup(Camera camera,Projection projection){
         bind();
@@ -256,5 +251,49 @@ public class ObjectJames extends ShaderProgram{
     }
     public List<Vector3f> getVertices() {
         return vertices;
+    }
+
+    public void getDerajat(){
+
+        quat = model.getNormalizedRotation(new Quaternionf());
+        derajat = quat.getEulerAnglesXYZ(new Vector3f());
+        float rotationX = (float) Math.toDegrees(derajat.x);
+        float rotationY = (float) Math.toDegrees(derajat.y);
+        float rotationZ = (float) Math.toDegrees(derajat.z);
+
+//        System.out.println("Rotation angles: (" + rotationX + ", " + rotationY + ", " + rotationZ + ")");
+    }
+
+    public float getDerajatX(){
+
+        quat = model.getNormalizedRotation(new Quaternionf());
+        derajat = quat.getEulerAnglesXYZ(new Vector3f());
+        float rotationX = (float) Math.toDegrees(derajat.x);
+        return rotationX;
+    }
+    public float getDerajatY(){
+
+        quat = model.getNormalizedRotation(new Quaternionf());
+        derajat = quat.getEulerAnglesXYZ(new Vector3f());
+        float rotationY = (float) Math.toDegrees(derajat.y);
+        return rotationY;
+    }
+    public float getDerajatZ(){
+
+        quat = model.getNormalizedRotation(new Quaternionf());
+        derajat = quat.getEulerAnglesXYZ(new Vector3f());
+        float rotationZ = (float) Math.toDegrees(derajat.z);
+        return rotationZ;
+    }
+
+    public Vector3f getUpdateCenterPoint(){
+        Vector3f destTemp = new Vector3f();
+        model.transformPosition(0.0f,0.0f,0.0f,destTemp);
+        return destTemp;
+//        System.out.println(centerPoint.get(0) + " " + centerPoint.get(1));
+    }
+
+    public void setExclude(boolean exclude) {
+        isExclude = exclude;
     }
 }

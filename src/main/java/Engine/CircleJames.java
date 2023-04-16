@@ -6,7 +6,7 @@ import org.joml.Vector4f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Circle extends ObjectJames {
+public class CircleJames extends ObjectJames {
 
     public List<Float> getCenterPoint() {
         return centerPoint;
@@ -21,8 +21,8 @@ public class Circle extends ObjectJames {
     Float radiusY;
 
     String tipe;
-    public Circle(List<ShaderModuleData> shaderModuleDataList, Vector4f color, String tipe, double titikPusatx,
-                  double titikpusaty , double jari2x, double jari2y) {
+    public CircleJames(List<ShaderModuleData> shaderModuleDataList, Vector4f color, String tipe, double titikPusatx,
+                       double titikpusaty , double jari2x, double jari2y) {
         super(shaderModuleDataList);
         this.vertices = new ArrayList<>();this.color = color;
         uniformsMap = new UniformsMap(getProgramId());
@@ -32,7 +32,7 @@ public class Circle extends ObjectJames {
         setupVAOVBO();
 
     }
-    public Circle(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint,Float radiusX,Float radiusY) {
+    public CircleJames(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY) {
         super(shaderModuleDataList, vertices, color);
         this.centerPoint = centerPoint;
         this.radiusX = radiusX;

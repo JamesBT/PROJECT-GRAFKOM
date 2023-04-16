@@ -7,92 +7,106 @@ import org.joml.Vector4f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SphereJames extends CircleJames {
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+
+public class SphereJane extends CircleJane {
     float radiusZ;
     int stackCount;
     int sectorCount;
+    List<Integer> index;
+    int ibo;
 
-    public SphereJames(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY, Float radiusZ,
-                       int sectorCount, int stackCount, int choice) {
+
+    public SphereJane(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY, Float radiusZ,
+                      int sectorCount, int stackCount, int bentuk) {
         super(shaderModuleDataList, vertices, color, centerPoint, radiusX, radiusY);
         this.radiusZ = radiusZ;
         this.stackCount = stackCount;
         this.sectorCount = sectorCount;
-        if(choice == 0){
-            //buat kotak
-            createBox();
-        }else if(choice == 1){
-            //buat tabung
-            createTube(radiusX,radiusY);
-//            createTube2();
-        }else if(choice == 2){
-            //buat bola
+        if(bentuk==1){
+
+            createHyperboloid1side();
+            //hyperboloid1side_gemuk();
+        }
+        else if(bentuk==2){
+            //bola mata
             createSphere();
-        }else if(choice == 3){
-            //buat elipsoid
-            createElipsoid(radiusX,radiusY,radiusZ);
-        }else if(choice == 4){
-            //buat paraboloid
-            createParaboloid(radiusX,radiusY,radiusZ);
-        }else if(choice == 5){
-            createHyperboloid();
+        }
+        else if(bentuk==3){
+            //badan
+            createEllipsoid();
+        }
+        else if(bentuk==4){
+            //cangkang
+            createHalfSphere();
+        }
+        else if(bentuk==5){
+            createHyperboloid2side();
+        }
+        else if(bentuk==6){
+            createElipticCone();
+        }
+        else if (bentuk==7){
+            createElipticParaboloid();
+        }
+        else if (bentuk==8){
+            createHyperboloidParaboloid();
+        }
+        else if(bentuk==9){
+            createHyperboloid1side_gemuk();
+        }
+        else if(bentuk==10){
+            createTabung();
         }
         setupVAOVBO();
-    }
-    @Override
-    public void setCenterPoint(List<Float> centerPoint) {
-        super.setCenterPoint(centerPoint);
-    }
-    @Override
-    public List<Float> getCenterPoint() {
-        return super.getCenterPoint();
     }
     public void createBox(){
         Vector3f temp = new Vector3f();
         ArrayList<Vector3f> tempVertices = new ArrayList<>();
-        //TITIK 1 kiri atas belakang
+        //TITIK 1
         temp.x = centerPoint.get(0) - radiusX / 2.0f;
         temp.y = centerPoint.get(1) + radiusY / 2.0f;
         temp.z = centerPoint.get(2) - radiusZ / 2.0f;
         tempVertices.add(temp);
         temp = new Vector3f();
-        //TITIK 2 kanan atas belakang
+        //TITIK 2
         temp.x = centerPoint.get(0) + radiusX / 2.0f;
         temp.y = centerPoint.get(1) + radiusY / 2.0f;
         temp.z = centerPoint.get(2) - radiusZ / 2.0f;
         tempVertices.add(temp);
         temp = new Vector3f();
-        //TITIK 3 kanan bawah belakang
+        //TITIK 3
         temp.x = centerPoint.get(0) + radiusX / 2.0f;
         temp.y = centerPoint.get(1) - radiusY / 2.0f;
         temp.z = centerPoint.get(2) - radiusZ / 2.0f;
         tempVertices.add(temp);
         temp = new Vector3f();
-        //TITIK 4 kiri bawah belakang
+        //TITIK 4
         temp.x = centerPoint.get(0) - radiusX / 2.0f;
         temp.y = centerPoint.get(1) - radiusY / 2.0f;
         temp.z = centerPoint.get(2) - radiusZ / 2.0f;
         tempVertices.add(temp);
         temp = new Vector3f();
-        //TITIK 5 kiri atas depan
+        //TITIK 5
         temp.x = centerPoint.get(0) - radiusX / 2.0f;
         temp.y = centerPoint.get(1) + radiusY / 2.0f;
         temp.z = centerPoint.get(2) + radiusZ / 2.0f;
         tempVertices.add(temp);
         temp = new Vector3f();
-        //TITIK 6 kanan atas depan
+        //TITIK 6
         temp.x = centerPoint.get(0) + radiusX / 2.0f;
         temp.y = centerPoint.get(1) + radiusY / 2.0f;
         temp.z = centerPoint.get(2) + radiusZ / 2.0f;
         tempVertices.add(temp);
         temp = new Vector3f();
-        //TITIK 7 kanan bawah depan
+        //TITIK 7
         temp.x = centerPoint.get(0) + radiusX / 2.0f;
         temp.y = centerPoint.get(1) - radiusY / 2.0f;
         temp.z = centerPoint.get(2) + radiusZ / 2.0f;
         tempVertices.add(temp);
         temp = new Vector3f();
-        //TITIK 8 kiri bawah depan
+        //TITIK 8
         temp.x = centerPoint.get(0) - radiusX / 2.0f;
         temp.y = centerPoint.get(1) - radiusY / 2.0f;
         temp.z = centerPoint.get(2) + radiusZ / 2.0f;
@@ -131,40 +145,30 @@ public class SphereJames extends CircleJames {
         vertices.add(tempVertices.get(7));
         vertices.add(tempVertices.get(6));
     }
-    public void createSphere(){
-        vertices.clear();
-        ArrayList<Vector3f> temp = new ArrayList<>();
+    public void draw(){
+        //drawSetup();
+        glLineWidth(2); //ketebalan garis
+        glPointSize(2); //besar kecil vertex
+        glDrawArrays(GL_TRIANGLES,
+                0,
+                vertices.size());
+    }
 
-        for(double v = -Math.PI/2; v<= Math.PI/2; v+=Math.PI/60){
-            for(double u = -Math.PI; u<= Math.PI; u+=Math.PI/60){
-                float x = radiusX * (float)(Math.cos(v) * Math.cos(u));
-                float y = radiusY * (float)(Math.cos(v) * Math.sin(u));
-                float z = radiusZ * (float)(Math.sin(v));
-                temp.add(new Vector3f(x,y,z));
+    public void createTabung(){
+        float x,y,z;
+        for(float v = -radiusY; v<= radiusY; v+=0.1f){
+            for(float i = 0;i<360;i+=0.1){
+                double rad = degToRad(i);
+                x = radiusX * (float)(Math.cos(rad));
+                y = radiusY * (float)(Math.sin(rad));
+                z = v ;
+                vertices.add(new Vector3f(x,z,y));
             }
         }
-        vertices = temp;
     }
-    public void createTube(float radius, float height){
-        vertices.clear();
-        ArrayList<Vector3f> temp = new ArrayList<>();
-
-        for(double v = 0; v<= 360; v+=0.1){
-            float x = radius * (float)(Math.cos(Math.toRadians(v)));
-            float y = radius * (float)(Math.sin(Math.toRadians(v)));
-            temp.add(new Vector3f(x,y,-(height)/2.0f));
-            temp.add(new Vector3f(x,y,height/2.0f));
-        }
-        vertices = temp;
-
-
-    }
-
-    public void createTube2(){
+    public void createSphere(){
         float pi = (float)Math.PI;
 
-        //stackcount = 18
-        //sectorcount = 36
         float sectorStep = 2 * (float)Math.PI / sectorCount;
         float stackStep = (float)Math.PI / stackCount;
         float sectorAngle, StackAngle, x, y, z;
@@ -180,63 +184,110 @@ public class SphereJames extends CircleJames {
             {
                 sectorAngle = j * sectorStep;
                 Vector3f temp_vector = new Vector3f();
-                temp_vector.x = centerPoint.get(0) + x * (float)Math.sin(sectorAngle);
-                temp_vector.y = centerPoint.get(1) + y ;
+                temp_vector.x = centerPoint.get(0) + x * (float)Math.cos(sectorAngle);
+                temp_vector.y = centerPoint.get(1) + y * (float)Math.sin(sectorAngle);
+                temp_vector.z = centerPoint.get(2) + z;
+                vertices.add(temp_vector);
+            }
+        }
+
+
+    }
+
+    public void createEllipsoid(){
+        ArrayList<Vector3f> temp = new ArrayList<>();
+
+        for(double v = -Math.PI/2; v<= Math.PI/2; v+=Math.PI/60){
+            for(double u = -Math.PI; u<= Math.PI; u+=Math.PI/60){
+                float x = 0.5f * (float)(Math.cos(v) * Math.cos(u));
+                float y = 0.5f * (float)(Math.cos(v) * Math.sin(u));
+                float z = 0.5f * (float)(Math.sin(v));
+                temp.add(new Vector3f(x,z,y));
+            }
+        }
+        vertices.clear();
+        vertices = temp;
+    }
+
+    public void createHyperboloid1side(){
+        ArrayList<Vector3f> temp = new ArrayList<>();
+
+        for(double v = -Math.PI/2; v<= Math.PI/2; v+=Math.PI/60){
+            for(double u = -Math.PI; u<= Math.PI; u+=Math.PI/60){
+                float x = 0.5f * (float)(1/Math.cos(v) * Math.cos(u));
+                float y = 0.5f * (float)(1/Math.cos(v) * Math.sin(u));
+                float z = 0.5f * (float)(Math.tan(v));
+                temp.add(new Vector3f(x,z,y));
+            }
+        }
+        vertices.clear();
+        vertices = temp;
+    }
+
+    public void createHalfSphere(){
+        float pi = (float)Math.PI;
+
+        float sectorStep = 2 * (float)Math.PI / sectorCount;
+        float stackStep = (float)Math.PI / stackCount;
+        float sectorAngle, StackAngle, x, y, z;
+
+        for (int i = 0; i <= stackCount/2; ++i)
+        {
+            StackAngle = i * stackStep;
+            x = radiusX * (float)Math.cos(StackAngle);
+            y = radiusY * (float)Math.cos(StackAngle);
+            z = radiusZ * (float)Math.sin(StackAngle);
+
+            for (int j = 0; j <= sectorCount; ++j)
+            {
+                sectorAngle = j * sectorStep;
+                Vector3f temp_vector = new Vector3f();
+                temp_vector.x = centerPoint.get(0) + x * (float)Math.cos(sectorAngle);
+                temp_vector.y = centerPoint.get(1) + y * (float)Math.sin(sectorAngle);
                 temp_vector.z = centerPoint.get(2) + z;
                 vertices.add(temp_vector);
             }
         }
     }
 
-    public void createElipsoid(float radiusx,float radiusy, float radiusz) {
-        vertices.clear();
-        ArrayList<Vector3f> temp = new ArrayList<>();
-
-        for(double v = -Math.PI/2; v<= Math.PI/2; v+=Math.PI/60){
-            for(double u = -Math.PI; u<= Math.PI; u+=Math.PI/60){
-                float x = radiusx * (float)(Math.cos(v) * Math.cos(u));
-                float y = radiusy * (float)(Math.cos(v) * Math.sin(u));
-                float z = radiusz * (float)(Math.sin(v) / 2);
-                temp.add(new Vector3f(x,y,z));
+    public void createHyperboloid1side_gemuk(){
+        float x,y,z;
+        for(double v = -Math.PI/3; v< Math.PI/3; v+=Math.PI/180){
+            for(double u = -Math.PI; u< Math.PI; u+=Math.PI/180){
+                x = 0.1f * (float)(1/Math.cos(v) * Math.cos(u));
+                y = 0.1f * (float)(1/Math.cos(v) * Math.sin(u));
+                z = 0.1f * (float)(Math.tan(v));
+                vertices.add(new Vector3f(x,z,y));
             }
         }
-        vertices = temp;
     }
-    public void createHyper1() {
-        vertices.clear();
-        ArrayList<Vector3f> temp = new ArrayList<>();
 
-        for(double v = -Math.PI/2; v<= Math.PI/2; v+=Math.PI/60){
-            for(double u = -Math.PI/2; u<= Math.PI/2; u+=Math.PI/60){
-                float x = 0.5f * (float)(1/Math.cos(v) * Math.cos(u));
-                float y = 0.5f * (float)(1/Math.cos(v) * Math.sin(u));
-                float z = 0.5f * (float)(Math.tan(v));
-                temp.add(new Vector3f(x,y,z));
-            }
-        }
-        vertices = temp;
-    }
-    public void createHyper2() {
-        vertices.clear();
+    public void createHyperboloid2side(){
         ArrayList<Vector3f> temp = new ArrayList<>();
 
         for(double v = -Math.PI/2; v<= Math.PI/2; v+=Math.PI/60){
             for(double u = -Math.PI/2; u<= Math.PI/2; u+=Math.PI/60){
-                float x = 0.5f * (float)(Math.tan(v) * Math.cos(u));
-                float y = 0.5f * (float)(Math.tan(v) * Math.sin(u));
-                float z = 0.5f * (float)(1/Math.cos(v));
-                temp.add(new Vector3f(x,y,z));
+                float x = 0.1f * (float)(Math.tan(v) * Math.cos(u));
+                float y = 0.1f * (float)(Math.tan(v) * Math.sin(u));
+                float z = 0.1f * (float)(1/Math.cos(v));
+                temp.add(new Vector3f(x,z,y));
             }
-            for(double u = Math.PI/2; u<= 3*Math.PI/2; u+=Math.PI/60){
-                float x = 0.5f * (float)(Math.tan(v) * Math.cos(u));
-                float y = 0.5f * (float)(Math.tan(v) * Math.sin(u));
-                float z = 0.5f * (float)(1/Math.cos(v));
-                temp.add(new Vector3f(x,y,z));
+
+
+        }
+        for(double v = -Math.PI/2; v<= Math.PI/2; v+=Math.PI/60) {
+            for (double u = Math.PI / 2; u <= 3 * Math.PI / 2; u += Math.PI / 60) {
+                float x = 0.3f * (float) (Math.tan(v) * Math.cos(u));
+                float y = 0.3f * (float) (Math.tan(v) * Math.sin(u));
+                float z = -0.3f * (float) (1 / Math.cos(v));
+                temp.add(new Vector3f(x, z, y));
             }
         }
+        vertices.clear();
         vertices = temp;
     }
-    public void createEllipticCone() {
+
+    public void createElipticCone(){
         vertices.clear();
         ArrayList<Vector3f> temp = new ArrayList<>();
 
@@ -248,36 +299,51 @@ public class SphereJames extends CircleJames {
                 temp.add(new Vector3f(x,y,z));
             }
         }
+
         vertices = temp;
     }
-    public void createParaboloid(float iptx,float ipty,float iptz) {
-        vertices.clear();
+
+    public void createElipticParaboloid(){
         ArrayList<Vector3f> temp = new ArrayList<>();
 
-        for(double v = 0; v<= 2*Math.PI; v+=Math.PI/60){
+        for(double v = 0; v<= 1; v+=0.05){
             for(double u = -Math.PI; u<= Math.PI; u+=Math.PI/60){
-                float x = iptx * (float)(v * Math.cos(u));
-                float y = ipty * (float)(v * Math.sin(u));
-                float z = iptz * (float)(v*v);
-                temp.add(new Vector3f(x,y,z));
+                float x = 0.5f * (float)(v * Math.cos(u));
+                float y = 0.5f * (float)(v * Math.sin(u));
+                float z = (float) Math.pow(v,2);
+                temp.add(new Vector3f(z,y,x));
             }
         }
+        vertices.clear();
         vertices = temp;
     }
-    public void createHyperboloid() {
-        vertices.clear();
+
+    public void createHyperboloidParaboloid(){
         ArrayList<Vector3f> temp = new ArrayList<>();
 
-        for(double v = 0; v<= 2*Math.PI; v+=Math.PI/60){
+        for(double v = 0; v<= 1; v+=0.05){
             for(double u = -Math.PI; u<= Math.PI; u+=Math.PI/60){
                 float x = 0.5f * (float)(v * Math.tan(u));
-                float y = 0.5f * (float)(v * 1/Math.cos(u));
-                float z = 0.5f * (float)(v*v);
+                float y = 0.5f * (float)(v * 1/Math.sin(u));
+                float z = (float) Math.pow(v,2);
                 temp.add(new Vector3f(x,y,z));
             }
         }
+        vertices.clear();
         vertices = temp;
     }
+
+    public void drawIndicies(){
+        //drawSetup();
+        // Draw the vertices
+        //optional
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ibo);
+
+        glDrawElements(GL_TRIANGLES,
+                index.size(),GL_UNSIGNED_INT,0);
+    }
+
+
     public void rotateObjectOnPoint(float degree, float offsetX, float offsetY, float offsetZ, float rotateX, float rotateY,float rotateZ)
     {
         translateObject(-rotateX, -rotateY, -rotateZ);
@@ -291,12 +357,15 @@ public class SphereJames extends CircleJames {
         centerPoint.set(1,newcpy);
 
         translateObject(rotateX, rotateY, rotateZ);
-        for (ObjectJames i: childObjectJames)
+        for (ObjectJane i: childObjectJane)
         {
-            if(i instanceof SphereJames) {
-                ((SphereJames) i).rotateObjectOnPoint(degree, offsetX, offsetY, offsetZ, rotateX, rotateY, rotateZ);
+            if(i instanceof SphereJane) {
+                ((SphereJane) i).rotateObjectOnPoint(degree, offsetX, offsetY, offsetZ, rotateX, rotateY, rotateZ);
             }
         }
 
     }
+
+
+
 }
