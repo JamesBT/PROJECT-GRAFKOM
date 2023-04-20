@@ -22,16 +22,19 @@ public class CircleJohan extends ObjectJohan {
 
     }
 
-    public CircleJohan(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY, float height) {
+    public CircleJohan(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY, float height, int option) {
         super(shaderModuleDataList, vertices, color);
         this.centerPoint = centerPoint;
         this.radiusX = radiusX;
         this.radiusY = radiusY;
         this.height = height;
 //        createCircle();
-        createCylinder();
+        if (option == 1){
+            createCylinder();
+        } else {
+            createHalfCylinder();
+        }
         setupVAOVBO();
-
     }
     public double degToRad(float degree){
         return (degree * Math.PI / (float) 180);
@@ -47,6 +50,24 @@ public class CircleJohan extends ObjectJohan {
                 float x = (float) (centerPoint.get(0) + Math.cos(rad) * radiusX);
                 float y = (float) (centerPoint.get(1) + Math.sin(rad) * radiusY);
                 vertices.add(new Vector3f(x, y, j));
+            }
+        }
+    }
+
+    public void createHalfCylinder() {
+        float count = 300;
+
+        vertices.clear();
+        for (float j = 0; j <= height; j += height/count) {
+            for (float i = 0; i < 360; i += 360/count) {
+                double rad = degToRad(i);
+                float x = (float) (centerPoint.get(0) + Math.cos(rad) * radiusX);
+                float y = (float) (centerPoint.get(1) + Math.sin(rad) * radiusY);
+                //                Kasi batas separuh aja yg di add
+                if (y >= centerPoint.get(1)) {
+                    vertices.add(new Vector3f(x, y, j));
+                }
+
             }
         }
     }

@@ -26,6 +26,8 @@ public class SphereJohan extends CircleJohan {
             createCone();
         } else if (option == 5){
             createSphere();
+        } else if(option == 6){
+            createBox();
         }
         setupVAOVBO();
     }
