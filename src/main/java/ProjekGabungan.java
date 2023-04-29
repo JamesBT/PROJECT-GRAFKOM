@@ -2721,7 +2721,7 @@ public class ProjekGabungan {
 
         //        Plankton ku di bawahin ke dalam krusty
         objectJohans.get(0).rotateObject((float) Math.toRadians(180f),0.0f,1.0f,0.0f);
-//        objectJohans.get(0).translateObject(0.0f, -28.8f, 5.0f);
+        objectJohans.get(0).translateObject(0.0f, -28.8f, 5.0f);
 
         //KANTOR MR KRAB
         //lantai
@@ -4587,34 +4587,34 @@ public class ProjekGabungan {
             input();
             //code
 
-//            for(ObjectJames lingkungan : enviromentMrKrab){
-//                lingkungan.draw(camera,projection);
-//            }
+            for(ObjectJames lingkungan : enviromentMrKrab){
+                lingkungan.draw(camera,projection);
+            }
 
             for(ObjectJames burger : objekBurger){
                 burger.draw(camera,projection);
             }
 
-//            for(ObjectJames objectJames : objekjames){
-//                objectJames.draw(camera,projection);
-//            }
+            for(ObjectJames objectJames : objekjames){
+                objectJames.draw(camera,projection);
+            }
 
             for(ObjectJohan objectJohan : objectJohans){
                 objectJohan.draw(camera,projection);
             }
 
-//            for(ObjectJohan envJohan : enviromentJohans){
-//                envJohan.draw(camera,projection);
-//            }
+            for(ObjectJohan envJohan : enviromentJohans){
+                envJohan.draw(camera,projection);
+            }
             //animasi tambahan jane
             //lendir bergerak sendiri begitu program di run
-//            for(ObjectJane object: objectJane){
-//                object.draw(camera,projection);
-//            }
-
-            for(ObjectJane lingkunganLab : environmentLabJane){
-                lingkunganLab.draw(camera,projection);
+            for(ObjectJane object: objectJane){
+                object.draw(camera,projection);
             }
+
+//            for(ObjectJane lingkunganLab : environmentLabJane){
+//                lingkunganLab.draw(camera,projection);
+//            }
 
             for (int i=0;i<=6;i++){
                 objectJane.get(0).getChildObject().get(i).rotateObjectOnPoint((float) Math.toRadians(0.5f),0.0f,1.0f,0.0f,
@@ -4624,13 +4624,13 @@ public class ProjekGabungan {
                 );
             }
 
-//            for(ObjectAngel object: objectAngels){
-//                object.draw(camera,projection);
-//            }
-
-            for(ObjectAngel lingkunganchumbucket:enviromentAngel){
-                lingkunganchumbucket.draw(camera,projection);
+            for(ObjectAngel object: objectAngels){
+                object.draw(camera,projection);
             }
+
+//            for(ObjectAngel lingkunganchumbucket:enviromentAngel){
+//                lingkunganchumbucket.draw(camera,projection);
+//            }
 
 
 
