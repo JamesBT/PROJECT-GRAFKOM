@@ -26,7 +26,7 @@ public class SphereJohan extends CircleJohan {
             createCone();
         } else if (option == 5){
             createSphere();
-        } else if(option == 6){
+        } else if (option == 6){
             createBox();
         }
         setupVAOVBO();
@@ -57,6 +57,7 @@ public class SphereJohan extends CircleJohan {
             }
         }
     }
+
 
     public void createBox(){
         Vector3f temp = new Vector3f();
@@ -214,5 +215,9 @@ public class SphereJohan extends CircleJohan {
                 vertices.add(temp_vector);
             }
         }
+    }
+
+    public float getRadiusZ() {
+        return radiusZ;
     }
 }

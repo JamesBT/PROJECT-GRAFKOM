@@ -287,9 +287,7 @@ public class ObjectJane extends ShaderProgram{
         translateObject(rotateX, rotateY, rotateZ);
         for (ObjectJane i: childObjectJane)
         {
-            if(i instanceof SphereJane) {
-                ((SphereJane) i).rotateObjectOnPoint(degree, offsetX, offsetY, offsetZ, rotateX, rotateY, rotateZ);
-            }
+            ((SphereJane) i).rotateObjectOnPoint(degree, offsetX, offsetY, offsetZ, rotateX, rotateY, rotateZ);
         }
 
     }

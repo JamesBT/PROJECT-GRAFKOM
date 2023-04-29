@@ -59,6 +59,15 @@ public class SphereJane extends CircleJane {
         else if(bentuk==10){
             createTabung();
         }
+        else if(bentuk==11){
+            createCylinder();
+        }
+        else if(bentuk==12){
+            createBox();
+        }
+        else if(bentuk==13){
+            createSelimutTabung();
+        }
         setupVAOVBO();
     }
     public void createBox(){
@@ -163,6 +172,20 @@ public class SphereJane extends CircleJane {
                 y = radiusY * (float)(Math.sin(rad));
                 z = v ;
                 vertices.add(new Vector3f(x,z,y));
+            }
+        }
+    }
+
+    public void createCylinder() {
+        float count = 300;
+
+        vertices.clear();
+        for (float j = 0; j <= radiusZ; j += radiusZ/count) {
+            for (float i = 0; i < 360; i += 360/count) {
+                double rad = degToRad(i);
+                float x = (float) (centerPoint.get(0) + Math.cos(rad) * radiusX);
+                float y = (float) (centerPoint.get(1) + Math.sin(rad) * radiusY);
+                vertices.add(new Vector3f(x, y, j));
             }
         }
     }
@@ -332,6 +355,36 @@ public class SphereJane extends CircleJane {
         vertices.clear();
         vertices = temp;
     }
+
+    public void createSelimutTabung() {
+        float count = 300;
+
+        vertices.clear();
+//        // Lingkaran atas
+//        for (float i = 0; i < 360; i += 360/count) {
+//            double rad = degToRad(i);
+//            float x = (float) (centerPoint.get(0) + Math.cos(rad) * radiusX);
+//            float y = (float) (centerPoint.get(1) + Math.sin(rad) * radiusY);
+//            vertices.add(new Vector3f(x, y, radiusZ));
+//        }
+//        // Lingkaran bawah
+//        for (float i = 0; i < 360; i += 360/count) {
+//            double rad = degToRad(i);
+//            float x = (float) (centerPoint.get(0) + Math.cos(rad) * radiusX);
+//            float y = (float) (centerPoint.get(1) + Math.sin(rad) * radiusY);
+//            vertices.add(new Vector3f(x, y, 0));
+//        }
+        // Persegi panjang
+        for (float j = 0; j < radiusZ; j += radiusZ/count) {
+            for (float i = 0; i < 360; i += 360/count) {
+                double rad = degToRad(i);
+                float x = (float) (centerPoint.get(0) + Math.cos(rad) * radiusX);
+                float y = (float) (centerPoint.get(1) + Math.sin(rad) * radiusY);
+                vertices.add(new Vector3f(x, y, j));
+            }
+        }
+    }
+
 
     public void drawIndicies(){
         //drawSetup();

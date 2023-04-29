@@ -239,6 +239,7 @@ public class ObjectJames extends ShaderProgram{
         return model;
     }
 
+
     public List<ObjectJames> getChildObject() {
         return childObjectJames;
     }
@@ -286,11 +287,17 @@ public class ObjectJames extends ShaderProgram{
         return rotationZ;
     }
 
+
     public Vector3f getUpdateCenterPoint(){
         Vector3f destTemp = new Vector3f();
         model.transformPosition(0.0f,0.0f,0.0f,destTemp);
         return destTemp;
 //        System.out.println(centerPoint.get(0) + " " + centerPoint.get(1));
+    }
+
+    public void updateCP(float cpx,float cpy,float cpz){
+        Vector3f destTemp = new Vector3f();
+        model.transformPosition(cpx,cpy,cpz,destTemp);
     }
 
     public void setExclude(boolean exclude) {

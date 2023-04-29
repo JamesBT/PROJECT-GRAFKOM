@@ -31,8 +31,12 @@ public class CircleJohan extends ObjectJohan {
 //        createCircle();
         if (option == 1){
             createCylinder();
-        } else {
+        } else if (option == 2) {
             createHalfCylinder();
+        } else if (option ==3) {
+            createTriangleCylinder();
+        } else if (option == 4) {
+            createBucket();
         }
         setupVAOVBO();
     }
@@ -41,7 +45,7 @@ public class CircleJohan extends ObjectJohan {
     }
 
     public void createCylinder() {
-        float count = 300;
+        float count = 100;
 
         vertices.clear();
         for (float j = 0; j <= height; j += height/count) {
@@ -53,6 +57,50 @@ public class CircleJohan extends ObjectJohan {
             }
         }
     }
+
+    public void createBucket() {
+        float count = 300;
+        float diameterIncrease = 0.001f; // increase in diameter for each level
+        float tempX = radiusX;
+        float tempY = radiusY;
+        vertices.clear();
+        for (float j = 0; j <= height; j += height/count) {
+            float radiusIncreaseX = (radiusX * diameterIncrease); // increase in radius for each level
+            float radiusIncreaseY = (radiusY * diameterIncrease); // increase in radius for each level
+            radiusX += radiusIncreaseX;
+            radiusY += radiusIncreaseY;
+            for (float i = 0; i < 360; i += 360/count) {
+                double rad = degToRad(i);
+                float x = (float) (centerPoint.get(0) + Math.cos(rad) * radiusX);
+                float y = (float) (centerPoint.get(1) + Math.sin(rad) * radiusY);
+                vertices.add(new Vector3f(x, y, j));
+            }
+        }
+        radiusX = tempX;
+        radiusY = tempY;
+    }
+
+    public void createTriangleCylinder() {
+        float count = 300;
+
+        vertices.clear();
+        for (float j = 0; j <= height; j += height/count) {
+            for (float i = 0; i < 360; i += 120) {
+                double rad1 = degToRad(i);
+                double rad2 = degToRad(i + 120);
+                float x1 = (float) (centerPoint.get(0) + Math.cos(rad1) * radiusX);
+                float y1 = (float) (centerPoint.get(1) + Math.sin(rad1) * radiusY);
+                float x2 = (float) (centerPoint.get(0) + Math.cos(rad2) * radiusX);
+                float y2 = (float) (centerPoint.get(1) + Math.sin(rad2) * radiusY);
+                float x3 = centerPoint.get(0);
+                float y3 = centerPoint.get(1);
+                vertices.add(new Vector3f(x1, y1, j));
+                vertices.add(new Vector3f(x2, y2, j));
+                vertices.add(new Vector3f(x3, y3, j));
+            }
+        }
+    }
+
 
     public void createHalfCylinder() {
         float count = 300;
@@ -112,7 +160,16 @@ public class CircleJohan extends ObjectJohan {
             }
         }
     }
-//    public void draw(){
+
+    public Float getRadiusX() {
+        return radiusX;
+    }
+
+    public Float getRadiusY() {
+        return radiusY;
+    }
+
+    //    public void draw(){
 //        drawSetup();
 //        glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
 //    }

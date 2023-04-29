@@ -8,15 +8,15 @@ import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class LineAngel extends CircleAngel {
+public class BoxAngel extends CircleAngel {
     float radiusX2;
     float radiusY2;
     float radiusZ;
+    float radiusZ2;
     int stackCount;
     int sectorCount;
-    int line=5;
-    public LineAngel(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY, Float radiusZ,
-                     int sectorCount, int stackCount) {
+    public BoxAngel(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY, Float radiusZ,
+                    int sectorCount, int stackCount) {
         super(shaderModuleDataList, vertices, color, centerPoint, radiusX, radiusY);
         this.radiusZ = radiusZ;
         this.stackCount = stackCount;
@@ -24,26 +24,16 @@ public class LineAngel extends CircleAngel {
         createBox();
         setupVAOVBO();
     }
-    public LineAngel(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY, Float radiusZ,
-                     int sectorCount, int stackCount,int lineSize) {
-        super(shaderModuleDataList, vertices, color, centerPoint, radiusX, radiusY);
-        this.radiusZ = radiusZ;
-        this.stackCount = stackCount;
-        this.sectorCount = sectorCount;
-        this.line=lineSize;
-        createBox();
-        setupVAOVBO();
-    }
-    public LineAngel(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color,
-                     List<Float> centerPoint, Float radiusX1,Float radiusX2, Float radiusY1,Float radiusY2, Float radiusZ,
-                     int sectorCount, int stackCount,int lineSize) {
+    public BoxAngel(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color,
+                    List<Float> centerPoint, Float radiusX1,Float radiusX2, Float radiusY1,Float radiusY2,
+                    Float radiusZ1,Float radiusZ2, int sectorCount, int stackCount) {
         super(shaderModuleDataList, vertices, color, centerPoint, radiusX1, radiusY1);
         this.radiusX2 = radiusX2;
         this.radiusY2 = radiusY2;
-        this.radiusZ = radiusZ;
+        this.radiusZ = radiusZ1;
+        this.radiusZ2 = radiusZ2;
         this.stackCount = stackCount;
         this.sectorCount = sectorCount;
-        this.line=lineSize;
         createBox2();
         setupVAOVBO();
     }
@@ -99,26 +89,36 @@ public class LineAngel extends CircleAngel {
         tempVertices.add(temp);
 
         vertices.clear();
+        //kotak yg sisi belakang
         vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(1));
         vertices.add(tempVertices.get(2));
         vertices.add(tempVertices.get(3));
-
-        vertices.add(tempVertices.get(0));
+        //kotak yg sisi depan
         vertices.add(tempVertices.get(4));
+        vertices.add(tempVertices.get(5));
+        vertices.add(tempVertices.get(6));
         vertices.add(tempVertices.get(7));
+        //kotak yg sisi kiri
+        vertices.add(tempVertices.get(7));
+        vertices.add(tempVertices.get(4));
+        vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(3));
-
+        //kotak yg sisi kanan
+        vertices.add(tempVertices.get(1));
+        vertices.add(tempVertices.get(5));
+        vertices.add(tempVertices.get(6));
+        vertices.add(tempVertices.get(2));
+        //kotak yg sisi atas
+        vertices.add(tempVertices.get(0));
+        vertices.add(tempVertices.get(1));
+        vertices.add(tempVertices.get(5));
+        vertices.add(tempVertices.get(4));
+        //kotak yg sisi bawah
+        vertices.add(tempVertices.get(3));
         vertices.add(tempVertices.get(2));
         vertices.add(tempVertices.get(6));
         vertices.add(tempVertices.get(7));
-
-        vertices.add(tempVertices.get(4));
-        vertices.add(tempVertices.get(5));
-        vertices.add(tempVertices.get(6));
-
-        vertices.add(tempVertices.get(5));
-        vertices.add(tempVertices.get(1));
     }
     public void createBox2(){
         Vector3f temp = new Vector3f();
@@ -138,13 +138,13 @@ public class LineAngel extends CircleAngel {
         //TITIK 3
         temp.x = centerPoint.get(0) + radiusX / 2.0f;
         temp.y = centerPoint.get(1) - radiusY / 2.0f;
-        temp.z = centerPoint.get(2) - radiusZ / 2.0f;
+        temp.z = centerPoint.get(2) - radiusZ2 / 2.0f;
         tempVertices.add(temp);
         temp = new Vector3f();
         //TITIK 4
         temp.x = centerPoint.get(0) - radiusX / 2.0f;
         temp.y = centerPoint.get(1) - radiusY / 2.0f;
-        temp.z = centerPoint.get(2) - radiusZ / 2.0f;
+        temp.z = centerPoint.get(2) - radiusZ2 / 2.0f;
         tempVertices.add(temp);
         temp = new Vector3f();
         //TITIK 5
@@ -162,42 +162,57 @@ public class LineAngel extends CircleAngel {
         //TITIK 7
         temp.x = centerPoint.get(0) + radiusX2 / 2.0f;
         temp.y = centerPoint.get(1) - radiusY2 / 2.0f;
-        temp.z = centerPoint.get(2) + radiusZ / 2.0f;
+        temp.z = centerPoint.get(2) + radiusZ2 / 2.0f;
         tempVertices.add(temp);
         temp = new Vector3f();
         //TITIK 8
         temp.x = centerPoint.get(0) - radiusX2 / 2.0f;
         temp.y = centerPoint.get(1) - radiusY2 / 2.0f;
-        temp.z = centerPoint.get(2) + radiusZ / 2.0f;
+        temp.z = centerPoint.get(2) + radiusZ2 / 2.0f;
         tempVertices.add(temp);
 
         vertices.clear();
+        //kotak yg sisi belakang
         vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(1));
         vertices.add(tempVertices.get(2));
         vertices.add(tempVertices.get(3));
-
-        vertices.add(tempVertices.get(0));
+        //kotak yg sisi depan
         vertices.add(tempVertices.get(4));
+        vertices.add(tempVertices.get(5));
+        vertices.add(tempVertices.get(6));
         vertices.add(tempVertices.get(7));
+        //kotak yg sisi kiri
+        vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(3));
-
+        vertices.add(tempVertices.get(7));
+        vertices.add(tempVertices.get(4));
+        //kotak yg sisi kanan
+        vertices.add(tempVertices.get(1));
+        vertices.add(tempVertices.get(5));
+        vertices.add(tempVertices.get(6));
+        vertices.add(tempVertices.get(2));
+        //kotak yg sisi atas
+        vertices.add(tempVertices.get(0));
+        vertices.add(tempVertices.get(1));
+        vertices.add(tempVertices.get(5));
+        vertices.add(tempVertices.get(4));
+        //kotak yg sisi bawah
+        vertices.add(tempVertices.get(3));
         vertices.add(tempVertices.get(2));
         vertices.add(tempVertices.get(6));
         vertices.add(tempVertices.get(7));
-
-        vertices.add(tempVertices.get(4));
-        vertices.add(tempVertices.get(5));
-        vertices.add(tempVertices.get(6));
-
-        vertices.add(tempVertices.get(5));
-        vertices.add(tempVertices.get(1));
     }
     public void draw(Camera camera,Projection projection){
         drawSetup(camera,projection);
         glLineWidth(5); //ketebalan garis
         glPointSize(5); //besar kecil vertex
-        glDrawArrays(GL_LINE_STRIP,0,vertices.size());
+        glDrawArrays(GL_POLYGON,0,3);
+        glDrawArrays(GL_POLYGON,4,7);
+        glDrawArrays(GL_POLYGON,8,11);
+        glDrawArrays(GL_POLYGON,12,15);
+        glDrawArrays(GL_POLYGON,16,19);
+        glDrawArrays(GL_POLYGON,20,23);
         for(ObjectAngel child:childObject){
             child.draw(camera,projection);
         }

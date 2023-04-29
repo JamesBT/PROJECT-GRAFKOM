@@ -27,15 +27,15 @@ public class SphereAngel extends CircleAngel {
 //        createHyperboloidParaboloid();
         setupVAOVBO();
     }
-        public void draw(Camera camera,Projection projection){
-            drawSetup(camera,projection);
-            glLineWidth(2); //ketebalan garis
-            glPointSize(2); //besar kecil vertex
-            glDrawArrays(GL_LINE_STRIP,0,vertices.size());
-            for(ObjectAngel child:childObject){
-                child.draw(camera,projection);
-            }
+    public void draw(Camera camera,Projection projection){
+        drawSetup(camera,projection);
+        glLineWidth(2); //ketebalan garis
+        glPointSize(2); //besar kecil vertex
+        glDrawArrays(GL_LINE_STRIP,0,vertices.size());
+        for(ObjectAngel child:childObject){
+            child.draw(camera,projection);
         }
+    }
     public void createSphere(){
         float pi = (float)Math.PI;
 
