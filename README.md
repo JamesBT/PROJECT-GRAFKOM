@@ -14,9 +14,7 @@ GRAFKOM 22/23
 
 ## LINK LAPORAN:
 
-comment: pakai akun petra untuk sekarang
-
-https://docs.google.com/document/d/1JX3y_TSE5NKibscWmtz7nStFEl1xv0ap_OZf954MBzk/edit?usp=sharing
+https://docs.google.com/document/d/1JX3y_TSE5NKibscWmtz7nStFEl1xv0ap_OZf954MBzk/edit?usp=drivesdk
 
 
 ## LINK VIDEO:
