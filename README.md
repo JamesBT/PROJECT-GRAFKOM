@@ -12,9 +12,6 @@ GRAFKOM 22/23
 
 
 
-============================================================================================
-
-
 ## LINK LAPORAN:
 
 comment: pakai akun petra untuk sekarang
