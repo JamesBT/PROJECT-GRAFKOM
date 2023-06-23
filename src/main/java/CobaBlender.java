@@ -22,15 +22,13 @@ public class CobaBlender {
             new Window
                     (800, 800, "Hello World");
 
-    private ArrayList<Object> krabbypatty = new ArrayList<>();
-    private ArrayList<Object> objects = new ArrayList<>();
+    ArrayList<Sphere> enviroment = new ArrayList<>();
+    ArrayList<Sphere> squidward = new ArrayList<>();
 
-    private ArrayList<Object> obj2 = new ArrayList<>();
-    ArrayList<Sphere> object = new ArrayList<>();
     private MouseInput mouseInput;
 
     static float rot = 0f;
-    int countDegree = 0;
+
     Projection projection = new Projection(window.getWidth(), window.getHeight());
     Camera camera = new Camera();
 
@@ -41,26 +39,44 @@ public class CobaBlender {
         camera.setPosition(0, 1f, 1.7f);
         camera.moveDown(0.6f);
 
-
-        object.add(new Sphere
+        enviroment.add(new Sphere
                 (
-                        Arrays.asList(
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
-                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
-                        ),
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
-                        Arrays.asList(0.0f, 0.0f, 0.0f),
-                        0.125f,
-                        0.125f,
-                        0.125f,
-                        36,
-                        18,
-                        "resources/models/enviroment/testing3.obj"
+                        new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
+                        "resources/models/character/squidward.obj"
                 )
         );
-
-
+//        object.add(new Sphere
+//                (
+//                        Arrays.asList
+//                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+//                        new ArrayList<>(),
+//                        new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
+//                        "resources/models/enviroment/lantai.obj"
+//                )
+//        );
+//        object.add(new Sphere
+//                (
+//                        Arrays.asList
+//                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+//                        new ArrayList<>(),
+//                        new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
+//                        "resources/models/enviroment/pintu.obj"
+//                )
+//        );
+//
+        squidward.add(new Sphere
+            (
+                Arrays.asList
+                        (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                new ArrayList<>(),
+                new Vector4f(0.0f, 1.0f, 0.0f, 1.0f),
+                "resources/models/enviroment/krustykrab.obj"
+            )
+        );
+//        object.get(0).scaleObject(3,3,3);
 
 
     }
@@ -115,16 +131,13 @@ public class CobaBlender {
             GL.createCapabilities();
             input();
 
-            //code
-//            for (Object object : objects) {
-//                object.draw(camera, projection);
-//            }
-//
-//            for(Object object : obj2){
-//                object.draw(camera,projection);
-//            }
 
-            for (Sphere objects : this.object)
+            for (Sphere objects : this.enviroment)
+            {
+                //gambar sekalian child
+                objects.draw(camera, projection);
+            }
+            for (Sphere objects : this.squidward)
             {
                 //gambar sekalian child
                 objects.draw(camera, projection);

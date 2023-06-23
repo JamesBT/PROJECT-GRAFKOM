@@ -1,146 +1,98 @@
 package Engine;
 
 import org.joml.Matrix4f;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+import static org.lwjgl.opengl.GL30.*;
 
-public class Object extends ShaderProgram{
+public class Object extends ShaderProgram
+{
+    List<Vector3f> vertices;
+    List<Object> childObjects;
 
-    List<Integer> index;
-    ArrayList<Vector2f> texture;
-    List<Vector3f> vertices = new ArrayList<>();
-    List<Vector3f> normal = new ArrayList<>();
-    List<Integer> indicies = new ArrayList<>();
-    int vao;
-    int vbo;
-    int nbo;
-    UniformsMap uniformsMap;
+    int vao, vbo, vboColor;
     Vector4f color;
-
+    List<Vector3f> verticesColor;
+    UniformsMap uniformsMap;
     Matrix4f model;
 
-    int vboColor;
-    int ibo;
-
-    List<Object> childObject;
-    List<Float> centerPoint;
-    public List<Vector3f> getVertices() {
-        return vertices;
-    }
-
-    public void setVertices(List<Vector3f> vertices) {
-        this.vertices = vertices;
-        setupVAOVBO();
-    }
-    public List<Vector3f> getNormal() {
-        return normal;
-    }
-
-    public void setNormal(List<Vector3f> normals) {
-        this.normal = normals;
-        setupVAOVBO();
-    }
-
-    public List<Object> getChildObject() {
-        return childObject;
-    }
-
-    public void setChildObject(List<Object> childObject) {
-        this.childObject = childObject;
-    }
-
-    public List<Float> getCenterPoint() {
-        updateCenterPoint();
-        return centerPoint;
-    }
-
-    public void setCenterPoint(List<Float> centerPoint) {
-        this.centerPoint = centerPoint;
-    }
-
-    public List<Integer> getIndicies() {
-        return indicies;
-    }
-
-    public void setIndicies(List<Integer> indicies) {
-        this.indicies = indicies;
-        setupVAOVBO();
-        ibo = glGenBuffers();
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ibo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,Utils.listoInt(indicies),GL_STATIC_DRAW);
-
-    }
-    List<Vector3f> verticesColor;
-    public Object(List<ShaderModuleData> shaderModuleDataList
-            , List<Vector3f> vertices
-            , Vector4f color) {
+    //constructor 1 warna
+    public Object(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color)
+    {
         super(shaderModuleDataList);
         this.vertices = vertices;
+        //setupVAOVBO();
+
         this.color = color;
         uniformsMap = new UniformsMap(getProgramId());
-        model = new Matrix4f().identity();
-        childObject = new ArrayList<>();
-        centerPoint = Arrays.asList(0f,0f,0f);
+//        uniformsMap.createUniform("uni_color");     //bikin uniform buat ditangkap shader
+//        uniformsMap.createUniform("model");     //bikin uniform model buat shader
+//        uniformsMap.createUniform("view");
+//        uniformsMap.createUniform("projection");
+
+        model = new Matrix4f();         //default const. matrix4f itu identitas
+        childObjects = new ArrayList<>();
     }
-    public Object(List<ShaderModuleData> shaderModuleDataList,
-                  List<Vector3f> vertices,
-                  List<Vector3f> verticesColor) {
+
+    //constructor pake multi warna
+    public Object(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, List<Vector3f> verticesColor)
+    {
         super(shaderModuleDataList);
         this.vertices = vertices;
         this.verticesColor = verticesColor;
         setupVAOVBOWithVerticesColor();
     }
-    public void setupVAOVBO(){
-        //set vao
+
+    public void setupVAOVBO()
+    {
+        //setup vao
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
 
-        //set vbo
+        //setup vbo
         vbo = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER,
-                Utils.listoFloat(vertices),
-                GL_STATIC_DRAW);
-
-
-        //set nbo
-        nbo = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, nbo);
-        glBufferData(GL_ARRAY_BUFFER, Utils.listoFloat(normal),
-                GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, Utils.listoFloat(vertices), GL_STATIC_DRAW);
     }
-    public void setupVAOVBOWithVerticesColor(){
-        //set vao
+
+    public void setupVAOVBOWithVerticesColor()
+    {
+        //setup vao
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
 
-        //set vbo
+        //setup vbocolor
         vbo = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER,
-                Utils.listoFloat(vertices),
-                GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, Utils.listoFloat(vertices), GL_STATIC_DRAW);
 
-        //set vboColor
+        //setup vbocolor
         vboColor = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboColor);
-        glBufferData(GL_ARRAY_BUFFER,
-                Utils.listoFloat(verticesColor),
-                GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, Utils.listoFloat(verticesColor), GL_STATIC_DRAW);
     }
-    public void drawSetup(Camera camera, Projection projection){
+
+    //draw setup tanpa kamera
+    public void drawSetup()
+    {
+        bind();
+        //isi uniform dengan variabel dari objek
+        uniformsMap.setUniform("uni_color", color);
+        uniformsMap.setUniform("model", model);
+
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+    }
+
+    //draw setup pake kamera
+    public void drawSetup(Camera camera, Projection projection)
+    {
         bind();
         //isi uniform dengan variabel dari objek
         uniformsMap.setUniform("uni_color", color);
@@ -151,144 +103,174 @@ public class Object extends ShaderProgram{
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
-
-        // Bind VBO
-        glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, nbo);
-        glVertexAttribPointer(1, 3,
-                GL_FLOAT,
-                false,
-                0, 0);
-        //directional Light
-        uniformsMap.setUniform("dirLight.direction", new Vector3f(-0.2f,-1.0f,-0.3f));
-        uniformsMap.setUniform("dirLight.ambient", new Vector3f(0.05f,0.05f,0.05f));
-        uniformsMap.setUniform("dirLight.diffuse", new Vector3f(0.4f,0.4f,0.4f));
-        uniformsMap.setUniform("dirLight.specular", new Vector3f(0.5f,0.5f,0.5f));
-        //posisi pointLight
-        Vector3f[] _pointLightPositions =
-                {
-                        new Vector3f(0.7f, 0.2f, 2.0f),
-                        new Vector3f(2.3f, -3.3f, -4.0f),
-                        new Vector3f(-4.0f, 2.0f, -12.0f),
-                        new Vector3f(0.0f, 0.0f, -3.0f)
-                };
-        for(int i = 0;i< _pointLightPositions.length;i++)
-        {
-            uniformsMap.setUniform("pointLights["+ i +"].position",_pointLightPositions[i]);
-            uniformsMap.setUniform("pointLights["+ i +"].ambient", new Vector3f(0.05f,0.05f,0.05f));
-            uniformsMap.setUniform("pointLights["+ i +"].diffuse", new Vector3f(0.8f,0.8f,0.8f));
-            uniformsMap.setUniform("pointLights["+ i +"].specular", new Vector3f(1.0f,1.0f,1.0f));
-            uniformsMap.setUniform("pointLights["+ i +"].constant",1.0f );
-            uniformsMap.setUniform("pointLights["+ i +"].linear", 0.09f);
-            uniformsMap.setUniform("pointLights["+ i +"].quadratic", 0.032f);
-
-        }
-
-        //spotlight
-        uniformsMap.setUniform("spotLight.position",camera.getPosition());
-        uniformsMap.setUniform("spotLight.direction",camera.getDirection());
-        uniformsMap.setUniform("spotLight.ambient",new Vector3f(0.0f,0.0f,0.0f));
-        uniformsMap.setUniform("spotLight.diffuse",new Vector3f(1.0f,1.0f,1.0f));
-        uniformsMap.setUniform("spotLight.specular",new Vector3f(1.0f,1.0f,1.0f));
-        uniformsMap.setUniform("spotLight.constant",1.0f);
-        uniformsMap.setUniform("spotLight.linear",0.09f);
-        uniformsMap.setUniform("spotLight.quadratic",0.032f);
-        uniformsMap.setUniform("spotLight.cutOff",(float)Math.cos(Math.toRadians(12.5f)));
-        uniformsMap.setUniform("spotLight.outerCutOff",(float)Math.cos(Math.toRadians(12.5f)));
-
-        uniformsMap.setUniform("viewPos",camera.getPosition());
-
     }
-    public void drawSetupWithVerticesColor(){
+
+    //drawsetup pake warna vertices
+    public void drawSetupWithVerticesColor()
+    {
         bind();
-        // Bind VBO
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glVertexAttribPointer(0, 3,
-                GL_FLOAT,
-                false,
-                0, 0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 
-        // Bind VBOColor
         glEnableVertexAttribArray(1);
         glBindBuffer(GL_ARRAY_BUFFER, vboColor);
-        glVertexAttribPointer(1, 3,
-                GL_FLOAT,
-                false,
-                0, 0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
     }
-    public void draw(Camera camera, Projection projection){
+
+    //tambah vertices ke ArrayList
+    public void addVertices(Vector3f newVector)
+    {
+        vertices.add(newVector);
+        //setupVAOVBO();
+    }
+
+    //bikin ArrayList baru isinya 3 vertices untuk garis bezier
+    public void addVertices(double firstX, double firstY, double secondX, double secondY, double thirdX, double thirdY)
+    {
+        vertices.clear();
+        vertices.add(new Vector3f((float)firstX, (float)firstY, 0));
+        double newX, newY;
+        for(double i = 0; i <=1; i+= 0.01)
+        {
+            //p(t) = ((1-t) * v1) + (t * v2)
+            //p(t) = ((1-t)^2 * v1) + (2(1-t) * t * v2) + (t^2 * v3)
+//            newX = ((1-i) * prevX) + (i * nextX);
+//            newY = ((1-i) * prevY) + (i * nextY);
+            newX = (Math.pow((1-i), 2) * firstX) + (2 * (1-i) * i * secondX) + (Math.pow(i, 2) * thirdX);
+            newY = (Math.pow((1-i), 2) * firstY) + (2 * (1-i) * i * secondY) + (Math.pow(i, 2) * thirdY);
+//            System.out.println(newX + "                " + newY);
+            vertices.add(new Vector3f((float)newX, (float)newY, 0));
+        }
+        vertices.add(new Vector3f((float)thirdX, (float)thirdY, 0));
+        //setupVAOVBO();
+    }
+
+    //update vertices dalam ArrayList index ke x
+    public void updateVertice(int index, Vector3f value)
+    {
+        vertices.set(index, value);
+        //setupVAOVBO();
+    }
+
+    //get child
+    public List<Object> getChildObjects()
+    {
+        return childObjects;
+    }
+
+    //set child
+    public void setChildObjects(List<Object> childObjects)
+    {
+        this.childObjects = childObjects;
+    }
+
+    //getCenterPoint dari objek
+    public Vector3f getCenterPoint()
+    {
+        Vector3f centerTemp = new Vector3f();
+        model.transformPosition(0, 0, 0, centerTemp);           //kalo dikali 0 semua nnti dapat posisi sekarang
+        return centerTemp;
+    }
+
+    //translate objek + childnya
+    public void translateObject(float offsetX, float offsetY, float offsetZ)
+    {
+        model = new Matrix4f().translate(offsetX, offsetY, offsetZ).mul(new Matrix4f(model));
+        for (Object i: childObjects)
+        {
+            i.translateObject(offsetX, offsetY, offsetZ);
+        }
+    }
+
+    //rotate objek + childnya
+    public void rotateObject(float degree, float offsetX, float offsetY, float offsetZ)
+    {
+        //offset x, y, sama z itu maksudnya rotasi terhadap sumbunya misal z=1 berarti rotasi thd sb z
+        model = new Matrix4f().rotate(degree, offsetX, offsetY, offsetZ).mul(new Matrix4f(model));
+        for (Object i: childObjects) {
+            i.rotateObject(degree, offsetX, offsetY, offsetZ);
+        }
+    }
+
+    //scale object + childnya
+    public void scaleObject(float x, float y, float z)
+    {
+        model = new Matrix4f().scale(x, y, z).mul(new Matrix4f(model));
+        for (Object i: childObjects) {
+            i.scaleObject(x, y, z);
+        }
+    }
+
+    //clear semua vertices di ArrayList
+    public void clearVertices()
+    {
+        vertices.clear();
+    }
+
+    //draw standar tanpa
+    public void draw()
+    {
+        drawSetup();
+        glLineWidth(1);
+        glPointSize(0);
+        glDrawArrays(GL_POLYGON, 0, vertices.size());
+        for (Object i: childObjects)
+        {
+            i.draw();
+        }
+    }
+
+    //draw pake kamera + child
+    public void draw(Camera camera, Projection projection)
+    {
         drawSetup(camera, projection);
-        // Draw the vertices
-        //optional
-        glLineWidth(10); //ketebalan garis
-        glPointSize(10); //besar kecil vertex
-
-        glDrawElements(GL_TRIANGLES,
-                indicies.size(),GL_UNSIGNED_INT,0);
-        for(Object child:childObject){
-            child.draw(camera,projection);
+        glLineWidth(1);
+        glPointSize(0);
+        glDrawArrays(GL_POLYGON, 0, vertices.size());
+        for (Object i: childObjects)
+        {
+            i.draw(camera, projection);
         }
     }
-    public void drawWithVerticesColor(){
+
+    //method draw pake kamera + child tapi gambarnya pake garis
+    public void draw(Camera camera, Projection projection, boolean lineOrTriangle)
+    {
+        drawSetup(camera, projection);
+        glLineWidth(1);
+        glPointSize(0);
+
+        if(lineOrTriangle)
+        {
+            glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+        }
+        else
+        {
+            glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+        }
+
+        for (Object i: childObjects)
+        {
+            i.draw(camera, projection);
+        }
+    }
+
+    //draw pake warna banyak
+    public void drawWithVerticesColor()
+    {
         drawSetupWithVerticesColor();
-        // Draw the vertices
-        //optional
-        glLineWidth(10); //ketebalan garis
-        glPointSize(10); //besar kecil vertex
-        //wajib
-        //GL_LINES
-        //GL_LINE_STRIP
-        //GL_LINE_LOOP
-        //GL_TRIANGLES
-        //GL_TRIANGLE_FAN
-        //GL_POINT
-        glDrawArrays(GL_TRIANGLES,
-                0,
-                vertices.size());
-    }
-    //    public void drawLine(){
-//        drawSetup();
-//        // Draw the vertices
-//        //optional
-//        glLineWidth(1); //ketebalan garis
-//        glPointSize(1); //besar kecil vertex
-//        glDrawArrays(GL_LINE_STRIP,
-//                0,
-//                vertices.size());
-//    }
-    public void addVertices(Vector3f newVertices){
-        vertices.add(newVertices);
-        setupVAOVBO();
-    }
-    public void translateObject(Float offsetX,Float offsetY,Float offsetZ){
-        model = new Matrix4f().translate(offsetX,offsetY,offsetZ).mul(new Matrix4f(model));
-        updateCenterPoint();
-        for(Object child:childObject){
-            child.translateObject(offsetX,offsetY,offsetZ);
-        }
-    }
-    public void rotateObject(Float degree, Float x,Float y,Float z){
-        model = new Matrix4f().rotate(degree,x,y,z).mul(new Matrix4f(model));
-        updateCenterPoint();
-        for(Object child:childObject){
-            child.rotateObject(degree,x,y,z);
-        }
-
-    }
-    public void updateCenterPoint(){
-        Vector3f destTemp = new Vector3f();
-        model.transformPosition(0.0f,0.0f,0.0f,destTemp);
-        centerPoint.set(0,destTemp.x);
-        centerPoint.set(1,destTemp.y);
-        centerPoint.set(2,destTemp.z);
-        System.out.println(centerPoint.get(0) + " " + centerPoint.get(1));
-    }
-    public void scaleObject(Float scaleX,Float scaleY,Float scaleZ){
-        model = new Matrix4f().scale(scaleX,scaleY,scaleZ).mul(new Matrix4f(model));
-        for(Object child:childObject){
-            child.translateObject(scaleX,scaleY,scaleZ);
-        }
+        glLineWidth(1);
+        glPointSize(0);
+        glDrawArrays(GL_TRIANGLES, 0, vertices.size());
     }
 
+    //draw garis
+    public void drawLine()
+    {
+        drawSetup();
+        glLineWidth(1);
+        glPointSize(0);
+        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+    }
 }

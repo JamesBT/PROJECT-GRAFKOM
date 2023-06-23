@@ -1,13 +1,22 @@
-# Blender 3.5.1 MTL File: 'None'
-# www.blender.org
+# Blender MTL File: 'None'
+# Material Count: 2
 
-newmtl Material_#25
-Ns 200.000000
+newmtl Material.008
+Ns 171.224768
 Ka 1.000000 1.000000 1.000000
-Ks 1.000000 1.000000 1.000000
+Kd 0.006864 0.124526 0.020958
+Ks 0.068966 0.068966 0.068966
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd C:/dark-wood-wallpapers-25196-6012074.jpg
-map_Bump -bm 1.000000 C:/Map #2
+
+newmtl Material.010
+Ns 499.702723
+Ka 1.000000 1.000000 1.000000
+Kd 0.007829 0.007829 0.007829
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
