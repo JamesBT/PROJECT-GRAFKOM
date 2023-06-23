@@ -8,18 +8,17 @@ GRAFKOM 22/23
 
 - JANE - c14210122
 
-- ANGEL - C14210129
+
 
 
 
 ## LINK LAPORAN:
 
-https://docs.google.com/document/d/1JX3y_TSE5NKibscWmtz7nStFEl1xv0ap_OZf954MBzk/edit?usp=drivesdk
 
 
 ## LINK VIDEO:
 
-https://youtu.be/8dbaBZyrPsE
+
 
 
 
