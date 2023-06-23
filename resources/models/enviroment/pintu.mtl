@@ -1,7 +1,7 @@
 # Blender MTL File: 'None'
 # Material Count: 5
 
-newmtl Door.002
+newmtl Door.001
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.113503 0.243224 0.678238
@@ -11,7 +11,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Doorin.002
+newmtl Doorin.001
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.256232 0.416828 0.746076
@@ -21,7 +21,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Material.028
+newmtl Material.012
 Ns 1000.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.316494 0.688876 0.800000
@@ -31,7 +31,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Material.032
+newmtl Material.016
 Ns 360.000029
 Ka 1.000000 1.000000 1.000000
 Kd 0.645725 0.645725 0.645725
@@ -41,7 +41,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Material.036
+newmtl Material.020
 Ns 463.807916
 Ka 1.000000 1.000000 1.000000
 Kd 0.228328 0.170870 0.013414

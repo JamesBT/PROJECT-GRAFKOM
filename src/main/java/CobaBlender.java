@@ -39,43 +39,84 @@ public class CobaBlender {
         camera.setPosition(0, 1f, 1.7f);
         camera.moveDown(0.6f);
 
+
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.0f, 1.0f, 1.0f, 1.0f),
+                        "resources/models/character/squidward.obj"
+                )
+        );
+
         enviroment.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
-                        "resources/models/character/squidward.obj"
+                        "resources/models/enviroment/dinding.obj"
                 )
         );
-//        object.add(new Sphere
-//                (
-//                        Arrays.asList
-//                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
-//                        new ArrayList<>(),
-//                        new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
-//                        "resources/models/enviroment/lantai.obj"
-//                )
-//        );
-//        object.add(new Sphere
-//                (
-//                        Arrays.asList
-//                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
-//                        new ArrayList<>(),
-//                        new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
-//                        "resources/models/enviroment/pintu.obj"
-//                )
-//        );
-//
-        squidward.add(new Sphere
-            (
-                Arrays.asList
-                        (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
-                new ArrayList<>(),
-                new Vector4f(0.0f, 1.0f, 0.0f, 1.0f),
-                "resources/models/enviroment/krustykrab.obj"
-            )
+
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
+                        "resources/models/enviroment/lantai.obj"
+                )
         );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.5176f, 0.1647f, 0.1607f, 1.0f),
+                        "resources/models/enviroment/perahu.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.2902f, 0.3765f, 0.4911f, 1.0f),
+                        "resources/models/enviroment/listkursi.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.2902f, 0.3765f, 0.4911f, 1.0f),
+                        "resources/models/enviroment/meja.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.2902f, 0.3765f, 0.4911f, 1.0f),
+                        "resources/models/enviroment/pintu.obj"
+                )
+        );
+
+
+
+//        squidward.add(new Sphere
+//            (
+//                Arrays.asList
+//                        (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+//                new ArrayList<>(),
+//                new Vector4f(0.0f, 1.0f, 0.0f, 1.0f),
+//                "resources/models/enviroment/krustykrab.obj"
+//            )
+//        );
 //        object.get(0).scaleObject(3,3,3);
 
 
