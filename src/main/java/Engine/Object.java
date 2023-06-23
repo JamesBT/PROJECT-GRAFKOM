@@ -1,6 +1,7 @@
 package Engine;
 
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -16,6 +17,9 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class Object extends ShaderProgram{
+
+    List<Integer> index;
+    ArrayList<Vector2f> texture;
     List<Vector3f> vertices = new ArrayList<>();
     List<Vector3f> normal = new ArrayList<>();
     List<Integer> indicies = new ArrayList<>();
@@ -84,17 +88,8 @@ public class Object extends ShaderProgram{
             , Vector4f color) {
         super(shaderModuleDataList);
         this.vertices = vertices;
-//        setupVAOVBO();
-        uniformsMap = new UniformsMap(getProgramId());
-        uniformsMap.createUniform(
-                "uni_color");
-        uniformsMap.createUniform(
-                "model");
-        uniformsMap.createUniform(
-                "projection");
-        uniformsMap.createUniform(
-                "view");
         this.color = color;
+        uniformsMap = new UniformsMap(getProgramId());
         model = new Matrix4f().identity();
         childObject = new ArrayList<>();
         centerPoint = Arrays.asList(0f,0f,0f);
@@ -119,8 +114,6 @@ public class Object extends ShaderProgram{
                 Utils.listoFloat(vertices),
                 GL_STATIC_DRAW);
 
-        uniformsMap.createUniform("lightColor");
-        uniformsMap.createUniform("lightPos");
 
         //set nbo
         nbo = glGenBuffers();
@@ -149,21 +142,61 @@ public class Object extends ShaderProgram{
     }
     public void drawSetup(Camera camera, Projection projection){
         bind();
-        uniformsMap.setUniform(
-                "uni_color", color);
-        uniformsMap.setUniform(
-                "model", model);
-        uniformsMap.setUniform(
-                "view", camera.getViewMatrix());
-        uniformsMap.setUniform(
-                "projection", projection.getProjMatrix());
-        // Bind VBO
+        //isi uniform dengan variabel dari objek
+        uniformsMap.setUniform("uni_color", color);
+        uniformsMap.setUniform("model", model);
+        uniformsMap.setUniform("view", camera.getViewMatrix());
+        uniformsMap.setUniform("projection", projection.getProjMatrix());
+
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glVertexAttribPointer(0, 3,
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+
+        // Bind VBO
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, nbo);
+        glVertexAttribPointer(1, 3,
                 GL_FLOAT,
                 false,
                 0, 0);
+        //directional Light
+        uniformsMap.setUniform("dirLight.direction", new Vector3f(-0.2f,-1.0f,-0.3f));
+        uniformsMap.setUniform("dirLight.ambient", new Vector3f(0.05f,0.05f,0.05f));
+        uniformsMap.setUniform("dirLight.diffuse", new Vector3f(0.4f,0.4f,0.4f));
+        uniformsMap.setUniform("dirLight.specular", new Vector3f(0.5f,0.5f,0.5f));
+        //posisi pointLight
+        Vector3f[] _pointLightPositions =
+                {
+                        new Vector3f(0.7f, 0.2f, 2.0f),
+                        new Vector3f(2.3f, -3.3f, -4.0f),
+                        new Vector3f(-4.0f, 2.0f, -12.0f),
+                        new Vector3f(0.0f, 0.0f, -3.0f)
+                };
+        for(int i = 0;i< _pointLightPositions.length;i++)
+        {
+            uniformsMap.setUniform("pointLights["+ i +"].position",_pointLightPositions[i]);
+            uniformsMap.setUniform("pointLights["+ i +"].ambient", new Vector3f(0.05f,0.05f,0.05f));
+            uniformsMap.setUniform("pointLights["+ i +"].diffuse", new Vector3f(0.8f,0.8f,0.8f));
+            uniformsMap.setUniform("pointLights["+ i +"].specular", new Vector3f(1.0f,1.0f,1.0f));
+            uniformsMap.setUniform("pointLights["+ i +"].constant",1.0f );
+            uniformsMap.setUniform("pointLights["+ i +"].linear", 0.09f);
+            uniformsMap.setUniform("pointLights["+ i +"].quadratic", 0.032f);
+
+        }
+
+        //spotlight
+        uniformsMap.setUniform("spotLight.position",camera.getPosition());
+        uniformsMap.setUniform("spotLight.direction",camera.getDirection());
+        uniformsMap.setUniform("spotLight.ambient",new Vector3f(0.0f,0.0f,0.0f));
+        uniformsMap.setUniform("spotLight.diffuse",new Vector3f(1.0f,1.0f,1.0f));
+        uniformsMap.setUniform("spotLight.specular",new Vector3f(1.0f,1.0f,1.0f));
+        uniformsMap.setUniform("spotLight.constant",1.0f);
+        uniformsMap.setUniform("spotLight.linear",0.09f);
+        uniformsMap.setUniform("spotLight.quadratic",0.032f);
+        uniformsMap.setUniform("spotLight.cutOff",(float)Math.cos(Math.toRadians(12.5f)));
+        uniformsMap.setUniform("spotLight.outerCutOff",(float)Math.cos(Math.toRadians(12.5f)));
+
+        uniformsMap.setUniform("viewPos",camera.getPosition());
 
     }
     public void drawSetupWithVerticesColor(){
@@ -190,13 +223,7 @@ public class Object extends ShaderProgram{
         //optional
         glLineWidth(10); //ketebalan garis
         glPointSize(10); //besar kecil vertex
-        //wajib
-        //GL_LINES
-        //GL_LINE_STRIP
-        //GL_LINE_LOOP
-        //GL_TRIANGLES
-        //GL_TRIANGLE_FAN
-        //GL_POINT
+
         glDrawElements(GL_TRIANGLES,
                 indicies.size(),GL_UNSIGNED_INT,0);
         for(Object child:childObject){

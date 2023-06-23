@@ -3,6 +3,7 @@ package Engine;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,122 +31,27 @@ public class Sphere extends Circle{
 //        createSphere();
         setupVAOVBO();
     }
-    public void createBox(){
-        Vector3f temp = new Vector3f();
-        ArrayList<Vector3f> tempVertices = new ArrayList<>();
-        //TITIK 1
-        temp.x = centerPoint.get(0) - radiusX / 2.0f;
-        temp.y = centerPoint.get(1) + radiusY / 2.0f;
-        temp.z = centerPoint.get(2) - radiusZ / 2.0f;
-        tempVertices.add(temp);
-        temp = new Vector3f();
-        //TITIK 2
-        temp.x = centerPoint.get(0) + radiusX / 2.0f;
-        temp.y = centerPoint.get(1) + radiusY / 2.0f;
-        temp.z = centerPoint.get(2) - radiusZ / 2.0f;
-        tempVertices.add(temp);
-        temp = new Vector3f();
-        //TITIK 3
-        temp.x = centerPoint.get(0) + radiusX / 2.0f;
-        temp.y = centerPoint.get(1) - radiusY / 2.0f;
-        temp.z = centerPoint.get(2) - radiusZ / 2.0f;
-        tempVertices.add(temp);
-        temp = new Vector3f();
-        //TITIK 4
-        temp.x = centerPoint.get(0) - radiusX / 2.0f;
-        temp.y = centerPoint.get(1) - radiusY / 2.0f;
-        temp.z = centerPoint.get(2) - radiusZ / 2.0f;
-        tempVertices.add(temp);
-        temp = new Vector3f();
-        //TITIK 5
-        temp.x = centerPoint.get(0) - radiusX / 2.0f;
-        temp.y = centerPoint.get(1) + radiusY / 2.0f;
-        temp.z = centerPoint.get(2) + radiusZ / 2.0f;
-        tempVertices.add(temp);
-        temp = new Vector3f();
-        //TITIK 6
-        temp.x = centerPoint.get(0) + radiusX / 2.0f;
-        temp.y = centerPoint.get(1) + radiusY / 2.0f;
-        temp.z = centerPoint.get(2) + radiusZ / 2.0f;
-        tempVertices.add(temp);
-        temp = new Vector3f();
-        //TITIK 7
-        temp.x = centerPoint.get(0) + radiusX / 2.0f;
-        temp.y = centerPoint.get(1) - radiusY / 2.0f;
-        temp.z = centerPoint.get(2) + radiusZ / 2.0f;
-        tempVertices.add(temp);
-        temp = new Vector3f();
-        //TITIK 8
-        temp.x = centerPoint.get(0) - radiusX / 2.0f;
-        temp.y = centerPoint.get(1) - radiusY / 2.0f;
-        temp.z = centerPoint.get(2) + radiusZ / 2.0f;
-        tempVertices.add(temp);
-        temp = new Vector3f();
+    public Sphere(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, List<Float> centerPoint, Float radiusX, Float radiusY, Float radiusZ,
+                  int sectorCount,int stackCount,String filePath) {
+        super(shaderModuleDataList, vertices, color, centerPoint, radiusX, radiusY);
+        File f = new File(filePath);
+        Model m = new Model();
+        try
+        {
+            m = ObjLoader.loadModel(f);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
-        vertices.clear();
-        //kotak yg sisi belakang
-        vertices.add(tempVertices.get(0));
-        vertices.add(tempVertices.get(1));
-        vertices.add(tempVertices.get(2));
-        vertices.add(tempVertices.get(3));
-        //kotak yg sisi depan
-        vertices.add(tempVertices.get(4));
-        vertices.add(tempVertices.get(5));
-        vertices.add(tempVertices.get(6));
-        vertices.add(tempVertices.get(7));
-        //kotak yg sisi kiri
-        vertices.add(tempVertices.get(0));
-        vertices.add(tempVertices.get(4));
-        vertices.add(tempVertices.get(7));
-        vertices.add(tempVertices.get(3));
-        //kotak yg sisi kanan
-        vertices.add(tempVertices.get(1));
-        vertices.add(tempVertices.get(5));
-        vertices.add(tempVertices.get(6));
-        vertices.add(tempVertices.get(2));
-        //kotak yg sisi atas
-        vertices.add(tempVertices.get(0));
-        vertices.add(tempVertices.get(1));
-        vertices.add(tempVertices.get(5));
-        vertices.add(tempVertices.get(4));
-        //kotak yg sisi bawah
-        vertices.add(tempVertices.get(3));
-        vertices.add(tempVertices.get(2));
-        vertices.add(tempVertices.get(7));
-        vertices.add(tempVertices.get(6));
+        this.vertices = m.sortedVertices;
+        this.texture = m.texture;
+        this.index = m.vertexIndices;
+        this.normal = m.sortedNormals;
 
-        normal = new ArrayList<>(Arrays.asList(
-                //belakang
-                new Vector3f(0.0f,0.0f,-1.0f),
-                new Vector3f(0.0f,0.0f,-1.0f),
-                new Vector3f(0.0f,0.0f,-1.0f),
-                new Vector3f(0.0f,0.0f,-1.0f),
-                //depan
-                new Vector3f(0.0f,0.0f,1.0f),
-                new Vector3f(0.0f,0.0f,1.0f),
-                new Vector3f(0.0f,0.0f,1.0f),
-                new Vector3f(0.0f,0.0f,1.0f),
-                //kiri
-                new Vector3f(-1.0f,0.0f,0.0f),
-                new Vector3f(-1.0f,0.0f,0.0f),
-                new Vector3f(-1.0f,0.0f,0.0f),
-                new Vector3f(-1.0f,0.0f,0.0f),
-                //kanan
-                new Vector3f(1.0f,0.0f,0.0f),
-                new Vector3f(1.0f,0.0f,0.0f),
-                new Vector3f(1.0f,0.0f,0.0f),
-                new Vector3f(1.0f,0.0f,0.0f),
-                //atas
-                new Vector3f(0.0f,1.0f,0.0f),
-                new Vector3f(0.0f,1.0f,0.0f),
-                new Vector3f(0.0f,1.0f,0.0f),
-                new Vector3f(0.0f,1.0f,0.0f),
-                //bawah
-                new Vector3f(0.0f,-1.0f,0.0f),
-                new Vector3f(0.0f,-1.0f,0.0f),
-                new Vector3f(0.0f,-1.0f,0.0f),
-                new Vector3f(0.0f,-1.0f,0.0f)
-        ));
+//        createSphere();
+        setupVAOVBO();
     }
     public void createBoxVertices()
     {
@@ -307,8 +213,6 @@ public class Sphere extends Circle{
                 false,
                 0, 0);
 
-        uniformsMap.setUniform("lightColor",new Vector3f(1.0f,1.0f,0.0f));
-        uniformsMap.setUniform("lightPos",new Vector3f(1.0f,1.0f,0.0f));
     }
     //    public void draw(){
 //        drawSetup();

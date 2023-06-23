@@ -5,6 +5,8 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,10 +21,12 @@ public class CobaBlender {
     private Window window =
             new Window
                     (800, 800, "Hello World");
-    private ArrayList<Object> objects
-            = new ArrayList<>();
 
+    private ArrayList<Object> krabbypatty = new ArrayList<>();
+    private ArrayList<Object> objects = new ArrayList<>();
 
+    private ArrayList<Object> obj2 = new ArrayList<>();
+    ArrayList<Sphere> object = new ArrayList<>();
     private MouseInput mouseInput;
 
     static float rot = 0f;
@@ -30,40 +34,35 @@ public class CobaBlender {
     Projection projection = new Projection(window.getWidth(), window.getHeight());
     Camera camera = new Camera();
 
-    public void init() {
+    public void init() throws IOException {
         window.init();
         GL.createCapabilities();
         mouseInput = window.getMouseInput();
         camera.setPosition(0, 1f, 1.7f);
         camera.moveDown(0.6f);
 
-        objects.add(new Sphere(
-                Arrays.asList(
-                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
-                        new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
-                ),
-                new ArrayList<>(),
-                new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
-                Arrays.asList(0.0f, 0.0f, 0.0f),
-                0.125f,
-                0.125f,
-                0.125f,
-                36,
-                18
-        ));
-//      fbx bisa
-//      obj belum
 
-        ObjectLoader objectLoader = new ObjectLoader("resources/models/Yoshi (Egg Hunt)/Yoshi (Egg Hunt).fbx", "fbx");
-//        ObjectLoader objectLoader = new ObjectLoader("resources/models/SpongeBob SquarePants/Spongebob_mesh.fbx", "fbx");
-//        ObjectLoader objectLoader = new ObjectLoader("resources/models/TESTING2.fbx", "fbx");
-//        ObjectLoader objectLoader = new ObjectLoader("resources/models/stall.obj", "fbx");
-        objects.get(0).setVertices(objectLoader.vertices);
-        objects.get(0).setNormal(objectLoader.normals);
-        objects.get(0).setIndicies(objectLoader.indicies);
+        object.add(new Sphere
+                (
+                        Arrays.asList(
+                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER),
+                                new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)
+                        ),
+                        new ArrayList<>(),
+                        new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
+                        Arrays.asList(0.0f, 0.0f, 0.0f),
+                        0.125f,
+                        0.125f,
+                        0.125f,
+                        36,
+                        18,
+                        "resources/models/enviroment/testing3.obj"
+                )
+        );
 
-//        objects.get(0).scaleObject(5.0f,5.0f,5.0f);
-//        objects.get(0).rotateObject((float)Math.toRadians(270),1f,0f,0f);
+
+
+
     }
 
     public void input() {
@@ -84,60 +83,27 @@ public class CobaBlender {
 
         }
 
-        if (window.isKeyPressed(GLFW_KEY_UP)) {
-            camera.moveUp(move);
+        if(mouseInput.isLeftButtonPressed()){
+            Vector2f displayVec = window.getMouseInput().getDisplVec();
+            camera.addRotation((float)Math.toRadians(displayVec.x * 0.1f),
+                    (float)Math.toRadians(displayVec.y * 0.1f));
         }
-        if (window.isKeyPressed(GLFW_KEY_DOWN)) {
-            camera.moveDown(move);
+        if(window.getMouseInput().getScroll().y != 0){
+            projection.setFOV(projection.getFOV()- (window.getMouseInput().getScroll().y*0.01f));
+            window.getMouseInput().setScroll(new Vector2f());
         }
         if (window.isKeyPressed(GLFW_KEY_R)) {
             keyRditekan = true;
-//            for(float i = 0f; i < 360f; i += 0.5f) {
-//                List<Float> temp = new ArrayList<>(objects.get(0).getCenterPoint());
-//                camera.setPosition(temp.get(0) * -1, temp.get(1) * -1, camera.getPosition().z);
-//                camera.addRotation(0, (float) Math.toRadians(0.5f));
-//                camera.setPosition(temp.get(0) * 1, temp.get(1) * 1, camera.getPosition().z);
-//            }
+
         }
         if (window.isKeyPressed(GLFW_KEY_G)) {
-//            float zCAM = camera.getPosition().z;
-//            float xCAM = camera.getPosition().x;
-//            float zOBJ = objects.get(0).getCenterPoint().get(2);
-//            float xOBJ = objects.get(0).getCenterPoint().get(0);
-//            float x = (float) Math.pow(xCAM-xOBJ,2);
-//            float y = (float) Math.pow(zCAM-zOBJ,2);
-//            float temp = (float) Math.sqrt(x+y)*0.01f;
-//            camera.moveRight(move+temp);
-//            camera.addRotation(0f,-move-(temp));
+
             camera.moveForward(1.7f);
             camera.addRotation(0, (float) Math.toRadians(1f));
             setRot(1f);
             camera.moveBackwards(1.7f);
         }
 
-        float move2 = 0.5f;
-        if (keyRditekan) {
-            float posisiX = camera.getPosition().x;
-            float posisiY = camera.getPosition().y;
-            float posisiZ = camera.getPosition().z;
-            camera.setPosition(-posisiX, -posisiY, -posisiZ);
-            camera.addRotation(0.0f, (float) Math.toRadians(move2));
-            camera.setPosition(posisiX, posisiY, posisiZ);
-            derajatkamera += move2;
-            if (derajatkamera >= 360.0f) {
-                derajatkamera = 0f;
-                keyRditekan = false;
-            }
-        }
-        if (mouseInput.isLeftButtonPressed()) {
-            Vector2f displayVec = window.getMouseInput().getDisplVec();
-            camera.addRotation((float) Math.toRadians(displayVec.x * 0.1f),
-                    (float) Math.toRadians(displayVec.y * 0.1f));
-        }
-        if (window.getMouseInput().getScroll().y != 0) {
-            projection.setFOV(projection.getFOV() - (window.getMouseInput().getScroll().y * 0.01f));
-            window.getMouseInput().setScroll(new Vector2f());
-        }
     }
 
     public void loop() {
@@ -150,15 +116,19 @@ public class CobaBlender {
             input();
 
             //code
-            for (Object object : objects) {
-                object.draw(camera, projection);
+//            for (Object object : objects) {
+//                object.draw(camera, projection);
+//            }
+//
+//            for(Object object : obj2){
+//                object.draw(camera,projection);
+//            }
+
+            for (Sphere objects : this.object)
+            {
+                //gambar sekalian child
+                objects.draw(camera, projection);
             }
-//            for(Object object: objectsRectangle){
-//                object.draw();
-//            }
-//            for(Object object: objectsPointsControl){
-//                object.drawLine();
-//            }
 
             // Restore state
             glDisableVertexAttribArray(0);
@@ -170,7 +140,7 @@ public class CobaBlender {
         }
     }
 
-    public void run() {
+    public void run() throws IOException {
 
         init();
         loop();
@@ -189,7 +159,7 @@ public class CobaBlender {
         Main.rot += rot;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new CobaBlender().run();
     }
 }
