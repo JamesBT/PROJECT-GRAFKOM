@@ -2,6 +2,7 @@ package Engine;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
@@ -20,6 +21,7 @@ public class Window {
     private String title;
 
     private MouseInput mouseInput;
+
 
     public Window(int width, int height, String title){
         this.width = width;
@@ -100,6 +102,9 @@ public class Window {
         glfwShowWindow(window);
 
         mouseInput = new MouseInput(window);
+
+        GL.createCapabilities();
+        glEnable(GL_DEPTH_TEST);
     }
 
     public void update(){
@@ -112,7 +117,9 @@ public class Window {
 
         if(glfwWindowShouldClose(window))
             open = false;
+
         mouseInput.input();
+
     }
 
     public void cleanup(){
@@ -125,6 +132,7 @@ public class Window {
         return glfwGetKey(window, keyCode) == GLFW_PRESS;
     }
 
-    public MouseInput getMouseInput(){return mouseInput;}
-
+    public MouseInput getMouseInput() {
+        return mouseInput;
+    }
 }

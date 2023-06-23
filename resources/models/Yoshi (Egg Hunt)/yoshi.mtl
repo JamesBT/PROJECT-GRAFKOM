@@ -1,0 +1,24 @@
+# Blender 3.5.0 MTL File: 'None'
+# www.blender.org
+
+newmtl M_YoshiEaster_Body
+Ns 200.000046
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 3
+map_Kd Textures/T_YoshiEaster_Body_Alb.png
+map_d Textures/T_YoshiEaster_Body_Alb.png
+map_Bump -bm 1.000000 Textures/T_YoshiEaster_Body_Nrm.png
+
+newmtl M_YoshiEaster_Eye
+Ns 200.000046
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 3
+map_Kd Textures/T_YoshiEaster_Eye_Alb.0.png
+map_d Textures/T_YoshiEaster_Eye_Alb.0.png
+map_Bump -bm 1.000000 Textures/T_YoshiEaster_Eye_Nrm.png
