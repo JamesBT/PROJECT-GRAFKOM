@@ -25,7 +25,6 @@ public class CobaBlender {
     ArrayList<Sphere> enviroment = new ArrayList<>();
     ArrayList<Sphere> character = new ArrayList<>();
 
-
     private MouseInput mouseInput;
     static float rot = 0f;
 
@@ -35,6 +34,7 @@ public class CobaBlender {
     public void init() throws IOException {
         window.init();
         GL.createCapabilities();
+        glEnable(GL_DEPTH_TEST);
         mouseInput = window.getMouseInput();
         camera.setPosition(0, 1f, 1.7f);
         camera.moveDown(0.6f);
@@ -49,9 +49,10 @@ public class CobaBlender {
                         "resources/models/character/squidward.obj"
                 )
         );
-
+        character.get(0).translateObject(-1.5f,0f,-2f);
+        character.get(0).scaleObject(2,2,2);
 //        krustykrab
-//        dinding
+//        dinding-0
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -61,6 +62,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/dindingdepankiri.obj"
                 )
         );
+//        1
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -70,6 +72,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/dindingdepankanan.obj"
                 )
         );
+//        2
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -79,6 +82,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/dindingsampingkiri.obj"
                 )
         );
+//        3
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -88,6 +92,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/dindingsampingkanan.obj"
                 )
         );
+//        4
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -97,6 +102,17 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/dindingbelakang.obj"
                 )
         );
+//        5
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.423529f, 0.325490f, 0.145098f, 1.0f),
+                        "resources/models/enviroment/krustykrab/atap.obj"
+                )
+        );
+//        6
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -107,6 +123,7 @@ public class CobaBlender {
                 )
         );
 //      lantai
+//        7
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -117,6 +134,7 @@ public class CobaBlender {
                 )
         );
 //        perahu
+//        8
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -126,6 +144,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/kapalbagiandalam.obj"
                 )
         );
+//        9
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -135,6 +154,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/kapalbagianluar.obj"
                 )
         );
+//        10
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -145,6 +165,7 @@ public class CobaBlender {
                 )
         );
 //        list kursi
+//        11
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -155,6 +176,7 @@ public class CobaBlender {
                 )
         );
 //        meja
+//        12
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -164,6 +186,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/meja1.obj"
                 )
         );
+//        13
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -173,6 +196,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/meja2.obj"
                 )
         );
+//        14
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -182,6 +206,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/meja3.obj"
                 )
         );
+//        15
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -192,6 +217,7 @@ public class CobaBlender {
                 )
         );
 //        barang di atas (belakang menu)
+//        16
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -202,6 +228,7 @@ public class CobaBlender {
                 )
         );
 //        handle pintu keluar
+//        17
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -212,6 +239,7 @@ public class CobaBlender {
                 )
         );
 //        pintu keluar
+//        18
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -222,16 +250,28 @@ public class CobaBlender {
                 )
         );
 //        menu
+//        19
+
         enviroment.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.2902f, 0.3765f, 0.4911f, 1.0f),
-                        "resources/models/enviroment/krustykrab/daftarmenu.obj"
+                        "resources/models/enviroment/krustykrab/daftarmenu1.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
+                        "resources/models/enviroment/krustykrab/daftarmenu2.obj"
                 )
         );
 //        pintu
+//        20
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -241,6 +281,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/pintu1.obj"
                 )
         );
+//        21
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -250,6 +291,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/pintu2.obj"
                 )
         );
+//        22
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -259,6 +301,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/pintu3.obj"
                 )
         );
+//        23
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -268,6 +311,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/pintu4.obj"
                 )
         );
+//        24
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -277,6 +321,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/pintu5.obj"
                 )
         );
+//        25
 //      bagian bawah krusty krab
         enviroment.add(new Sphere
                 (
@@ -287,6 +332,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/bagianbawah1.obj"
                 )
         );
+//        26
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -296,6 +342,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/bagianbawah2.obj"
                 )
         );
+//        27
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -307,6 +354,7 @@ public class CobaBlender {
         );
 
         //        chandelier
+//        28
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -316,7 +364,6 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/listchandelier.obj"
                 )
         );
-
 
 
     }
@@ -401,15 +448,14 @@ public class CobaBlender {
                 //gambar sekalian child
                 objects.draw(camera, projection);
             }
+            System.out.println(enviroment.get(0).getCpz());
+
 
 
 
             // Restore state
             glDisableVertexAttribArray(0);
 
-            // Poll for window events.
-            // The key callback above will only be
-            // invoked during this call.
             glfwPollEvents();
         }
     }

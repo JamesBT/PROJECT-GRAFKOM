@@ -1,0 +1,76 @@
+# Blender MTL File: 'None'
+# Material Count: 7
+
+newmtl Box_1.003
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.132868 0.095307 0.046665
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump -bm 1.200000 D:\\kuliah\\sem 4\\Grafkom\\PROJECT-GRAFKOM\\resources\\models\\enviroment\\krustykrab\\textures\\ui2leaxlw_4K_Normal.jpg
+
+newmtl Box_2.003
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.132868 0.095307 0.046665
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump -bm 1.200000 D:\\kuliah\\sem 4\\Grafkom\\PROJECT-GRAFKOM\\resources\\models\\enviroment\\krustykrab\\textures\\ui2leaxlw_4K_Normal.jpg
+
+newmtl Clou_2.004
+Ns 640.000019
+Ka 0.800000 0.800000 0.800000
+Kd 0.050876 0.050876 0.050876
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl Menu_1.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd D:\\kuliah\\sem 4\\Grafkom\\PROJECT-GRAFKOM\\resources\\models\\enviroment\\krustykrab\\textures\\Mermaid_Man_and_Barnacle_Boy_V_008.jpg
+
+newmtl Menu_2.003
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.799103 0.658375 0.396755
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl Menu_3.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd D:\\kuliah\\sem 4\\Grafkom\\PROJECT-GRAFKOM\\resources\\models\\enviroment\\krustykrab\\textures\\static-assets-upload15260468030396887966.jpg
+
+newmtl Menu_4.003
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.366253 0.590619 0.147027
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2

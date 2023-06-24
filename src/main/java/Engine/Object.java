@@ -12,6 +12,8 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class Object extends ShaderProgram
 {
+
+
     List<Vector3f> vertices;
     List<Object> childObjects;
 
@@ -20,6 +22,24 @@ public class Object extends ShaderProgram
     List<Vector3f> verticesColor;
     UniformsMap uniformsMap;
     Matrix4f model;
+
+    float light1x=-23.85f;
+    float light1y=17.8f;
+    float light1z=1.75f;
+    float light2x=-3.6f;
+    float light2y=18f;
+    float light2z=14.5f;
+    float light3x=16.07f;
+    float light3y=17.237f;
+    float light3z=7.152f;
+    //    jarak = 600 -> pagi = -100,80,0
+//    jarak = 65 -> malam = 100,-80,0
+    float light4x=-100.0f;
+    float light4y=0.0f;
+    float light4z=0.0f;
+    float lightConstantD=1.0f;
+    float lightLinear=0.07f;
+    float lightQuadratic=0.017f;
 
     //constructor 1 warna
     public Object(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color)
@@ -203,19 +223,6 @@ public class Object extends ShaderProgram
         vertices.clear();
     }
 
-    //draw standar tanpa
-    public void draw()
-    {
-        drawSetup();
-        glLineWidth(1);
-        glPointSize(0);
-        glDrawArrays(GL_POLYGON, 0, vertices.size());
-        for (Object i: childObjects)
-        {
-            i.draw();
-        }
-    }
-
     //draw pake kamera + child
     public void draw(Camera camera, Projection projection)
     {
@@ -228,44 +235,10 @@ public class Object extends ShaderProgram
             i.draw(camera, projection);
         }
     }
-
-    //method draw pake kamera + child tapi gambarnya pake garis
-    public void draw(Camera camera, Projection projection, boolean lineOrTriangle)
-    {
+    
+    public void drawLine(Camera camera, Projection projection) {
         drawSetup(camera, projection);
-        glLineWidth(1);
-        glPointSize(0);
-
-        if(lineOrTriangle)
-        {
-            glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
-        }
-        else
-        {
-            glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-        }
-
-        for (Object i: childObjects)
-        {
-            i.draw(camera, projection);
-        }
-    }
-
-    //draw pake warna banyak
-    public void drawWithVerticesColor()
-    {
-        drawSetupWithVerticesColor();
-        glLineWidth(1);
-        glPointSize(0);
-        glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-    }
-
-    //draw garis
-    public void drawLine()
-    {
-        drawSetup();
-        glLineWidth(1);
-        glPointSize(0);
-        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+        glDrawArrays(GL_LINE_LOOP, 0,
+                vertices.size());
     }
 }
