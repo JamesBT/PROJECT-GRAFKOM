@@ -25,6 +25,8 @@ public class Sphere extends Circle
     ArrayList<Vector2f> texture;
     ArrayList<Vector3f> normal;
 
+    String filename = "";
+
     int ibo, nbo, stackCount, sectorCount;
     double cpz;
     float radiusX, radiusY, radiusZ;
@@ -34,6 +36,7 @@ public class Sphere extends Circle
     {
         super(shaderModuleDataList, vertices, color, 0, 0, 0);
 
+        filename = filePath;
         File f = new File(filePath);
         Model m = new Model();
         try
@@ -51,136 +54,6 @@ public class Sphere extends Circle
         this.normal = m.sortedNormals;
         setupVAOVBO();
     }
-
-//    public Sphere(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color,float cpx,float cpy,float cpz, float radx, float rady,float radz){
-//        super(shaderModuleDataList, vertices, color, 0, 0, 0);
-//        this.radiusX = radx;
-//        this.radiusY = rady;
-//        this.radiusZ = radz;
-//        this.cpx = cpx;
-//        this.cpy = cpy;
-//        this.cpz = cpz;
-//        createBox();
-//        setupVAOVBO();
-//    }
-//    public void createBox(){
-//        vertices.clear();
-//        Vector3f temp = new Vector3f();
-//        ArrayList<Vector3f> tempVertices = new ArrayList<>();
-//        //TITIK 1
-//        temp.x = (float) cpx - radiusX / 2.0f;
-//        temp.y = (float) cpy + radiusY / 2.0f;
-//        temp.z = (float) cpz - radiusZ / 2.0f;
-//        tempVertices.add(temp);
-//        temp = new Vector3f();
-//        //TITIK 2
-//        temp.x = (float) cpx + radiusX / 2.0f;
-//        temp.y = (float) cpy + radiusY / 2.0f;
-//        temp.z = (float) cpz - radiusZ / 2.0f;
-//        tempVertices.add(temp);
-//        temp = new Vector3f();
-//        //TITIK 3
-//        temp.x = (float) cpx + radiusX / 2.0f;
-//        temp.y = (float) cpy - radiusY / 2.0f;
-//        temp.z = (float) cpz - radiusZ / 2.0f;
-//        tempVertices.add(temp);
-//        temp = new Vector3f();
-//        //TITIK 4
-//        temp.x = (float) cpx - radiusX / 2.0f;
-//        temp.y = (float) cpy - radiusY / 2.0f;
-//        temp.z = (float) cpz - radiusZ / 2.0f;
-//        tempVertices.add(temp);
-//        temp = new Vector3f();
-//        //TITIK 5
-//        temp.x = (float) cpx - radiusX / 2.0f;
-//        temp.y = (float) cpy + radiusY / 2.0f;
-//        temp.z = (float) cpz + radiusZ / 2.0f;
-//        tempVertices.add(temp);
-//        temp = new Vector3f();
-//        //TITIK 6
-//        temp.x = (float) cpx + radiusX / 2.0f;
-//        temp.y = (float) cpy + radiusY / 2.0f;
-//        temp.z = (float) cpz + radiusZ / 2.0f;
-//        tempVertices.add(temp);
-//        temp = new Vector3f();
-//        //TITIK 7
-//        temp.x = (float) cpx + radiusX / 2.0f;
-//        temp.y = (float) cpy - radiusY / 2.0f;
-//        temp.z = (float) cpz + radiusZ / 2.0f;
-//        tempVertices.add(temp);
-//        temp = new Vector3f();
-//        //TITIK 8
-//        temp.x = (float) cpx - radiusX / 2.0f;
-//        temp.y = (float) cpy - radiusY / 2.0f;
-//        temp.z = (float) cpz + radiusZ / 2.0f;
-//        tempVertices.add(temp);
-//        temp = new Vector3f();
-////        vertices.clear();
-//        //kotak yg sisi belakang
-//        vertices.add(tempVertices.get(0));
-//        vertices.add(tempVertices.get(1));
-//        vertices.add(tempVertices.get(2));
-//        vertices.add(tempVertices.get(3));
-//        //kotak yg sisi depan
-//        vertices.add(tempVertices.get(4));
-//        vertices.add(tempVertices.get(5));
-//        vertices.add(tempVertices.get(6));
-//        vertices.add(tempVertices.get(7));
-//        //kotak yg sisi kiri
-//        vertices.add(tempVertices.get(0));
-//        vertices.add(tempVertices.get(4));
-//        vertices.add(tempVertices.get(7));
-//        vertices.add(tempVertices.get(3));
-//        //kotak yg sisi kanan
-//        vertices.add(tempVertices.get(1));
-//        vertices.add(tempVertices.get(5));
-//        vertices.add(tempVertices.get(6));
-//        vertices.add(tempVertices.get(2));
-//        //kotak yg sisi atas
-//        vertices.add(tempVertices.get(0));
-//        vertices.add(tempVertices.get(1));
-//        vertices.add(tempVertices.get(5));
-//        vertices.add(tempVertices.get(4));
-//        //kotak yg sisi bawah
-//        vertices.add(tempVertices.get(3));
-//        vertices.add(tempVertices.get(2));
-//        vertices.add(tempVertices.get(7));
-//        vertices.add(tempVertices.get(6));
-//
-//        normal = new ArrayList<>(Arrays.asList(
-//                //belakang
-//                new Vector3f(0.0f,0.0f,-1.0f),
-//                new Vector3f(0.0f,0.0f,-1.0f),
-//                new Vector3f(0.0f,0.0f,-1.0f),
-//                new Vector3f(0.0f,0.0f,-1.0f),
-//                //depan
-//                new Vector3f(0.0f,0.0f,1.0f),
-//                new Vector3f(0.0f,0.0f,1.0f),
-//                new Vector3f(0.0f,0.0f,1.0f),
-//                new Vector3f(0.0f,0.0f,1.0f),
-//                //kiri
-//                new Vector3f(-1.0f,0.0f,0.0f),
-//                new Vector3f(-1.0f,0.0f,0.0f),
-//                new Vector3f(-1.0f,0.0f,0.0f),
-//                new Vector3f(-1.0f,0.0f,0.0f),
-//                //kanan
-//                new Vector3f(1.0f,0.0f,0.0f),
-//                new Vector3f(1.0f,0.0f,0.0f),
-//                new Vector3f(1.0f,0.0f,0.0f),
-//                new Vector3f(1.0f,0.0f,0.0f),
-//                //atas
-//                new Vector3f(0.0f,1.0f,0.0f),
-//                new Vector3f(0.0f,1.0f,0.0f),
-//                new Vector3f(0.0f,1.0f,0.0f),
-//                new Vector3f(0.0f,1.0f,0.0f),
-//                //bawah
-//                new Vector3f(0.0f,-1.0f,0.0f),
-//                new Vector3f(0.0f,-1.0f,0.0f),
-//                new Vector3f(0.0f,-1.0f,0.0f),
-//                new Vector3f(0.0f,-1.0f,0.0f)
-//        ));
-//    }
-
 
 
     public Sphere(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, String filePath, boolean fbx)
@@ -283,7 +156,7 @@ public class Sphere extends Circle
             this.light3y = 17.23f;
             this.light3z = 7.152f;
             this.light4x = 80f;
-            this.light4y = -100f;
+            this.light4y = -1000f;
             this.light4z = 0f;
 
             this.lightLinear = 0.07f;
@@ -298,7 +171,7 @@ public class Sphere extends Circle
         glBindBuffer(GL_ARRAY_BUFFER, nbo);
         glVertexAttribPointer(1, 3, GL_FLOAT,false, 0, 0);
         //directional Light
-        uniformsMap.setUniform("dirLight.direction", new Vector3f(100.0f,-80.0f,0.0f));
+        uniformsMap.setUniform("dirLight.direction", new Vector3f(2000.0f,-80.0f,-0.0f));
         uniformsMap.setUniform("dirLight.ambient", new Vector3f(0.05f,0.05f,0.05f));
         uniformsMap.setUniform("dirLight.diffuse", new Vector3f(0.4f,0.4f,0.4f));
         uniformsMap.setUniform("dirLight.specular", new Vector3f(0.5f,0.5f,0.5f));
@@ -369,5 +242,9 @@ public class Sphere extends Circle
 
     public float getRadiusZ() {
         return radiusZ;
+    }
+
+    public String getFilename() {
+        return filename;
     }
 }

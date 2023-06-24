@@ -241,4 +241,19 @@ public class Object extends ShaderProgram
         glDrawArrays(GL_LINE_LOOP, 0,
                 vertices.size());
     }
+
+    public List<Vector3f> getVertices() {
+        return vertices;
+    }
+
+    public List<Vector3f> getUpdatedVertice (){
+        List<Vector3f> temp = new ArrayList<>();
+        for (int i = 0; i < vertices.size(); i++) {
+            Vector3f vertex = vertices.get(i);
+            Vector4f transformedVertex = new Vector4f(vertex, 1.0f);
+            model.transform(transformedVertex);
+            temp.add(new Vector3f(transformedVertex.x, transformedVertex.y, transformedVertex.z));
+        }
+        return temp;
+    }
 }
