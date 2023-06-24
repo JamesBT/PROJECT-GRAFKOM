@@ -53,7 +53,7 @@ public class CobaBlender {
     float derajatkamera;
     private Window window =
             new Window
-                    (800, 800, "Hello World");
+                    (1000, 800, "Hello World");
 
     ArrayList<Sphere> enviroment = new ArrayList<>();
     ArrayList<Sphere> enviroment2 = new ArrayList<>();
@@ -68,6 +68,11 @@ public class CobaBlender {
 
     Projection projection = new Projection(window.getWidth(), window.getHeight());
     Camera camera = new Camera();
+
+    boolean FPS = false;
+    boolean TPS = false;
+    boolean freeroam = true;
+    int state;
 
     public void init() throws IOException {
         window.init();
@@ -125,7 +130,8 @@ public class CobaBlender {
         character.get(2).translateObject(-2.2f,-1.3f,2.3f);
         character.get(2).scaleObject(12,12,10);
 
-        character.get(3).translateObject(-25f,0.0f,0.0f);
+//        character.get(3).rotateObject((float)Math.toRadians(90),0f,0f,1f);
+        character.get(3).translateObject(-15f,0.0f,2.0f);
         character.get(3).scaleObject(3,3,3);
 
         //      bagian bawah krusty krab
@@ -819,53 +825,22 @@ public class CobaBlender {
         System.out.println("Y: "+camera.getPosition().y);
         System.out.println("Z: "+camera.getPosition().z);
         if (window.isKeyPressed(GLFW_KEY_I)) {
-            character.get(0).translateObject(0.0f, 0.0f, -0.5f);
+//            state 0=S,1=A,2=W,3=D
+            character.get(0).translateObject(0.0f, 0.0f, 0.5f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
-                    character.get(0).translateObject(0.0f, 0.0f, +0.5f);
+                    character.get(0).translateObject(0.0f, 0.0f, -0.5f);
                     break;
                 }
             }
             for (Object object: enviroment2){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
-                    character.get(0).translateObject(0.0f, 0.0f, +0.5f);
+                    character.get(0).translateObject(0.0f, 0.0f, -0.5f);
                     break;
                 }
             }
         }
         if (window.isKeyPressed(GLFW_KEY_J)) {
-            character.get(0).translateObject(-0.5f, 0.0f, 0f);
-            for (Object object: enviroment){
-                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
-                    character.get(0).translateObject(+0.5f, 0.0f, 0f);
-                    break;
-                }
-            }
-            for (Object object: enviroment2){
-                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
-                    character.get(0).translateObject(+0.5f, 0.0f, 0f);
-                    break;
-                }
-            }
-        }
-        if (window.isKeyPressed(GLFW_KEY_K)) {
-            character.get(0).translateObject(0.0f, 0.0f, 0.5f);
-            for (Object object: enviroment){
-                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
-                    character.get(0).translateObject(0.0f, 0.0f, -0.5f);
-//                    System.out.println(((Sphere)object).getFilename());
-                    break;
-                }
-            }
-            for (Object object: enviroment2){
-                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
-                    character.get(0).translateObject(0.0f, 0.0f, -0.5f);
-//                    System.out.println(((Sphere)object).getFilename());
-                    break;
-                }
-            }
-        }
-        if (window.isKeyPressed(GLFW_KEY_L)) {
             character.get(0).translateObject(0.5f, 0.0f, 0f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
@@ -880,6 +855,38 @@ public class CobaBlender {
                 }
             }
         }
+        if (window.isKeyPressed(GLFW_KEY_K)) {
+            character.get(0).translateObject(0.0f, 0.0f, -0.5f);
+            for (Object object: enviroment){
+                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
+                    character.get(0).translateObject(0.0f, 0.0f, +0.5f);
+//                    System.out.println(((Sphere)object).getFilename());
+                    break;
+                }
+            }
+            for (Object object: enviroment2){
+                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
+                    character.get(0).translateObject(0.0f, 0.0f, +0.5f);
+//                    System.out.println(((Sphere)object).getFilename());
+                    break;
+                }
+            }
+        }
+        if (window.isKeyPressed(GLFW_KEY_L)) {
+            character.get(0).translateObject(-0.5f, 0.0f, 0f);
+            for (Object object: enviroment){
+                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
+                    character.get(0).translateObject(+0.5f, 0.0f, 0f);
+                    break;
+                }
+            }
+            for (Object object: enviroment2){
+                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
+                    character.get(0).translateObject(+0.5f, 0.0f, 0f);
+                    break;
+                }
+            }
+        }
 
         if (window.isKeyPressed(GLFW_KEY_W)) {
             camera.moveForward(move);
@@ -890,10 +897,7 @@ public class CobaBlender {
                     break;
                 }
             }
-
         }
-
-
         if (window.isKeyPressed(GLFW_KEY_A)) {
             camera.moveLeft(move);
             for (Object object: enviroment){
@@ -924,6 +928,60 @@ public class CobaBlender {
                 }
             }
         }
+
+        if(window.isKeyPressed(GLFW_KEY_1)){
+            FPS = true;
+            TPS = false;
+            freeroam = false;
+        }
+        if(window.isKeyPressed(GLFW_KEY_2)){
+            FPS=false;
+            TPS=true;
+            freeroam=false;
+        }
+        if(window.isKeyPressed(GLFW_KEY_3)){
+            FPS=false;
+            TPS=false;
+            freeroam=true;
+        }
+
+        if(FPS){
+            int verticeSize = 0;
+            Vector3f centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
+            for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
+                centerPoint.x += vertex.x;
+                centerPoint.y += vertex.y;
+                centerPoint.z += vertex.z;
+                verticeSize++;
+            }
+
+            centerPoint.x /= verticeSize;
+            centerPoint.y /= verticeSize;
+            centerPoint.z /= verticeSize;
+
+            camera.setPosition(centerPoint.x,centerPoint.y+1,centerPoint.z+0.75f);
+        }
+        if(TPS){
+            int verticeSize = 0;
+            Vector3f centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
+            for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
+                centerPoint.x += vertex.x;
+                centerPoint.y += vertex.y;
+                centerPoint.z += vertex.z;
+                verticeSize++;
+            }
+
+            centerPoint.x /= verticeSize;
+            centerPoint.y /= verticeSize;
+            centerPoint.z /= verticeSize;
+
+            camera.setPosition(centerPoint.x,centerPoint.y+5,centerPoint.z-4f);
+            camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(180));
+        }
+        if(freeroam){
+
+        }
+
 
         if(mouseInput.isLeftButtonPressed()){
             Vector2f displayVec = window.getMouseInput().getDisplVec();
