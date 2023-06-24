@@ -186,14 +186,14 @@ public class Sphere extends Circle
         //posisi pointLight
         Vector3f[] _pointLightPositions =
                 {
-                        new Vector3f(0.0f, 0.0f, 0.0f),
-                        new Vector3f(20.0f, 0.0f, 0.0f),
-                        new Vector3f(-20.0f, 0.0f, 0.0f),
-                        new Vector3f(40.0f, 0.0f, 0.0f),
-                        new Vector3f(0.0f, 0.0f, 0.0f),
-                        new Vector3f(20.0f, 0.0f, 0.0f),
-                        new Vector3f(-20.0f, 0.0f, 0.0f),
-                        new Vector3f(40.0f, 0.0f, 0.0f)
+                        new Vector3f(-23.85f, 17.8f, 1.75f),
+                        new Vector3f(-23.85f, 17.8f, 1.75f),
+                        new Vector3f(-3.6f, 18f, 14.5f),
+                        new Vector3f(-3.6f, 18f, 14.5f),
+                        new Vector3f(16.07f, 17.237f, 7.152f),
+                        new Vector3f(16.07f, 17.237f, 7.152f),
+                        new Vector3f(-100.0f, 0.0f, 0.0f),
+                        new Vector3f(-100.0f, 0.0f, 0.0f)
                 };
         for(int i = 0;i< _pointLightPositions.length;i++)
         {
@@ -203,7 +203,7 @@ public class Sphere extends Circle
             uniformsMap.setUniform("pointLights["+ i +"].specular", new Vector3f(1.0f,1.0f,1.0f));
             uniformsMap.setUniform("pointLights["+ i +"].constant",1.0f );
             uniformsMap.setUniform("pointLights["+ i +"].linear", 0.045f);
-            uniformsMap.setUniform("pointLights["+ i +"].quadratic", 0.0075f);
+            uniformsMap.setUniform("pointLights["+ i +"].quadratic", 0.017f);
         }
 
         //spotlight

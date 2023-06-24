@@ -57,8 +57,8 @@ public class CobaBlender {
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
-                        "resources/models/enviroment/krustykrab/dinding.obj"
+                        new Vector4f(0.478431372f, 0.58823529411f, 0.615686274f, 1.0f),
+                        "resources/models/enviroment/krustykrab/dindingluar.obj"
                 )
         );
 //      lantai
@@ -67,7 +67,7 @@ public class CobaBlender {
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
+                        new Vector4f(0.08627f, 0.19216f, 0.113725f, 1.0f),
                         "resources/models/enviroment/krustykrab/lantai.obj"
                 )
         );
@@ -87,7 +87,7 @@ public class CobaBlender {
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.2902f, 0.3765f, 0.4911f, 1.0f),
+                        new Vector4f(0.32549019607f, 0.215686274f, 0.1450980f, 1.0f),
                         "resources/models/enviroment/krustykrab/listkursi.obj"
                 )
         );
@@ -107,7 +107,7 @@ public class CobaBlender {
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.2902f, 0.3765f, 0.4911f, 1.0f),
+                        new Vector4f(0.396078f, 0.37647f, 0.345098f, 1.0f),
                         "resources/models/enviroment/krustykrab/barangatas.obj"
                 )
         );
@@ -127,7 +127,7 @@ public class CobaBlender {
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.2902f, 0.3765f, 0.4911f, 1.0f),
+                        new Vector4f(0.450980f, 0.72156f, 0.83529f, 1.0f),
                         "resources/models/enviroment/krustykrab/pintu.obj"
                 )
         );
@@ -149,7 +149,7 @@ public class CobaBlender {
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.2902f, 0.3765f, 0.4911f, 1.0f),
+                        new Vector4f(0.4078431f, 0.501960f, 0.63921f, 1.0f),
                         "resources/models/enviroment/krustykrab/listpintu.obj"
                 )
         );
@@ -170,6 +170,10 @@ public class CobaBlender {
 
     public void input() {
         float move = 0.4f;
+        System.out.println("X: "+camera.getPosition().x);
+        System.out.println("Y: "+camera.getPosition().y);
+        System.out.println("Z: "+camera.getPosition().z);
+
         if (window.isKeyPressed(GLFW_KEY_W)) {
             camera.moveForward(move);
         }
