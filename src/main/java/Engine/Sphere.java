@@ -298,7 +298,7 @@ public class Sphere extends Circle
         glBindBuffer(GL_ARRAY_BUFFER, nbo);
         glVertexAttribPointer(1, 3, GL_FLOAT,false, 0, 0);
         //directional Light
-        uniformsMap.setUniform("dirLight.direction", new Vector3f(200.0f,-0.0f,-0.0f));
+        uniformsMap.setUniform("dirLight.direction", new Vector3f(100.0f,-80.0f,0.0f));
         uniformsMap.setUniform("dirLight.ambient", new Vector3f(0.05f,0.05f,0.05f));
         uniformsMap.setUniform("dirLight.diffuse", new Vector3f(0.4f,0.4f,0.4f));
         uniformsMap.setUniform("dirLight.specular", new Vector3f(0.5f,0.5f,0.5f));

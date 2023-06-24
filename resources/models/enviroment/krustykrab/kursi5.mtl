@@ -1,0 +1,24 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl Material.104
+Ns 118.265628
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.137500 0.137500 0.137500
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:Users\\thlds\\Documents\\Barrel\\Texture\\Barrel01.jpg
+
+newmtl Material.105
+Ns 899.999931
+Ka 0.200000 0.200000 0.200000
+Kd 0.800000 0.800000 0.800000
+Ks 0.537500 0.537500 0.537500
+Ke 0.000000 0.000000 0.000000
+Ni 9.849999
+d 1.000000
+illum 3
+map_Kd C:Users\\thlds\\Documents\\Barrel\\Texture\\Barrel02.jpg

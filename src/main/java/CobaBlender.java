@@ -172,7 +172,43 @@ public class CobaBlender {
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.32549019607f, 0.215686274f, 0.1450980f, 1.0f),
-                        "resources/models/enviroment/krustykrab/listkursi.obj"
+                        "resources/models/enviroment/krustykrab/kursi1.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.32549019607f, 0.215686274f, 0.1450980f, 1.0f),
+                        "resources/models/enviroment/krustykrab/kursi2.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.32549019607f, 0.215686274f, 0.1450980f, 1.0f),
+                        "resources/models/enviroment/krustykrab/kursi3.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.32549019607f, 0.215686274f, 0.1450980f, 1.0f),
+                        "resources/models/enviroment/krustykrab/kursi4.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.32549019607f, 0.215686274f, 0.1450980f, 1.0f),
+                        "resources/models/enviroment/krustykrab/kursi5.obj"
                 )
         );
 //        meja
@@ -183,7 +219,43 @@ public class CobaBlender {
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.0705f, 0.08235f, 0.15294f, 1.0f),
-                        "resources/models/enviroment/krustykrab/meja1.obj"
+                        "resources/models/enviroment/krustykrab/meja1-1.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.0705f, 0.08235f, 0.15294f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja1-2.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.0705f, 0.08235f, 0.15294f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja1-3.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.0705f, 0.08235f, 0.15294f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja1-4.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.0705f, 0.08235f, 0.15294f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja1-5.obj"
                 )
         );
 //        13
@@ -193,7 +265,43 @@ public class CobaBlender {
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.43921f, 0.11764f, 0.12549f, 1.0f),
-                        "resources/models/enviroment/krustykrab/meja2.obj"
+                        "resources/models/enviroment/krustykrab/meja2-1.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.43921f, 0.11764f, 0.12549f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja2-2.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.43921f, 0.11764f, 0.12549f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja2-3.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.43921f, 0.11764f, 0.12549f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja2-4.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.43921f, 0.11764f, 0.12549f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja2-5.obj"
                 )
         );
 //        14
@@ -203,7 +311,43 @@ public class CobaBlender {
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.57647f, 0.52549f, 0.25882f, 1.0f),
-                        "resources/models/enviroment/krustykrab/meja3.obj"
+                        "resources/models/enviroment/krustykrab/meja3-1.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.57647f, 0.52549f, 0.25882f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja3-2.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.57647f, 0.52549f, 0.25882f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja3-3.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.57647f, 0.52549f, 0.25882f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja3-4.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.57647f, 0.52549f, 0.25882f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja3-5.obj"
                 )
         );
 //        15
@@ -213,7 +357,43 @@ public class CobaBlender {
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.35686f, 0.450980f, 0.59215f, 1.0f),
-                        "resources/models/enviroment/krustykrab/meja4.obj"
+                        "resources/models/enviroment/krustykrab/meja4-1.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.35686f, 0.450980f, 0.59215f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja4-2.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.35686f, 0.450980f, 0.59215f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja4-3.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.35686f, 0.450980f, 0.59215f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja4-4.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.35686f, 0.450980f, 0.59215f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja4-5.obj"
                 )
         );
 //        barang di atas (belakang menu)
