@@ -26,6 +26,7 @@ public class Sphere extends Circle
     ArrayList<Vector3f> normal;
     ArrayList<Vector3f> normalVert;
 
+    float lightx,lighty,lightz=0f;
     int ibo, nbo, stackCount, sectorCount;
     double cpz;
     float radiusX, radiusY, radiusZ;
@@ -66,50 +67,6 @@ public class Sphere extends Circle
         this.texture = m.texture;
         this.index = m.vertexIndices;
         this.normal = m.sortedNormals;
-
-//        for (Vector3f i: this.vertices)
-//        {
-//            System.out.println(i.x + " " + i.y + " " + i.z);
-//            System.out.println(i);
-//        }
-
-
-//        System.out.println("VERTICES");
-//        for (Vector3f vert:this.vertices)
-//        {
-//            System.out.println(vert.x + " " + vert.y + " " + vert.z);
-//        }
-
-//        System.out.println("NORMAL");
-//        for (Vector3f vert:this.normal)
-//        {
-//            System.out.print(vert.x + " " + vert.y + " " + vert.z + "  ");
-//        }
-//        System.out.println();
-//        System.out.println("New NORMAL");
-//        for (Vector3f vert:this.newNormal)
-//        {
-//            System.out.print(vert.x + " " + vert.y + " " + vert.z + "  ");
-//        }
-
-//        System.out.println("VERTINDEX");
-//        for (int ind:m.vertexIndices)
-//        {
-//            System.out.println(ind);
-//        }
-
-//        System.out.println("NORMINDEX");
-//        for (int ind:m.normalIndices)
-//        {
-//            System.out.println(ind + " " + m.normals.get(ind).x + " " + m.normals.get(ind).y + " " + m.normals.get(ind).z);
-//        }
-//
-//        System.out.println("NORMAL FINAL");
-//        for (Vector3f vert:this.normal)
-//        {
-//            System.out.println(vert.x + " " + vert.y + " " + vert.z);
-//        }
-
         setupVAOVBO();
     }
 
@@ -195,6 +152,10 @@ public class Sphere extends Circle
         translateObject((float) cpx, (float) cpy, (float) cpz);
     }
 
+    public void setLightCamera(float lightx,float lighty,float lightz){
+
+    }
+
     public void setupVAOVBO()
     {
         super.setupVAOVBO();
@@ -216,22 +177,23 @@ public class Sphere extends Circle
         // Bind VBO
         glEnableVertexAttribArray(1);
         glBindBuffer(GL_ARRAY_BUFFER, nbo);
-        glVertexAttribPointer(1, 3,
-                GL_FLOAT,
-                false,
-                0, 0);
+        glVertexAttribPointer(1, 3, GL_FLOAT,false, 0, 0);
         //directional Light
-        uniformsMap.setUniform("dirLight.direction", new Vector3f(-0.2f,-1.0f,-0.3f));
-        uniformsMap.setUniform("dirLight.ambient", new Vector3f(0.05f,0.05f,0.05f));
-        uniformsMap.setUniform("dirLight.diffuse", new Vector3f(0.4f,0.4f,0.4f));
-        uniformsMap.setUniform("dirLight.specular", new Vector3f(0.5f,0.5f,0.5f));
+//        uniformsMap.setUniform("dirLight.direction", new Vector3f(200.0f,-0.0f,-0.0f));
+//        uniformsMap.setUniform("dirLight.ambient", new Vector3f(0.05f,0.05f,0.05f));
+//        uniformsMap.setUniform("dirLight.diffuse", new Vector3f(0.4f,0.4f,0.4f));
+//        uniformsMap.setUniform("dirLight.specular", new Vector3f(0.5f,0.5f,0.5f));
         //posisi pointLight
         Vector3f[] _pointLightPositions =
                 {
-                        new Vector3f(0.7f, 0.2f, 2.0f),
-                        new Vector3f(2.3f, -3.3f, -4.0f),
-                        new Vector3f(-4.0f, 2.0f, -12.0f),
-                        new Vector3f(0.0f, 0.0f, -3.0f)
+                        new Vector3f(0.0f, 0.0f, 0.0f),
+                        new Vector3f(20.0f, 0.0f, 0.0f),
+                        new Vector3f(-20.0f, 0.0f, 0.0f),
+                        new Vector3f(40.0f, 0.0f, 0.0f),
+                        new Vector3f(0.0f, 0.0f, 0.0f),
+                        new Vector3f(20.0f, 0.0f, 0.0f),
+                        new Vector3f(-20.0f, 0.0f, 0.0f),
+                        new Vector3f(40.0f, 0.0f, 0.0f)
                 };
         for(int i = 0;i< _pointLightPositions.length;i++)
         {
@@ -240,9 +202,8 @@ public class Sphere extends Circle
             uniformsMap.setUniform("pointLights["+ i +"].diffuse", new Vector3f(0.8f,0.8f,0.8f));
             uniformsMap.setUniform("pointLights["+ i +"].specular", new Vector3f(1.0f,1.0f,1.0f));
             uniformsMap.setUniform("pointLights["+ i +"].constant",1.0f );
-            uniformsMap.setUniform("pointLights["+ i +"].linear", 0.09f);
-            uniformsMap.setUniform("pointLights["+ i +"].quadratic", 0.032f);
-
+            uniformsMap.setUniform("pointLights["+ i +"].linear", 0.045f);
+            uniformsMap.setUniform("pointLights["+ i +"].quadratic", 0.0075f);
         }
 
         //spotlight
