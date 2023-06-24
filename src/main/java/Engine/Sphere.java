@@ -31,6 +31,25 @@ public class Sphere extends Circle
     double cpz;
     float radiusX, radiusY, radiusZ;
 
+    float light1x=-23.85f;
+    float light1y=17.8f;
+    float light1z=1.75f;
+    float light2x=-3.6f;
+    float light2y=18f;
+    float light2z=14.5f;
+    float light3x=16.07f;
+    float light3y=17.237f;
+    float light3z=7.152f;
+//    jarak = 600 -> pagi = -100,80,0
+//    jarak = 65 -> malam = 100,-80,0
+    float light4x=-100.0f;
+    float light4y=0.0f;
+    float light4z=0.0f;
+    float lightConstantD=1.0f;
+    float lightLinear=0.07f;
+    float lightQuadratic=0.017f;
+
+
     public Sphere(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, double rx, double ry, double rz, double cpx, double cpy, double cpz, int option)
     {
         super(shaderModuleDataList, vertices, color, rx, cpx, cpy);
@@ -43,7 +62,6 @@ public class Sphere extends Circle
         this.sectorCount = 36;
 
         createBoxVertices();
-
 
         setupVAOVBO();
     }
@@ -152,10 +170,6 @@ public class Sphere extends Circle
         translateObject((float) cpx, (float) cpy, (float) cpz);
     }
 
-    public void setLightCamera(float lightx,float lighty,float lightz){
-
-    }
-
     public void setupVAOVBO()
     {
         super.setupVAOVBO();
@@ -172,6 +186,50 @@ public class Sphere extends Circle
 //        uniformsMap.createUniform("lightPos");
     }
 
+    public void setupVariabel(int jarak){
+        if(jarak!=65){
+//            pagi
+            this.light1x = 0f;
+            this.light1y = -4000f;
+            this.light1z = 1.75f;
+            this.light2x = -3.6f;
+            this.light2y = -4000f;
+            this.light2z = 14.5f;
+            this.light3x = 16.07f;
+            this.light3y = -4000f;
+            this.light3z = 7.152f;
+            this.light4x = -100f;
+            this.light4y = 80f;
+            this.light4z = 0f;
+            if(jarak == 650){
+                this.lightLinear = 0.007f;
+                this.lightQuadratic = 0.0002f;
+            }
+            else if(jarak == 3250){
+                this.lightLinear = 0.0014f;
+                this.lightQuadratic = 0.000007f;
+            }
+
+        }else if(jarak == 65){
+//       malam
+            this.light1x = -23.85f;
+            this.light1y = 17.8f;
+            this.light1z = 1.75f;
+            this.light2x = -3.6f;
+            this.light2y = 18f;
+            this.light2z = 14.5f;
+            this.light3x = 16.07f;
+            this.light3y = 17.23f;
+            this.light3z = 7.152f;
+            this.light4x = 80f;
+            this.light4y = -100f;
+            this.light4z = 0f;
+
+            this.lightLinear = 0.07f;
+            this.lightQuadratic = 0.017f;
+        }
+    }
+
     public void drawSetup(Camera camera, Projection projection){
         super.drawSetup(camera,projection);
         // Bind VBO
@@ -186,14 +244,14 @@ public class Sphere extends Circle
         //posisi pointLight
         Vector3f[] _pointLightPositions =
                 {
-                        new Vector3f(-23.85f, 17.8f, 1.75f),
-                        new Vector3f(-23.85f, 17.8f, 1.75f),
-                        new Vector3f(-3.6f, 18f, 14.5f),
-                        new Vector3f(-3.6f, 18f, 14.5f),
-                        new Vector3f(16.07f, 17.237f, 7.152f),
-                        new Vector3f(16.07f, 17.237f, 7.152f),
-                        new Vector3f(-100.0f, 0.0f, 0.0f),
-                        new Vector3f(-100.0f, 0.0f, 0.0f)
+                        new Vector3f(light1x, light1y, light1z),
+                        new Vector3f(light1x, light1y, light1z),
+                        new Vector3f(light2x, light2y, light2z),
+                        new Vector3f(light2x, light2y, light2z),
+                        new Vector3f(light3x, light3y, light3z),
+                        new Vector3f(light3x, light3y, light3z),
+                        new Vector3f(light4x, light4y, light4z),
+                        new Vector3f(light4x, light4y, light4z)
                 };
         for(int i = 0;i< _pointLightPositions.length;i++)
         {
@@ -201,9 +259,9 @@ public class Sphere extends Circle
             uniformsMap.setUniform("pointLights["+ i +"].ambient", new Vector3f(0.05f,0.05f,0.05f));
             uniformsMap.setUniform("pointLights["+ i +"].diffuse", new Vector3f(0.8f,0.8f,0.8f));
             uniformsMap.setUniform("pointLights["+ i +"].specular", new Vector3f(1.0f,1.0f,1.0f));
-            uniformsMap.setUniform("pointLights["+ i +"].constant",1.0f );
-            uniformsMap.setUniform("pointLights["+ i +"].linear", 0.045f);
-            uniformsMap.setUniform("pointLights["+ i +"].quadratic", 0.017f);
+            uniformsMap.setUniform("pointLights["+ i +"].constant",lightConstantD );
+            uniformsMap.setUniform("pointLights["+ i +"].linear", lightLinear);
+            uniformsMap.setUniform("pointLights["+ i +"].quadratic", lightQuadratic);
         }
 
         //spotlight

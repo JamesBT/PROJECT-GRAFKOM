@@ -25,6 +25,8 @@ public class CobaBlender {
     ArrayList<Sphere> enviroment = new ArrayList<>();
     ArrayList<Sphere> character = new ArrayList<>();
 
+
+
     private MouseInput mouseInput;
 
     static float rot = 0f;
@@ -57,8 +59,17 @@ public class CobaBlender {
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.478431372f, 0.58823529411f, 0.615686274f, 1.0f),
+                        new Vector4f(0.423529f, 0.325490f, 0.145098f, 1.0f),
                         "resources/models/enviroment/krustykrab/dindingluar.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.478431372f, 0.58823529411f, 0.615686274f, 1.0f),
+                        "resources/models/enviroment/krustykrab/dindingdalam.obj"
                 )
         );
 //      lantai
@@ -78,7 +89,25 @@ public class CobaBlender {
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.5176f, 0.1647f, 0.1607f, 1.0f),
-                        "resources/models/enviroment/krustykrab/perahu.obj"
+                        "resources/models/enviroment/krustykrab/kapalbagiandalam.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
+                        "resources/models/enviroment/krustykrab/kapalbagianluar.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.0f, 0.0f, 0.0f, 1.0f),
+                        "resources/models/enviroment/krustykrab/kasir.obj"
                 )
         );
 //        list kursi
@@ -97,8 +126,35 @@ public class CobaBlender {
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.2902f, 0.3765f, 0.4911f, 1.0f),
-                        "resources/models/enviroment/krustykrab/meja.obj"
+                        new Vector4f(0.0705f, 0.08235f, 0.15294f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja1.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.43921f, 0.11764f, 0.12549f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja2.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.57647f, 0.52549f, 0.25882f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja3.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.35686f, 0.450980f, 0.59215f, 1.0f),
+                        "resources/models/enviroment/krustykrab/meja4.obj"
                 )
         );
 //        barang di atas (belakang menu)
@@ -131,7 +187,6 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/pintu.obj"
                 )
         );
-
 //        menu
         enviroment.add(new Sphere
                 (
@@ -142,30 +197,91 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/daftarmenu.obj"
                 )
         );
-
 //        pintu
         enviroment.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.4078431f, 0.501960f, 0.63921f, 1.0f),
-                        "resources/models/enviroment/krustykrab/listpintu.obj"
+                        new Vector4f(0.435294f, 0.611764f, 0.654901f, 1.0f),
+                        "resources/models/enviroment/krustykrab/pintu1.obj"
                 )
         );
-//        chandelier
         enviroment.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(1.0f, 1.0f, 0.0f, 1.0f),
-                        "resources/models/enviroment/krustykrab/listchandelier.obj"
+                        new Vector4f(0.384313f, 0.47450f, 0.607843f, 1.0f),
+                        "resources/models/enviroment/krustykrab/pintu2.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.00258f, 0.56078f, 0.56078f, 1.0f),
+                        "resources/models/enviroment/krustykrab/pintu3.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.541176f, 0.541176f, 0.541176f, 1.0f),
+                        "resources/models/enviroment/krustykrab/pintu4.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.501960f, 0.474509f, 0.38431f, 1.0f),
+                        "resources/models/enviroment/krustykrab/pintu5.obj"
                 )
         );
 
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.32941f, 0.349019f, 0.37647f, 1.0f),
+                        "resources/models/enviroment/krustykrab/bagianbawah1.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.254901f, 0.35686f, 0.13725f, 1.0f),
+                        "resources/models/enviroment/krustykrab/bagianbawah2.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.58039f, 0.5647f, 0.36078f, 1.0f),
+                        "resources/models/enviroment/krustykrab/bagianbawah3.obj"
+                )
+        );
 
-
+        //        chandelier
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.0f, 1.0f, 0.0f, 1.0f),
+                        "resources/models/enviroment/krustykrab/listchandelier.obj"
+                )
+        );
     }
 
     public void input() {
@@ -179,7 +295,6 @@ public class CobaBlender {
         }
         if (window.isKeyPressed(GLFW_KEY_A)) {
             camera.moveLeft(move);
-
         }
         if (window.isKeyPressed(GLFW_KEY_S)) {
             camera.moveBackwards(move);
@@ -199,16 +314,22 @@ public class CobaBlender {
             projection.setFOV(projection.getFOV()- (window.getMouseInput().getScroll().y*0.01f));
             window.getMouseInput().setScroll(new Vector2f());
         }
-        if (window.isKeyPressed(GLFW_KEY_R)) {
-            keyRditekan = true;
-
+//        untuk pagi
+        if (window.isKeyPressed(GLFW_KEY_P)) {
+            for (Sphere objects : this.enviroment)
+            {
+                //gambar sekalian child
+                objects.setupVariabel(3250);
+            }
         }
-        if (window.isKeyPressed(GLFW_KEY_G)) {
+//        untuk malam
+        if (window.isKeyPressed(GLFW_KEY_M)) {
+            for (Sphere objects : this.enviroment)
+            {
+                //gambar sekalian child
+                objects.setupVariabel(65);
+            }
 
-            camera.moveForward(1.7f);
-            camera.addRotation(0, (float) Math.toRadians(1f));
-            setRot(1f);
-            camera.moveBackwards(1.7f);
         }
 
     }
@@ -228,11 +349,12 @@ public class CobaBlender {
                 //gambar sekalian child
                 objects.draw(camera, projection);
             }
-//            for (Sphere objects : this.character)
-//            {
-//                //gambar sekalian child
-//                objects.draw(camera, projection);
-//            }
+            for (Sphere objects : this.character)
+            {
+                //gambar sekalian child
+                objects.draw(camera, projection);
+            }
+
 
             // Restore state
             glDisableVertexAttribArray(0);
