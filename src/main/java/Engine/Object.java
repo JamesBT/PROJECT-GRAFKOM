@@ -26,7 +26,7 @@ public class Object extends ShaderProgram
     {
         super(shaderModuleDataList);
         this.vertices = vertices;
-        //setupVAOVBO();
+
 
         this.color = color;
         uniformsMap = new UniformsMap(getProgramId());
@@ -35,7 +35,7 @@ public class Object extends ShaderProgram
 //        uniformsMap.createUniform("view");
 //        uniformsMap.createUniform("projection");
 
-        model = new Matrix4f();         //default const. matrix4f itu identitas
+        model = new Matrix4f().identity();         //default const. matrix4f itu identitas
         childObjects = new ArrayList<>();
     }
 
@@ -99,10 +99,6 @@ public class Object extends ShaderProgram
         uniformsMap.setUniform("model", model);
         uniformsMap.setUniform("view", camera.getViewMatrix());
         uniformsMap.setUniform("projection", projection.getProjMatrix());
-
-        glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
     }
 
     //drawsetup pake warna vertices
@@ -122,7 +118,6 @@ public class Object extends ShaderProgram
     public void addVertices(Vector3f newVector)
     {
         vertices.add(newVector);
-        //setupVAOVBO();
     }
 
     //bikin ArrayList baru isinya 3 vertices untuk garis bezier
@@ -143,14 +138,14 @@ public class Object extends ShaderProgram
             vertices.add(new Vector3f((float)newX, (float)newY, 0));
         }
         vertices.add(new Vector3f((float)thirdX, (float)thirdY, 0));
-        //setupVAOVBO();
+
     }
 
     //update vertices dalam ArrayList index ke x
     public void updateVertice(int index, Vector3f value)
     {
         vertices.set(index, value);
-        //setupVAOVBO();
+
     }
 
     //get child

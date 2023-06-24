@@ -26,9 +26,7 @@ public class CobaBlender {
     ArrayList<Sphere> character = new ArrayList<>();
 
 
-
     private MouseInput mouseInput;
-
     static float rot = 0f;
 
     Projection projection = new Projection(window.getWidth(), window.getHeight());
@@ -60,7 +58,43 @@ public class CobaBlender {
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.423529f, 0.325490f, 0.145098f, 1.0f),
-                        "resources/models/enviroment/krustykrab/dindingluar.obj"
+                        "resources/models/enviroment/krustykrab/dindingdepankiri.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.423529f, 0.325490f, 0.145098f, 1.0f),
+                        "resources/models/enviroment/krustykrab/dindingdepankanan.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.423529f, 0.325490f, 0.145098f, 1.0f),
+                        "resources/models/enviroment/krustykrab/dindingsampingkiri.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.423529f, 0.325490f, 0.145098f, 1.0f),
+                        "resources/models/enviroment/krustykrab/dindingsampingkanan.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.423529f, 0.325490f, 0.145098f, 1.0f),
+                        "resources/models/enviroment/krustykrab/dindingbelakang.obj"
                 )
         );
         enviroment.add(new Sphere
@@ -243,7 +277,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/pintu5.obj"
                 )
         );
-
+//      bagian bawah krusty krab
         enviroment.add(new Sphere
                 (
                         Arrays.asList
@@ -282,6 +316,9 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/listchandelier.obj"
                 )
         );
+
+
+
     }
 
     public void input() {
@@ -321,10 +358,20 @@ public class CobaBlender {
                 //gambar sekalian child
                 objects.setupVariabel(3250);
             }
+            for (Sphere objects : this.character)
+            {
+                //gambar sekalian child
+                objects.setupVariabel(3250);
+            }
         }
 //        untuk malam
         if (window.isKeyPressed(GLFW_KEY_M)) {
             for (Sphere objects : this.enviroment)
+            {
+                //gambar sekalian child
+                objects.setupVariabel(65);
+            }
+            for (Sphere objects : this.character)
             {
                 //gambar sekalian child
                 objects.setupVariabel(65);
@@ -354,6 +401,7 @@ public class CobaBlender {
                 //gambar sekalian child
                 objects.draw(camera, projection);
             }
+
 
 
             // Restore state

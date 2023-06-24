@@ -21,7 +21,7 @@ import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 
 public class Sphere extends Circle
 {
-    List<Integer> index;
+    List<Integer> index = new ArrayList<>();
     ArrayList<Vector2f> texture;
     ArrayList<Vector3f> normal;
     ArrayList<Vector3f> normalVert;
@@ -48,23 +48,6 @@ public class Sphere extends Circle
     float lightConstantD=1.0f;
     float lightLinear=0.07f;
     float lightQuadratic=0.017f;
-
-
-    public Sphere(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, double rx, double ry, double rz, double cpx, double cpy, double cpz, int option)
-    {
-        super(shaderModuleDataList, vertices, color, rx, cpx, cpy);
-        this.cpz = cpz;
-        this.radiusX = (float) rx;
-        this.radiusY = (float) ry;
-        this.radiusZ = (float) rz;
-
-        this.stackCount = 18;
-        this.sectorCount = 36;
-
-        createBoxVertices();
-
-        setupVAOVBO();
-    }
 
     public Sphere(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, String filePath)
     {
@@ -102,7 +85,6 @@ public class Sphere extends Circle
         for (Vector3f i: this.vertices)
         {
             System.out.println(i.x + " " + i.y + " " + i.z);
-//            System.out.println(i);
         }
 
         setupVAOVBO();
@@ -139,31 +121,7 @@ public class Sphere extends Circle
         }
     }
 
-    public void rotateObjectOnPoint(float degree, float offsetX, float offsetY, float offsetZ, float rotateX, float rotateY, float rotateZ)
-    {
-        translateObject(-rotateX, -rotateY, -rotateZ);
 
-        model = new Matrix4f().rotate((float)(Math.toRadians(degree)), offsetX, offsetY, offsetZ).mul(new Matrix4f(model));
-
-        float newcpx =(float) (cpx * Math.cos((double) (float)(Math.toRadians(degree))) - cpy * Math.sin((double) (float)(Math.toRadians(degree))));
-        float newcpy =(float) (cpx * Math.sin((double) (float)(Math.toRadians(degree))) + cpy * Math.cos((double) (float)(Math.toRadians(degree))));
-
-        cpx = newcpx;
-        cpy = newcpy;
-
-        translateObject(rotateX, rotateY, rotateZ);
-
-        for (Object i: childObjects)
-        {
-            ((Sphere)i).rotateObjectOnPoint(degree, offsetX, offsetY, offsetZ, rotateX, rotateY, rotateZ);
-        }
-    }
-
-    public void centralize()
-    {
-        createSphere();
-        setupVAOVBO();
-    }
 
     public void returnPosition()
     {
@@ -209,7 +167,6 @@ public class Sphere extends Circle
                 this.lightLinear = 0.0014f;
                 this.lightQuadratic = 0.000007f;
             }
-
         }else if(jarak == 65){
 //       malam
             this.light1x = -23.85f;
@@ -237,10 +194,10 @@ public class Sphere extends Circle
         glBindBuffer(GL_ARRAY_BUFFER, nbo);
         glVertexAttribPointer(1, 3, GL_FLOAT,false, 0, 0);
         //directional Light
-//        uniformsMap.setUniform("dirLight.direction", new Vector3f(200.0f,-0.0f,-0.0f));
-//        uniformsMap.setUniform("dirLight.ambient", new Vector3f(0.05f,0.05f,0.05f));
-//        uniformsMap.setUniform("dirLight.diffuse", new Vector3f(0.4f,0.4f,0.4f));
-//        uniformsMap.setUniform("dirLight.specular", new Vector3f(0.5f,0.5f,0.5f));
+        uniformsMap.setUniform("dirLight.direction", new Vector3f(200.0f,-0.0f,-0.0f));
+        uniformsMap.setUniform("dirLight.ambient", new Vector3f(0.05f,0.05f,0.05f));
+        uniformsMap.setUniform("dirLight.diffuse", new Vector3f(0.4f,0.4f,0.4f));
+        uniformsMap.setUniform("dirLight.specular", new Vector3f(0.5f,0.5f,0.5f));
         //posisi pointLight
         Vector3f[] _pointLightPositions =
                 {
@@ -277,6 +234,10 @@ public class Sphere extends Circle
         uniformsMap.setUniform("spotLight.outerCutOff",(float)Math.cos(Math.toRadians(12.5f)));
 
         uniformsMap.setUniform("viewPos",camera.getPosition());
+
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
     }
 
     public void draw(Camera camera, Projection projection)
@@ -290,6 +251,7 @@ public class Sphere extends Circle
             i.draw(camera, projection);
         }
     }
+
 
     //method draw pake kamera + child tapi gambarnya pake garis
     public void draw(Camera camera, Projection projection, boolean lineOrTriangle)
@@ -386,31 +348,55 @@ public class Sphere extends Circle
         vertices.add(tempVertices.get(1));
         vertices.add(tempVertices.get(2));
         vertices.add(tempVertices.get(3));
+        index.add(0);
+        index.add(1);
+        index.add(2);
+        index.add(3);
         //kotak yg sisi depan
         vertices.add(tempVertices.get(4));
         vertices.add(tempVertices.get(5));
         vertices.add(tempVertices.get(6));
         vertices.add(tempVertices.get(7));
+        index.add(4);
+        index.add(5);
+        index.add(6);
+        index.add(7);
         //kotak yg sisi kiri
         vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(4));
         vertices.add(tempVertices.get(7));
         vertices.add(tempVertices.get(3));
+        index.add(0);
+        index.add(4);
+        index.add(7);
+        index.add(3);
         //kotak yg sisi kanan
         vertices.add(tempVertices.get(1));
         vertices.add(tempVertices.get(5));
         vertices.add(tempVertices.get(6));
         vertices.add(tempVertices.get(2));
+        index.add(1);
+        index.add(5);
+        index.add(6);
+        index.add(2);
         //kotak yg sisi atas
         vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(1));
         vertices.add(tempVertices.get(5));
         vertices.add(tempVertices.get(4));
+        index.add(0);
+        index.add(1);
+        index.add(5);
+        index.add(4);
         //kotak yg sisi bawah
         vertices.add(tempVertices.get(3));
         vertices.add(tempVertices.get(2));
         vertices.add(tempVertices.get(7));
         vertices.add(tempVertices.get(6));
+        index.add(3);
+        index.add(2);
+        index.add(7);
+        index.add(6);
 
         normal = new ArrayList<>(Arrays.asList(
                 //belakang
@@ -500,53 +486,90 @@ public class Sphere extends Circle
         temp = new Vector3f();
 
         vertices.clear();
+        index.clear();
         vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(1));
         vertices.add(tempVertices.get(3));
+        index.add(0);
+        index.add(1);
+        index.add(3);
 
         vertices.add(tempVertices.get(1));
         vertices.add(tempVertices.get(2));
         vertices.add(tempVertices.get(3));
+        index.add(1);
+        index.add(2);
+        index.add(3);
 
         vertices.add(tempVertices.get(4));
         vertices.add(tempVertices.get(5));
         vertices.add(tempVertices.get(7));
+        index.add(4);
+        index.add(5);
+        index.add(7);
 
         vertices.add(tempVertices.get(5));
         vertices.add(tempVertices.get(6));
         vertices.add(tempVertices.get(7));
+        index.add(5);
+        index.add(6);
+        index.add(7);
 
         vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(4));
         vertices.add(tempVertices.get(7));
+        index.add(0);
+        index.add(4);
+        index.add(7);
 
         vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(3));
         vertices.add(tempVertices.get(7));
+        index.add(0);
+        index.add(3);
+        index.add(7);
 
         vertices.add(tempVertices.get(1));
         vertices.add(tempVertices.get(5));
         vertices.add(tempVertices.get(6));
+        index.add(1);
+        index.add(5);
+        index.add(6);
 
         vertices.add(tempVertices.get(1));
         vertices.add(tempVertices.get(2));
         vertices.add(tempVertices.get(6));
+        index.add(1);
+        index.add(2);
+        index.add(6);
 
         vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(1));
         vertices.add(tempVertices.get(5));
+        index.add(0);
+        index.add(1);
+        index.add(5);
 
         vertices.add(tempVertices.get(0));
         vertices.add(tempVertices.get(4));
         vertices.add(tempVertices.get(5));
+        index.add(0);
+        index.add(4);
+        index.add(5);
 
         vertices.add(tempVertices.get(2));
         vertices.add(tempVertices.get(3));
         vertices.add(tempVertices.get(6));
+        index.add(2);
+        index.add(3);
+        index.add(6);
 
         vertices.add(tempVertices.get(3));
         vertices.add(tempVertices.get(6));
         vertices.add(tempVertices.get(7));
+        index.add(3);
+        index.add(6);
+        index.add(7);
 
         normal = new ArrayList<>(Arrays.asList(
                 // ini yg belakang
@@ -587,7 +610,6 @@ public class Sphere extends Circle
         ));
     }
 
-    //PUNYA KELAS, YG DIATA PUNYA MATTHEW
     /*public void createBoxVertices()
     {
         System.out.println("code");
