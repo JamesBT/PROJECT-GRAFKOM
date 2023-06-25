@@ -15,6 +15,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL30.*;
 
+// FIXED
 public class CobaBlender {
     boolean checkCollision(List<Vector3f> vertices1, List<Vector3f> vertices2) {
         // Mengambil koordinat minimum dan maksimum dari AABB pertama
@@ -50,10 +51,8 @@ public class CobaBlender {
     }
 
     boolean keyRditekan = false;
-    float derajatkamera;
-    private Window window =
-            new Window
-                    (1000, 800, "Hello World");
+    float derajatkamera=0f;
+    private Window window = new Window(1000, 800, "PROJECT GRAFKOM");
 
     ArrayList<Sphere> enviroment = new ArrayList<>();
     ArrayList<Sphere> enviroment2 = new ArrayList<>();
@@ -72,15 +71,22 @@ public class CobaBlender {
     boolean FPS = false;
     boolean TPS = false;
     boolean freeroam = true;
-    int state;
-
+    int state=2;
+    float camX = 0f;
+    float camY = 0f;
+    float camZ = 0f;
+    float currentDeg = 0.0f, countDeg = 3.5f;
+    float directionBodyX = 0f, directionBodyY = -1f;
+    float currentBodyDegree = 270f;
     public void init() throws IOException {
         window.init();
         GL.createCapabilities();
         glEnable(GL_DEPTH_TEST);
         mouseInput = window.getMouseInput();
-        camera.setPosition(0, 1f, 1.7f);
-        camera.moveDown(0.6f);
+        camera.setPosition(0, 0f, 1.7f);
+        camera.moveLeft(4f);
+        camera.moveBackwards(20f);
+        camera.moveUp(5f);
 
 
         character.add(new Sphere
@@ -121,8 +127,13 @@ public class CobaBlender {
                 )
         );
 
-        character.get(0).translateObject(-1.5f,-0.1f,5.2f);
-        character.get(0).scaleObject(3.25f,3.25f,3.25f);
+//          keatas krusty krab
+//        character.get(0).translateObject(-1.15f,-0.1f,-7f);
+//        character.get(0).scaleObject(3.25f,3.25f,-3.25f);
+
+//        kebawah
+        character.get(0).translateObject(+5.8f,-5.25f,-14f);
+        character.get(0).scaleObject(3.25f,3.25f,-3.25f);
 
         character.get(1).translateObject(-1.5f,0.2f,-2f);
         character.get(1).scaleObject(1.5f,1.5f,1.5f);
@@ -821,26 +832,142 @@ public class CobaBlender {
 
     public void input() {
         float move = 0.4f;
-        System.out.println("X: "+camera.getPosition().x);
-        System.out.println("Y: "+camera.getPosition().y);
-        System.out.println("Z: "+camera.getPosition().z);
+//        System.out.println("X: "+camera.getPosition().x);
+//        System.out.println("Y: "+camera.getPosition().y);
+//        System.out.println("Z: "+camera.getPosition().z);
+//        FIXED
         if (window.isKeyPressed(GLFW_KEY_I)) {
-//            state 0=S,1=A,2=W,3=D
+            character.get(0).translateObject(0.0f, 0.0f, -0.5f);
+            for (Object object: enviroment){
+                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
+                    character.get(0).translateObject(0.0f, 0.0f, +0.5f);
+                    break;
+                }
+            }
+            for (Object object: enviroment2){
+                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
+                    character.get(0).translateObject(0.0f, 0.0f, +0.5f);
+                    break;
+                }
+            }
+//                    state 0 = K, 1 = J, 2 = I, 3 = L
+            switch (state){
+                case 0:
+                    int verticeSize = 0;
+                    Vector3f centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
+                    for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
+                        centerPoint.x += vertex.x;
+                        centerPoint.y += vertex.y;
+                        centerPoint.z += vertex.z;
+                        verticeSize++;
+                    }
+
+                    centerPoint.x /= verticeSize;
+                    centerPoint.y /= verticeSize;
+                    centerPoint.z /= verticeSize;
+
+
+                    camera.setPosition(-centerPoint.x, -centerPoint.y, -centerPoint.z);
+                    camera.addRotation(0.0f,180f);
+                    camera.setPosition(centerPoint.x, centerPoint.y, centerPoint.z);
+
+                    directionBodyX = 0.0f;
+                    directionBodyY = 1.0f;
+
+                    character.get(0).rotateObject(180f, directionBodyX, directionBodyY, 0.0f);
+                    break;
+                case 1:
+                    directionBodyX = 0.0f;
+                    directionBodyY = -1.0f;
+                    character.get(0).rotateObject(90f, directionBodyX, directionBodyY, 0.0f);
+                    break;
+                case 3:
+                    directionBodyX = 0.0f;
+                    directionBodyY = 1.0f;
+                    character.get(0).rotateObject(90f, directionBodyX, directionBodyY, 0.0f);
+                    break;
+            }
+            state= 2;
+            currentBodyDegree = currentBodyDegree + (90f - currentBodyDegree);
+            currentDeg += countDeg;
+        }
+        if (window.isKeyPressed(GLFW_KEY_J)) {
+            character.get(0).translateObject(-0.5f, 0.0f, 0f);
+            for (Object object: enviroment){
+                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
+                    character.get(0).translateObject(+0.5f, 0.0f, 0f);
+                    break;
+                }
+            }
+            for (Object object: enviroment2){
+                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
+                    character.get(0).translateObject(+0.5f, 0.0f, 0f);
+                    break;
+                }
+            }
+
+            
+
+        }
+        if (window.isKeyPressed(GLFW_KEY_K)) {
             character.get(0).translateObject(0.0f, 0.0f, 0.5f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
                     character.get(0).translateObject(0.0f, 0.0f, -0.5f);
+//                    System.out.println(((Sphere)object).getFilename());
                     break;
                 }
             }
             for (Object object: enviroment2){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
                     character.get(0).translateObject(0.0f, 0.0f, -0.5f);
+//                    System.out.println(((Sphere)object).getFilename());
                     break;
                 }
             }
+//            titik tengah
+            int verticeSize = 0;
+            Vector3f centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
+            for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
+                centerPoint.x += vertex.x;
+                centerPoint.y += vertex.y;
+                centerPoint.z += vertex.z;
+                verticeSize++;
+            }
+
+            centerPoint.x /= verticeSize;
+            centerPoint.y /= verticeSize;
+            centerPoint.z /= verticeSize;
+            switch (state){
+                case 1:
+                    directionBodyX = 0.0f;
+                    directionBodyY = 1.0f;
+                    character.get(0).rotateObject(90f, directionBodyX, directionBodyY, 0.0f);
+                    break;
+                case 2:
+
+
+                    camera.setPosition(-centerPoint.x, -centerPoint.y, -centerPoint.z);
+                    camera.addRotation(0.0f,(float)Math.toRadians(180f));
+                    camera.setPosition(centerPoint.x, centerPoint.y, centerPoint.z);
+
+                    directionBodyX = 0.0f;
+                    directionBodyY = 1.0f;
+                    character.get(0).translateObject(-centerPoint.x,-centerPoint.y,-centerPoint.z);
+                    character.get(0).rotateObject(180f, directionBodyX, directionBodyY, 0.0f);
+                    character.get(0).translateObject(centerPoint.x,centerPoint.y,centerPoint.z);
+                    break;
+                case 3:
+                    directionBodyX = 0.0f;
+                    directionBodyY = -1.0f;
+                    character.get(0).rotateObject(90f, directionBodyX, directionBodyY, 0.0f);
+                    break;
+            }
+            state= 0;
+            currentBodyDegree = currentBodyDegree + (270f - currentBodyDegree);
+            currentDeg += countDeg;
         }
-        if (window.isKeyPressed(GLFW_KEY_J)) {
+        if (window.isKeyPressed(GLFW_KEY_L)) {
             character.get(0).translateObject(0.5f, 0.0f, 0f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
@@ -855,53 +982,64 @@ public class CobaBlender {
                 }
             }
         }
-        if (window.isKeyPressed(GLFW_KEY_K)) {
-            character.get(0).translateObject(0.0f, 0.0f, -0.5f);
-            for (Object object: enviroment){
-                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
-                    character.get(0).translateObject(0.0f, 0.0f, +0.5f);
-//                    System.out.println(((Sphere)object).getFilename());
-                    break;
-                }
-            }
-            for (Object object: enviroment2){
-                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
-                    character.get(0).translateObject(0.0f, 0.0f, +0.5f);
-//                    System.out.println(((Sphere)object).getFilename());
-                    break;
-                }
-            }
-        }
-        if (window.isKeyPressed(GLFW_KEY_L)) {
-            character.get(0).translateObject(-0.5f, 0.0f, 0f);
-            for (Object object: enviroment){
-                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
-                    character.get(0).translateObject(+0.5f, 0.0f, 0f);
-                    break;
-                }
-            }
-            for (Object object: enviroment2){
-                if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
-                    character.get(0).translateObject(+0.5f, 0.0f, 0f);
-                    break;
-                }
-            }
-        }
 
         if (window.isKeyPressed(GLFW_KEY_W)) {
             camera.moveForward(move);
             for (Object object: enviroment){
-                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.025f, camera.getPosition().y+0.025f, camera.getPosition().z+0.025f))), object.getVertices())){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
 //                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
                     camera.moveForward(-move);
                     break;
                 }
             }
+            for (Object object: enviroment2){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveForward(-move);
+                    break;
+                }
+            }
+            for (Object object: lantai){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveForward(-move);
+                    break;
+                }
+            }
+            for (Object object: lantai2){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveForward(-move);
+                    break;
+                }
+            }
+
         }
         if (window.isKeyPressed(GLFW_KEY_A)) {
             camera.moveLeft(move);
             for (Object object: enviroment){
-                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.025f, camera.getPosition().y+0.025f, camera.getPosition().z+0.025f))), object.getVertices())){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveLeft(-move);
+                    break;
+                }
+            }
+            for (Object object: enviroment2){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveLeft(-move);
+                    break;
+                }
+            }
+            for (Object object: lantai){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveLeft(-move);
+                    break;
+                }
+            }
+            for (Object object: lantai2){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
 //                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
                     camera.moveLeft(-move);
                     break;
@@ -911,7 +1049,28 @@ public class CobaBlender {
         if (window.isKeyPressed(GLFW_KEY_S)) {
             camera.moveBackwards(move);
             for (Object object: enviroment){
-                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.025f, camera.getPosition().y+0.025f, camera.getPosition().z+0.025f))), object.getVertices())){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveBackwards(-move);
+                    break;
+                }
+            }
+            for (Object object: enviroment2){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveBackwards(-move);
+                    break;
+                }
+            }
+            for (Object object: lantai){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveBackwards(-move);
+                    break;
+                }
+            }
+            for (Object object: lantai2){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
 //                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
                     camera.moveBackwards(-move);
                     break;
@@ -921,7 +1080,28 @@ public class CobaBlender {
         if (window.isKeyPressed(GLFW_KEY_D)) {
             camera.moveRight(move);
             for (Object object: enviroment){
-                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.025f, camera.getPosition().y+0.025f, camera.getPosition().z+0.025f))), object.getVertices())){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveRight(-move);
+                    break;
+                }
+            }
+            for (Object object: enviroment2){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveRight(-move);
+                    break;
+                }
+            }
+            for (Object object: lantai){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
+//                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
+                    camera.moveRight(-move);
+                    break;
+                }
+            }
+            for (Object object: lantai2){
+                if (checkCollision(new ArrayList<>(Arrays.asList(new Vector3f(camera.getPosition().x+0.0001f, camera.getPosition().y+0.0001f, camera.getPosition().z+0.0001f))), object.getVertices())){
 //                    System.out.println("COLLISION with " + ((Sphere)object).getFilename());
                     camera.moveRight(-move);
                     break;
@@ -929,6 +1109,51 @@ public class CobaBlender {
             }
         }
 
+        if(window.isKeyPressed(GLFW_KEY_5)){
+            int verticeSize = 0;
+            Vector3f centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
+            for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
+                centerPoint.x += vertex.x;
+                centerPoint.y += vertex.y;
+                centerPoint.z += vertex.z;
+                verticeSize++;
+            }
+
+            centerPoint.x /= verticeSize;
+            centerPoint.y /= verticeSize;
+            centerPoint.z /= verticeSize;
+
+            System.out.println("CPX: "+centerPoint.x);
+            System.out.println("CPY: "+centerPoint.y);
+            System.out.println("CPZ: "+centerPoint.z);
+        }
+
+        int verticeSize = 0;
+        Vector3f centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
+        for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
+            centerPoint.x += vertex.x;
+            centerPoint.y += vertex.y;
+            centerPoint.z += vertex.z;
+            verticeSize++;
+        }
+
+        centerPoint.x /= verticeSize;
+        centerPoint.y /= verticeSize;
+        centerPoint.z /= verticeSize;
+
+
+        if(window.isKeyPressed(GLFW_KEY_Q)){
+            character.get(0).rotateObject(90,0f,1f,0f);
+            derajatkamera+=20f;
+            if(centerPoint.x >= 18.92688f && centerPoint.x <= 19.92688f && centerPoint.y == -14.620786f && centerPoint.z == 45.37312f){
+                System.out.println("SUDAH");
+                System.out.println(derajatkamera);
+                derajatkamera=0f;
+            }else{
+                System.out.println("BELUM");
+                System.out.println(derajatkamera);
+            }
+        }
         if(window.isKeyPressed(GLFW_KEY_1)){
             FPS = true;
             TPS = false;
@@ -946,8 +1171,8 @@ public class CobaBlender {
         }
 
         if(FPS){
-            int verticeSize = 0;
-            Vector3f centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
+             verticeSize = 0;
+             centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
             for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
                 centerPoint.x += vertex.x;
                 centerPoint.y += vertex.y;
@@ -958,12 +1183,15 @@ public class CobaBlender {
             centerPoint.x /= verticeSize;
             centerPoint.y /= verticeSize;
             centerPoint.z /= verticeSize;
-
-            camera.setPosition(centerPoint.x,centerPoint.y+1,centerPoint.z+0.75f);
+            camX = 0f;
+            camY = 1f;
+            camZ = -0.75f;
+            camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(0));
+            camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z+camZ);
         }
         if(TPS){
-            int verticeSize = 0;
-            Vector3f centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
+             verticeSize = 0;
+             centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
             for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
                 centerPoint.x += vertex.x;
                 centerPoint.y += vertex.y;
@@ -975,8 +1203,11 @@ public class CobaBlender {
             centerPoint.y /= verticeSize;
             centerPoint.z /= verticeSize;
 
-            camera.setPosition(centerPoint.x,centerPoint.y+5,centerPoint.z-4f);
-            camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(180));
+            camX = 0f;
+            camY = 5f;
+            camZ = 4f;
+            camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z+camZ);
+            camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(0));
         }
         if(freeroam){
 
