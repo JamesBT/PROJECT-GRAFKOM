@@ -84,6 +84,7 @@ public class CobaBlender {
     float currentDeg = 0.0f, countDeg = 3.5f;
     float directionBodyX = 0f, directionBodyY = -1f;
     float currentBodyDegree = 270f;
+    SkyBoxCube skybox;
 
     public void init() throws IOException {
         window.init();
@@ -95,6 +96,7 @@ public class CobaBlender {
         camera.moveBackwards(20f);
         camera.moveUp(5f);
 
+        skybox=new SkyBoxCube();
 
         character.add(new Sphere
                 (
@@ -1437,6 +1439,8 @@ public class CobaBlender {
                 //gambar sekalian child
                 objects.draw(camera, projection);
             }
+
+            skybox.draw(camera, projection);
 
             // Restore state
             glDisableVertexAttribArray(0);
