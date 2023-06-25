@@ -13,7 +13,7 @@ GRAFKOM 22/23
 
 
 ## LINK LAPORAN:
-
+https://docs.google.com/document/d/162DLOrLTnVBzN_FUnT5DUfa7xDxTyAvTg78tEv22-Ls/edit?usp=sharing
 
 
 ## LINK VIDEO:
