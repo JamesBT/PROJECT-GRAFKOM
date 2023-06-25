@@ -73,15 +73,18 @@ public class CobaBlender {
     boolean freeroam = true;
     int state=2;
     float camX = 0f;
-    float camY = 0f;
-    float camZ = 0f;
+    float camY = 1f;
+    float camZ = -0.75f;
+
+    float camXTPS = 0f;
+    float camYTPS = 5f;
+    float camZTPS = 4f;
+    boolean keysama = true;
+    char keysebelumnya;
     float currentDeg = 0.0f, countDeg = 3.5f;
     float directionBodyX = 0f, directionBodyY = -1f;
     float currentBodyDegree = 270f;
-    boolean hadapdepan = true;
-    boolean hadapkiri = false;
-    boolean hadapkanan = false;
-    boolean hadapbelakang=false;
+
     public void init() throws IOException {
         window.init();
         GL.createCapabilities();
@@ -849,12 +852,13 @@ public class CobaBlender {
         centerPoint.x /= verticeSize;
         centerPoint.y /= verticeSize;
         centerPoint.z /= verticeSize;
-//        System.out.println("X: "+camera.getPosition().x);
-//        System.out.println("Y: "+camera.getPosition().y);
-//        System.out.println("Z: "+camera.getPosition().z);
+
 //        FIXED
         System.out.println(currentBodyDegree);
         if (window.isKeyPressed(GLFW_KEY_I)) {
+            if(!keysama && keysebelumnya!='I'){
+                keysama = true;
+            }
             character.get(0).translateObject(0.0f, 0.0f, -0.5f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
@@ -899,16 +903,31 @@ public class CobaBlender {
                     break;
             }
             state= 2;
-            hadapdepan=true;
-            hadapbelakang=false;
-            hadapkiri=false;
-            hadapkanan = false;
             currentBodyDegree = currentBodyDegree + (90f - currentBodyDegree);
             currentDeg += countDeg;
-//            character.get(0).translateObject(centerPoint.x,centerPoint.y,centerPoint.z);
+//            character.get(0).translateObject(centerPoint.x,centerPoint.y,centerPoint.z);\
+            if(keysama){
+                if(FPS){
+                    camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(0));
+                    camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z+camZ);
+                }if(TPS){
+                    camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(0));
+                    camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z+camZTPS);
+                }
+                keysama=false;
+                keysebelumnya='I';
+            }else{
+                if(FPS){
+                    camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z+camZ);
+                }if(TPS){
+                    camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z+camZTPS);
+                }
+            }
         }
-        System.out.println(currentBodyDegree);
         if (window.isKeyPressed(GLFW_KEY_J)) {
+            if(!keysama && keysebelumnya!='J'){
+                keysama = true;
+            }
             character.get(0).translateObject(-0.5f, 0.0f, 0f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
@@ -961,14 +980,29 @@ public class CobaBlender {
             state= 1;
             currentBodyDegree = currentBodyDegree + (180f - currentBodyDegree);
             currentDeg += countDeg;
-            hadapkiri=true;
-            hadapdepan=false;
-            hadapbelakang=false;
-            hadapkanan=false;
-//            character.get(0).translateObject(centerPoint.x,centerPoint.y,centerPoint.z);
+            if(keysama){
+                if(FPS){
+                    camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(270));
+                    camera.setPosition(centerPoint.x-camY,centerPoint.y+camZ,centerPoint.z+camX);
+                }if(TPS){
+                    camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(270));
+                    camera.setPosition(centerPoint.x+camYTPS,centerPoint.y+camZTPS,centerPoint.z+camXTPS);
+                }
+                keysama=false;
+                keysebelumnya='J';
+            }else{
+                if(FPS){
+                    camera.setPosition(centerPoint.x-camY,centerPoint.y+camZ,centerPoint.z+camX);
+                }if(TPS){
+                    camera.setPosition(centerPoint.x+camYTPS,centerPoint.y+camZTPS,centerPoint.z+camXTPS);
+                }
+            }
 
         }
         if (window.isKeyPressed(GLFW_KEY_K)) {
+            if(!keysama && keysebelumnya!='K'){
+                keysama = true;
+            }
             character.get(0).translateObject(0.0f, 0.0f, 0.5f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
@@ -1021,14 +1055,30 @@ public class CobaBlender {
             state= 0;
             currentBodyDegree = currentBodyDegree + (270f - currentBodyDegree);
             currentDeg += countDeg;
+            if(keysama){
+                if(FPS){
+                    camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(180));
+                    camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z-camZ);
 
-            hadapbelakang=true;
-            hadapdepan=false;
-            hadapkiri=false;
-            hadapkanan=false;
+                }if(TPS){
+                    camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(180));
+                    camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z-camZTPS);
+                }
+                keysebelumnya='K';
+                keysama=false;
+            }else{
+                if(FPS){
+                    camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z-camZ);
 
+                }if(TPS){
+                    camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z-camZTPS);
+                }
+            }
         }
         if (window.isKeyPressed(GLFW_KEY_L)) {
+            if(!keysama && keysebelumnya!='L'){
+                keysama = true;
+            }
             character.get(0).translateObject(0.5f, 0.0f, 0f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
@@ -1055,13 +1105,6 @@ public class CobaBlender {
 
                     break;
                 case 1:
-
-
-
-//                    camera.setPosition(-centerPoint.x, -centerPoint.y, -centerPoint.z);
-//                    camera.addRotation(0.0f,-90f);
-//                    camera.setPosition(centerPoint.x, centerPoint.y, centerPoint.z);
-
                     directionBodyX = 0.0f;
                     directionBodyY = 1.0f;
                     character.get(0).translateObject(-centerPoint.x,-centerPoint.y,-centerPoint.z);
@@ -1081,11 +1124,26 @@ public class CobaBlender {
             state= 3;
             currentBodyDegree = currentBodyDegree + (180f - currentBodyDegree);
             currentDeg += countDeg;
+            if(keysama){
+                if(FPS) {
+                    camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(90));
+                    camera.setPosition(centerPoint.x+camY,centerPoint.y+camZ,centerPoint.z+camX);
+                }
+                if(TPS){
+                    camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(90));
+                    camera.setPosition(centerPoint.x-camYTPS,centerPoint.y+camZTPS,centerPoint.z+camXTPS);
+                }
+                keysama=false;
+                keysebelumnya='L';
+            }else{
+                if(FPS) {
+                    camera.setPosition(centerPoint.x+camY,centerPoint.y+camZ,centerPoint.z+camX);
+                }
+                if(TPS){
+                    camera.setPosition(centerPoint.x-camYTPS,centerPoint.y+camZTPS,centerPoint.z+camXTPS);
+                }
 
-            hadapkanan=true;
-            hadapkiri=false;
-            hadapdepan=false;
-            hadapbelakang=false;
+            }
 
         }
 
@@ -1240,81 +1298,7 @@ public class CobaBlender {
             freeroam=true;
         }
 
-        if(FPS){
-             verticeSize = 0;
-             centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
-            for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
-                centerPoint.x += vertex.x;
-                centerPoint.y += vertex.y;
-                centerPoint.z += vertex.z;
-                verticeSize++;
-            }
 
-            centerPoint.x /= verticeSize;
-            centerPoint.y /= verticeSize;
-            centerPoint.z /= verticeSize;
-            camX = 0f;
-            camY = 1f;
-            camZ = -0.75f;
-            if(hadapdepan){
-                System.out.println("HADAP DEPAN");
-                camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(0));
-                camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z+camZ);
-            }else if(hadapbelakang){
-                System.out.println("HADAP BELAKANG");
-                camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(180));
-                camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z-camZ);
-            }else if(hadapkiri){
-                System.out.println("HADAP KIRI");
-                camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(270));
-                camera.setPosition(centerPoint.x-camY,centerPoint.y+camZ,centerPoint.z+camX);
-            }else if(hadapkanan){
-                System.out.println("HADAP KANAN");
-                camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(90));
-                camera.setPosition(centerPoint.x+camY,centerPoint.y+camZ,centerPoint.z+camX);
-            }
-
-        }
-        if(TPS){
-             verticeSize = 0;
-             centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
-            for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
-                centerPoint.x += vertex.x;
-                centerPoint.y += vertex.y;
-                centerPoint.z += vertex.z;
-                verticeSize++;
-            }
-
-            centerPoint.x /= verticeSize;
-            centerPoint.y /= verticeSize;
-            centerPoint.z /= verticeSize;
-
-            camX = 0f;
-            camY = 5f;
-            camZ = 4f;
-            if(hadapdepan){
-                System.out.println("HADAP DEPAN");
-                camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(0));
-                camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z+camZ);
-            }else if(hadapbelakang){
-                System.out.println("HADAP BELAKANG");
-                camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(180));
-                camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z-camZ);
-            }else if(hadapkiri){
-                System.out.println("HADAP KIRI");
-                camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(270));
-                camera.setPosition(centerPoint.x+camY,centerPoint.y+camZ,centerPoint.z+camX);
-            }else if(hadapkanan){
-                System.out.println("HADAP KANAN");
-                camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(90));
-                camera.setPosition(centerPoint.x-camY,centerPoint.y+camZ,centerPoint.z+camX);
-            }
-//            camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z+camZ);
-//            camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(0));
-        }
-        if(freeroam){
-
-        }
 
 
         if(mouseInput.isLeftButtonPressed()){
