@@ -771,44 +771,77 @@ public class CobaBlender {
                 )
         );
 //        pintu
-//        20
+
         enviroment.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.435294f, 0.611764f, 0.654901f, 1.0f),
-                        "resources/models/enviroment/krustykrab/pintu1.obj"
+                        "resources/models/enviroment/krustykrab/door1-1.obj"
                 )
         );
-//        21
         enviroment.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.384313f, 0.47450f, 0.607843f, 1.0f),
-                        "resources/models/enviroment/krustykrab/pintu2.obj"
+                        "resources/models/enviroment/krustykrab/door1-2.obj"
                 )
         );
-//        22
         enviroment.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.00258f, 0.56078f, 0.56078f, 1.0f),
-                        "resources/models/enviroment/krustykrab/pintu3.obj"
+                        "resources/models/enviroment/krustykrab/door1-3.obj"
                 )
         );
-//        23
         enviroment.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
                         new Vector4f(0.541176f, 0.541176f, 0.541176f, 1.0f),
-                        "resources/models/enviroment/krustykrab/pintu4.obj"
+                        "resources/models/enviroment/krustykrab/door1-4.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.435294f, 0.611764f, 0.654901f, 1.0f),
+                        "resources/models/enviroment/krustykrab/door2-1.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.384313f, 0.47450f, 0.607843f, 1.0f),
+                        "resources/models/enviroment/krustykrab/door2-2.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.00258f, 0.56078f, 0.56078f, 1.0f),
+                        "resources/models/enviroment/krustykrab/door2-3.obj"
+                )
+        );
+        enviroment.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.541176f, 0.541176f, 0.541176f, 1.0f),
+                        "resources/models/enviroment/krustykrab/door2-4.obj"
                 )
         );
 //        24
