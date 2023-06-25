@@ -67,16 +67,16 @@ public class SkyBoxCube extends ShaderProgram
                     size, -size,  size
             };
 
-    private static String[] TEXTURE_FILE_NAMES = {"resources/skybox/tengah2.png", "resources/skybox/kiri.png", "resources/skybox/atas.png",
-            "resources/skybox/bawah.png", "resources/skybox/tengah1.png", "resources/skybox/kanan.png"};
+    private static String[] TEXTURE_FILE_NAMES = {"resources/skybox/malamtengah2.png", "resources/skybox/malamkiri.png", "resources/skybox/malamatas.png",
+            "resources/skybox/malambawah.png", "resources/skybox/malamtengah1.png", "resources/skybox/malamkanan.png"};
 
     public void gantiWaktu(int waktu){
         if(waktu==3250){
             TEXTURE_FILE_NAMES = new String[]{"resources/skybox/spongebobrt.png", "resources/skybox/spongeboblf.png", "resources/skybox/spongebobup.png",
                     "resources/skybox/spongebobdn.png", "resources/skybox/spongebobft.png", "resources/skybox/spongebobbk.png"};
         }else if(waktu==65){
-            TEXTURE_FILE_NAMES = new String[]{"resources/skybox/tengah2.png", "resources/skybox/kiri.png", "resources/skybox/atas.png",
-                    "resources/skybox/bawah.png", "resources/skybox/tengah1.png", "resources/skybox/kanan.png"};
+            TEXTURE_FILE_NAMES = new String[]{"resources/skybox/malamtengah2.png", "resources/skybox/malamkiri.png", "resources/skybox/malamatas.png",
+                    "resources/skybox/malambawah.png", "resources/skybox/malamtengah1.png", "resources/skybox/malamkanan.png"};
         }
         textureId = loadCubeMap(TEXTURE_FILE_NAMES);
     }

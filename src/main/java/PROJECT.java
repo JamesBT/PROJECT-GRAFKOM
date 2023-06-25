@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL30.*;
 
 // FIXED
-public class CobaBlender {
+public class PROJECT {
     boolean checkCollision(List<Vector3f> vertices1, List<Vector3f> vertices2) {
         // Mengambil koordinat minimum dan maksimum dari AABB pertama
         float minX1 = 999999999999999f, minY1 = 999999999999999f, minZ1 = 999999999999999f;
@@ -1629,12 +1629,9 @@ public class CobaBlender {
         return rot;
     }
 
-    public static void setRot(float rot) {
-        Main.rot += rot;
-    }
 
     public static void main(String[] args) throws IOException {
-        new CobaBlender().run();
+        new PROJECT().run();
     }
     public void updateCameraCinematic(){
         ArrayList<Vector3f> track = new ArrayList<>(List.of());
