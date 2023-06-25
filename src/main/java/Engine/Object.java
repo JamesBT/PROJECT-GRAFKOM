@@ -18,6 +18,15 @@ public class Object extends ShaderProgram
     List<Object> childObjects;
 
     int vao, vbo, vboColor;
+
+    public Vector4f getColor() {
+        return color;
+    }
+
+    public void setColor(Vector4f color) {
+        this.color = color;
+    }
+
     Vector4f color;
     List<Vector3f> verticesColor;
     UniformsMap uniformsMap;

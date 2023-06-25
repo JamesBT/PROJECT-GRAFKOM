@@ -6,7 +6,6 @@ import org.joml.Vector4f;
 import org.lwjgl.opengl.GL;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,8 +49,7 @@ public class CobaBlender {
         return collisionX && collisionY && collisionZ;
     }
 
-    boolean keyRditekan = false;
-    float derajatkamera=0f;
+    float derajatkamera=30f;
     private Window window = new Window(1000, 800, "PROJECT GRAFKOM");
 
     ArrayList<Sphere> enviroment = new ArrayList<>();
@@ -61,10 +59,13 @@ public class CobaBlender {
     ArrayList<Sphere> lantai2 = new ArrayList<>();
 
     ArrayList<Sphere> character = new ArrayList<>();
-    ArrayList<Sphere> pintuenvi2keluar = new ArrayList();
-    ArrayList<Sphere> pintuenvi2keluarpenjara = new ArrayList<>();
-    ArrayList<Sphere> pintuenvi2masukpenjara = new ArrayList<>();
+    ArrayList<Sphere> pintuenvi2masuk = new ArrayList();
+    ArrayList<Sphere> pintuenvi2masukpenjara = new ArrayList();
+    ArrayList<Sphere> pintuenvi2masukpenjarapenjara = new ArrayList<>();
+    ArrayList<Sphere> pintuenvi2keluar = new ArrayList<>();
+    ArrayList<Sphere> kamera = new ArrayList<>();
 
+    float camRotation=0;
     private MouseInput mouseInput;
     static float rot = 0f;
 
@@ -73,6 +74,7 @@ public class CobaBlender {
 
     boolean FPS = false;
     boolean TPS = false;
+    boolean cinematography;
     boolean freeroam = true;
     int state=2;
     float camX = 0f;
@@ -82,11 +84,14 @@ public class CobaBlender {
     float camXTPS = 0f;
     float camYTPS = 5f;
     float camZTPS = 4f;
-    boolean keysama = true;
+
     char keysebelumnya;
     float currentDeg = 0.0f, countDeg = 3.5f;
     float directionBodyX = 0f, directionBodyY = -1f;
     float currentBodyDegree = 270f;
+    boolean isMrkrablari = false;
+    float speedMrkrab1 = 0.05f;
+    float totalLari = 0f;
     SkyBoxCube skybox;
 
     public void init() throws IOException {
@@ -138,16 +143,24 @@ public class CobaBlender {
                         "resources/models/character/patrick.obj"
                 )
         );
+        character.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.0f, 1.0f, 1.0f, 1.0f),
+                        "resources/models/character/mrkrabs.obj"
+                )
+        );
 
 //          keatas krusty krab
 //        character.get(0).translateObject(-1.15f,-0.1f,-7f);
 //        character.get(0).scaleObject(3.25f,3.25f,-3.25f);
 
-//        kebawah
-        character.get(0).translateObject(+5.8f,-5.25f,-14f);
+        character.get(0).translateObject(-1.15f,-0.1f,-7f);
         character.get(0).scaleObject(3.25f,3.25f,-3.25f);
 
-        character.get(1).translateObject(-1.5f,0.2f,-2f);
+        character.get(1).translateObject(-2.1f,0.2f,-2f);
         character.get(1).scaleObject(1.5f,1.5f,1.5f);
 
         character.get(2).translateObject(-2.2f,-1.3f,2.3f);
@@ -156,6 +169,8 @@ public class CobaBlender {
 //        character.get(3).rotateObject((float)Math.toRadians(90),0f,0f,1f);
         character.get(3).translateObject(-15f,0.0f,2.0f);
         character.get(3).scaleObject(3,3,3);
+
+
 
         //      bagian bawah krusty krab
         lantai.add(new Sphere
@@ -563,6 +578,17 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/pintu.obj"
                 )
         );
+        kamera.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.450980f, 0.72156f, 0.83529f, 1.0f),
+                        "resources/models/patokankamera.obj"
+                )
+        );
+
+
                 enviroment2.add(new Sphere
                 (
                         Arrays.asList
@@ -698,9 +724,8 @@ public class CobaBlender {
                         "resources/models/enviroment/ruangbelakang/env2-lantai.obj"
                 )
         );
-
 //        pintu enviroment 2 - keluar tempat
-        pintuenvi2keluar.add(new Sphere
+        pintuenvi2masukpenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -709,7 +734,7 @@ public class CobaBlender {
                         "resources/models/enviroment/ruangbelakang/envi2-pintu-3-1.obj"
                 )
         );
-        pintuenvi2keluar.add(new Sphere
+        pintuenvi2masukpenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -718,7 +743,7 @@ public class CobaBlender {
                         "resources/models/enviroment/ruangbelakang/envi2-pintu-3-2.obj"
                 )
         );
-        pintuenvi2keluar.add(new Sphere
+        pintuenvi2masukpenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -728,7 +753,7 @@ public class CobaBlender {
                 )
         );
 //        pintu enviroment 2 - keluar
-        pintuenvi2keluarpenjara.add(new Sphere
+        pintuenvi2masukpenjarapenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -737,7 +762,7 @@ public class CobaBlender {
                         "resources/models/enviroment/ruangbelakang/env2-pintu1-1.obj"
                 )
         );
-        pintuenvi2keluarpenjara.add(new Sphere
+        pintuenvi2masukpenjarapenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -746,7 +771,7 @@ public class CobaBlender {
                         "resources/models/enviroment/ruangbelakang/env2-pintu1-2.obj"
                 )
         );
-        pintuenvi2keluarpenjara.add(new Sphere
+        pintuenvi2masukpenjarapenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -756,7 +781,7 @@ public class CobaBlender {
                 )
         );
 //        pintu enviroment 2 - masuk penjara
-        pintuenvi2masukpenjara.add(new Sphere
+        pintuenvi2keluar.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -765,7 +790,7 @@ public class CobaBlender {
                         "resources/models/enviroment/ruangbelakang/env2-pintu2-1.obj"
                 )
         );
-        pintuenvi2masukpenjara.add(new Sphere
+        pintuenvi2keluar.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -774,7 +799,7 @@ public class CobaBlender {
                         "resources/models/enviroment/ruangbelakang/env2-pintu2-2.obj"
                 )
         );
-        pintuenvi2masukpenjara.add(new Sphere
+        pintuenvi2keluar.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -805,7 +830,7 @@ public class CobaBlender {
         );
 //        pintu
 
-        enviroment.add(new Sphere
+        pintuenvi2masuk.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -814,7 +839,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/door1-1.obj"
                 )
         );
-        enviroment.add(new Sphere
+        pintuenvi2masuk.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -823,7 +848,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/door1-2.obj"
                 )
         );
-        enviroment.add(new Sphere
+        pintuenvi2masuk.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -832,7 +857,7 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/door1-3.obj"
                 )
         );
-        enviroment.add(new Sphere
+        pintuenvi2masuk.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
@@ -905,6 +930,64 @@ public class CobaBlender {
     public void input() {
         float move = 0.4f;
 
+        //        if collision pintu menuju basement
+        for (Object pintu : pintuenvi2masuk){
+            if (checkCollision(character.get(0).getUpdatedVertice(), pintu.getVertices())){
+//            Spongebob ke basement
+                character.get(0).translateObject(+40f,-16.5f,-38f);
+
+                Vector3f temp = character.get(0).getCenterPoint();
+                character.get(0).translateObject(-temp.x,-temp.y,-temp.z);
+                character.get(0).rotateObject(90f, 0.0f, 1f, 0f);
+                character.get(0).translateObject(temp.x,temp.y,temp.z);
+
+                //        mr krab pindah ke basement
+                character.get(4).translateObject(-40f,-16.5f,-70f);
+//            Mr krab rotate lari ke kiri
+                isMrkrablari = true;
+                break;
+            }
+        }
+
+        //        if collision pintu menuju keluar basement
+        for (Object pintu : pintuenvi2keluar){
+            if (checkCollision(character.get(0).getUpdatedVertice(), pintu.getVertices())){
+//            Spongebob ke atas
+                character.get(0).translateObject(-40f,16.5f,38f);
+                Vector3f temp = character.get(0).getCenterPoint();
+                character.get(0).translateObject(-temp.x,-temp.y,-temp.z);
+                character.get(0).rotateObject(-90f, 0.0f, 1f, 0f);
+                character.get(0).translateObject(temp.x,temp.y,temp.z);
+                break;
+            }
+        }
+
+//        if collision pintu menuju penjara
+//        for (Object pintu : pintuenvi2keluar){
+//            if (checkCollision(character.get(0).getUpdatedVertice(), pintu.getVertices())){
+////            Spongebob ke penjara
+//                character.get(0).translateObject(+10f,0f,-2f);
+//
+//                Vector3f temp = character.get(0).getCenterPoint();
+//                character.get(0).translateObject(-temp.x,-temp.y,-temp.z);
+//                character.get(0).rotateObject(90f, 0.0f, 1f, 0f);
+//                character.get(0).translateObject(temp.x,temp.y,temp.z);
+//                break;
+//            }
+//        }
+
+
+        if (isMrkrablari){
+//            lari keluar dari basement (ini just for showing the path of the road lah)
+            if (totalLari < 30f) {
+                character.get(4).translateObject(0f,0f,speedMrkrab1);
+                totalLari+=speedMrkrab1;
+            }
+//            balik lagi ke atas
+            character.get(4).translateObject(0f,0f,100f);
+            isMrkrablari = false;
+        }
+
         int verticeSize = 0;
         Vector3f centerPoint = new Vector3f(0.0f, 0.0f, 0.0f);
         for (Vector3f vertex : character.get(0).getUpdatedVertice()) {
@@ -919,11 +1002,8 @@ public class CobaBlender {
         centerPoint.z /= verticeSize;
 
 //        FIXED
-        System.out.println(currentBodyDegree);
         if (window.isKeyPressed(GLFW_KEY_I)) {
-            if(!keysama && keysebelumnya!='I'){
-                keysama = true;
-            }
+
             character.get(0).translateObject(0.0f, 0.0f, -0.5f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
@@ -939,13 +1019,8 @@ public class CobaBlender {
             }
 
 //                    state 0 = K, 1 = J, 2 = I, 3 = L
-//            character.get(0).translateObject(-centerPoint.x,-centerPoint.y,-centerPoint.z);
             switch (state){
                 case 0:
-//                    camera.setPosition(-centerPoint.x, -centerPoint.y, -centerPoint.z);
-//                    camera.addRotation(0.0f,180f);
-//                    camera.setPosition(centerPoint.x, centerPoint.y, centerPoint.z);
-
                     directionBodyX = 0.0f;
                     directionBodyY = 1.0f;
                     character.get(0).translateObject(-centerPoint.x,-centerPoint.y,-centerPoint.z);
@@ -970,29 +1045,9 @@ public class CobaBlender {
             state= 2;
             currentBodyDegree = currentBodyDegree + (90f - currentBodyDegree);
             currentDeg += countDeg;
-//            character.get(0).translateObject(centerPoint.x,centerPoint.y,centerPoint.z);\
-            if(keysama){
-                if(FPS){
-                    camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(0));
-                    camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z+camZ);
-                }if(TPS){
-                    camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(0));
-                    camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z+camZTPS);
-                }
-                keysama=false;
-                keysebelumnya='I';
-            }else{
-                if(FPS){
-                    camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z+camZ);
-                }if(TPS){
-                    camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z+camZTPS);
-                }
-            }
         }
         if (window.isKeyPressed(GLFW_KEY_J)) {
-            if(!keysama && keysebelumnya!='J'){
-                keysama = true;
-            }
+
             character.get(0).translateObject(-0.5f, 0.0f, 0f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
@@ -1007,7 +1062,6 @@ public class CobaBlender {
                 }
             }
 
-//            character.get(0).translateObject(-centerPoint.x,-centerPoint.y,-centerPoint.z);
             //                    state 0 = K, 1 = J, 2 = I, 3 = L
             switch (state){
                 case 0:
@@ -1026,13 +1080,6 @@ public class CobaBlender {
 
                     break;
                 case 3:
-
-
-
-//                    camera.setPosition(-centerPoint.x, -centerPoint.y, -centerPoint.z);
-//                    camera.addRotation(0.0f,90f);
-//                    camera.setPosition(centerPoint.x, centerPoint.y, centerPoint.z);
-
                     directionBodyX = 0.0f;
                     directionBodyY = 1.0f;
 
@@ -1045,29 +1092,11 @@ public class CobaBlender {
             state= 1;
             currentBodyDegree = currentBodyDegree + (180f - currentBodyDegree);
             currentDeg += countDeg;
-            if(keysama){
-                if(FPS){
-                    camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(270));
-                    camera.setPosition(centerPoint.x-camY,centerPoint.y+camZ,centerPoint.z+camX);
-                }if(TPS){
-                    camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(270));
-                    camera.setPosition(centerPoint.x+camYTPS,centerPoint.y+camZTPS,centerPoint.z+camXTPS);
-                }
-                keysama=false;
-                keysebelumnya='J';
-            }else{
-                if(FPS){
-                    camera.setPosition(centerPoint.x-camY,centerPoint.y+camZ,centerPoint.z+camX);
-                }if(TPS){
-                    camera.setPosition(centerPoint.x+camYTPS,centerPoint.y+camZTPS,centerPoint.z+camXTPS);
-                }
-            }
+
 
         }
         if (window.isKeyPressed(GLFW_KEY_K)) {
-            if(!keysama && keysebelumnya!='K'){
-                keysama = true;
-            }
+
             character.get(0).translateObject(0.0f, 0.0f, 0.5f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
@@ -1096,12 +1125,6 @@ public class CobaBlender {
 
                     break;
                 case 2:
-
-
-//                    camera.setPosition(-centerPoint.x, -centerPoint.y, -centerPoint.z);
-//                    camera.addRotation(0.0f,(float)Math.toRadians(180f));
-//                    camera.setPosition(centerPoint.x, centerPoint.y, centerPoint.z);
-
                     directionBodyX = 0.0f;
                     directionBodyY = 1.0f;
                     character.get(0).translateObject(-centerPoint.x,-centerPoint.y,-centerPoint.z);
@@ -1120,30 +1143,10 @@ public class CobaBlender {
             state= 0;
             currentBodyDegree = currentBodyDegree + (270f - currentBodyDegree);
             currentDeg += countDeg;
-            if(keysama){
-                if(FPS){
-                    camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(180));
-                    camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z-camZ);
 
-                }if(TPS){
-                    camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(180));
-                    camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z-camZTPS);
-                }
-                keysebelumnya='K';
-                keysama=false;
-            }else{
-                if(FPS){
-                    camera.setPosition(centerPoint.x+camX,centerPoint.y+camY,centerPoint.z-camZ);
-
-                }if(TPS){
-                    camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z-camZTPS);
-                }
-            }
         }
         if (window.isKeyPressed(GLFW_KEY_L)) {
-            if(!keysama && keysebelumnya!='L'){
-                keysama = true;
-            }
+
             character.get(0).translateObject(0.5f, 0.0f, 0f);
             for (Object object: enviroment){
                 if (checkCollision(character.get(0).getUpdatedVertice(), object.getVertices())){
@@ -1157,8 +1160,6 @@ public class CobaBlender {
                     break;
                 }
             }
-//            character.get(0).translateObject(-centerPoint.x,-centerPoint.y,-centerPoint.z);
-
             //                    state 0 = K, 1 = J, 2 = I, 3 = L
             switch (state){
                 case 0:
@@ -1189,26 +1190,7 @@ public class CobaBlender {
             state= 3;
             currentBodyDegree = currentBodyDegree + (180f - currentBodyDegree);
             currentDeg += countDeg;
-            if(keysama){
-                if(FPS) {
-                    camera.setRotation((float)Math.toRadians(0),(float)Math.toRadians(90));
-                    camera.setPosition(centerPoint.x+camY,centerPoint.y+camZ,centerPoint.z+camX);
-                }
-                if(TPS){
-                    camera.setRotation((float)Math.toRadians(30),(float)Math.toRadians(90));
-                    camera.setPosition(centerPoint.x-camYTPS,centerPoint.y+camZTPS,centerPoint.z+camXTPS);
-                }
-                keysama=false;
-                keysebelumnya='L';
-            }else{
-                if(FPS) {
-                    camera.setPosition(centerPoint.x+camY,centerPoint.y+camZ,centerPoint.z+camX);
-                }
-                if(TPS){
-                    camera.setPosition(centerPoint.x-camYTPS,centerPoint.y+camZTPS,centerPoint.z+camXTPS);
-                }
 
-            }
 
         }
 
@@ -1349,21 +1331,74 @@ public class CobaBlender {
             FPS = true;
             TPS = false;
             freeroam = false;
+            cinematography = false;
+            derajatkamera=30f;
         }
-//        enable TPS
         if(window.isKeyPressed(GLFW_KEY_2)){
             FPS=false;
             TPS=true;
             freeroam=false;
+            cinematography=false;
         }
-//        enable freeroam/cinematic
         if(window.isKeyPressed(GLFW_KEY_3)){
             FPS=false;
             TPS=false;
+            freeroam=false;
+            cinematography=true;
+            derajatkamera=30f;
+        }
+        if(window.isKeyPressed(GLFW_KEY_4)){
+            FPS=false;
+            TPS=false;
             freeroam=true;
+            cinematography=false;
+            derajatkamera=30f;
+        }
+        if(TPS){
+            camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z+camZTPS);
+            if(derajatkamera==30f){
+                camera.setRotation((float)Math.toRadians(30),0);
+                derajatkamera=0f;
+            }
+        }
+        if(FPS){
+            camera.setPosition(centerPoint.x,centerPoint.y,centerPoint.z);
+        }
+        if(window.isKeyPressed(GLFW_KEY_LEFT) && cinematography){
+            Vector3f pos = camera.getPosition();
+            camera.setPosition(-pos.x, -pos.y, -pos.z);
+            camera.addRotation(0f, (float) Math.toRadians(5));
+            camera.setPosition(pos.x, pos.y, pos.z);
+            camRotation-=5;
+
+            if (camRotation > 355) {
+                camRotation = 0;
+            }
+            if (camRotation < 0) {
+                camRotation = 355;
+            }
+            updateCinematic();
         }
 
+        if (window.isKeyPressed(GLFW_KEY_RIGHT) && cinematography){
+            Vector3f pos = camera.getPosition();
+            camera.setPosition(-pos.x, -pos.y, -pos.z);
+            camera.addRotation(0f, (float) Math.toRadians(-5));
+            camera.setPosition(pos.x, pos.y, pos.z);
+            camRotation+=5;
 
+            if (camRotation > 355) {
+                camRotation = 0;
+            }
+            if (camRotation < 0) {
+                camRotation = 355;
+            }
+            updateCinematic();
+        }
+
+        if(window.isKeyPressed(GLFW_KEY_C)){
+
+        }
 
 
         if(mouseInput.isLeftButtonPressed()){
@@ -1442,7 +1477,6 @@ public class CobaBlender {
                     0.0f);
             GL.createCapabilities();
             input();
-
             for (Sphere objects : this.enviroment)
             {
                 //gambar sekalian child
@@ -1453,11 +1487,16 @@ public class CobaBlender {
                 //gambar sekalian child
                 objects.draw(camera, projection);
             }
-            for (Sphere objects : this.character)
-            {
-                //gambar sekalian child
-                objects.draw(camera, projection);
+            for(int i=0;i<character.size();i++){
+                if(FPS){
+                    if(i>0){
+                        character.get(i).draw(camera,projection);
+                    }
+                }else{
+                    character.get(i).draw(camera,projection);
+                }
             }
+
 
             for (Sphere objects : this.lantai)
             {
@@ -1469,17 +1508,27 @@ public class CobaBlender {
                 //gambar sekalian child
                 objects.draw(camera, projection);
             }
+            for (Sphere objects : this.pintuenvi2masukpenjara)
+            {
+                //gambar sekalian child
+                objects.draw(camera, projection);
+            }
+            for (Sphere objects : this.pintuenvi2masukpenjarapenjara)
+            {
+                //gambar sekalian child
+                objects.draw(camera, projection);
+            }
             for (Sphere objects : this.pintuenvi2keluar)
             {
                 //gambar sekalian child
                 objects.draw(camera, projection);
             }
-            for (Sphere objects : this.pintuenvi2keluarpenjara)
+            for (Sphere objects : this.pintuenvi2masuk)
             {
                 //gambar sekalian child
                 objects.draw(camera, projection);
             }
-            for (Sphere objects : this.pintuenvi2masukpenjara)
+            for (Sphere objects : this.kamera)
             {
                 //gambar sekalian child
                 objects.draw(camera, projection);
@@ -1515,5 +1564,16 @@ public class CobaBlender {
 
     public static void main(String[] args) throws IOException {
         new CobaBlender().run();
+    }
+    public void updateCinematic(){
+        ArrayList<Vector3f> track = new ArrayList<>(List.of());
+
+        for (double i=0; i<360; i+= 360/360){
+            float x = (float)(4f*Math.sin(Math.toRadians(i)));
+            float z = (float)(4f*Math.cos(Math.toRadians(i)));
+            track.add(new Vector3f(x, camY, z));
+        }
+
+        camera.setPosition(track.get((int)camRotation).x, track.get((int)camRotation).y, track.get((int)camRotation).z);
     }
 }
