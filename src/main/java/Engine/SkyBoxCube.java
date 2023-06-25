@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GL13;
 
 import java.io.FileInputStream;
 import java.nio.ByteBuffer;
-import java.sql.SQLOutput;
 import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL11.*;

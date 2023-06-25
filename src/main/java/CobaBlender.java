@@ -1034,7 +1034,6 @@ public class CobaBlender {
                 case 0:
                     directionBodyX = 0.0f;
                     directionBodyY = 1.0f;
-
                     character.get(0).translateObject(-centerPoint.x,-centerPoint.y,-centerPoint.z);
                     character.get(0).rotateObject(180f, directionBodyX, directionBodyY, 0.0f);
                     character.get(0).translateObject(centerPoint.x,centerPoint.y,centerPoint.z);
@@ -1049,7 +1048,6 @@ public class CobaBlender {
                 case 3:
                     directionBodyX = 0.0f;
                     directionBodyY = 1.0f;
-
                     character.get(0).translateObject(-centerPoint.x,-centerPoint.y,-centerPoint.z);
                     character.get(0).rotateObject(90f, directionBodyX, directionBodyY, 0.0f);
                     character.get(0).translateObject(centerPoint.x,centerPoint.y,centerPoint.z);
@@ -1461,7 +1459,7 @@ public class CobaBlender {
             if (camRotation < 0) {
                 camRotation = 355;
             }
-            updateCinematic();
+            updateCameraCinematic();
         }
         if (window.isKeyPressed(GLFW_KEY_RIGHT) && cinematography){
             Vector3f pos = camera.getPosition();
@@ -1476,7 +1474,7 @@ public class CobaBlender {
             if (camRotation < 0) {
                 camRotation = 355;
             }
-            updateCinematic();
+            updateCameraCinematic();
         }
 
         if(mouseInput.isLeftButtonPressed()){
@@ -1638,15 +1636,13 @@ public class CobaBlender {
     public static void main(String[] args) throws IOException {
         new CobaBlender().run();
     }
-    public void updateCinematic(){
+    public void updateCameraCinematic(){
         ArrayList<Vector3f> track = new ArrayList<>(List.of());
-
         for (double i=0; i<360; i+= 360/360){
             float x = (float)(100f*Math.sin(Math.toRadians(i)));
             float z = (float)(100f*Math.cos(Math.toRadians(i)));
             track.add(new Vector3f(x, 50, z));
         }
-
         camera.setPosition(track.get((int)camRotation).x, track.get((int)camRotation).y, track.get((int)camRotation).z);
     }
 }
