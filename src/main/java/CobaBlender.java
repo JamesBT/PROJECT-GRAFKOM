@@ -74,6 +74,7 @@ public class CobaBlender {
 
     boolean FPS = false;
     boolean TPS = false;
+    boolean dienvi2 = false;
     boolean cinematography;
     boolean freeroam = true;
     int state=2;
@@ -945,6 +946,7 @@ public class CobaBlender {
                 character.get(4).translateObject(-40f,-16.5f,-70f);
 //            Mr krab rotate lari ke kiri
                 isMrkrablari = true;
+                dienvi2=true;
                 break;
             }
         }
@@ -958,7 +960,9 @@ public class CobaBlender {
                 character.get(0).translateObject(-temp.x,-temp.y,-temp.z);
                 character.get(0).rotateObject(-90f, 0.0f, 1f, 0f);
                 character.get(0).translateObject(temp.x,temp.y,temp.z);
+                dienvi2=false;
                 break;
+
             }
         }
 
@@ -1355,7 +1359,12 @@ public class CobaBlender {
             derajatkamera=30f;
         }
         if(TPS){
-            camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z+camZTPS);
+            if(!dienvi2){
+                camera.setPosition(centerPoint.x+camXTPS,centerPoint.y+camYTPS,centerPoint.z+camZTPS);
+            }else{
+                camera.setPosition(centerPoint.x+camYTPS,centerPoint.y+camZTPS,centerPoint.z+camXTPS);
+            }
+
             if(derajatkamera==30f){
                 camera.setRotation((float)Math.toRadians(30),0);
                 derajatkamera=0f;
@@ -1524,6 +1533,10 @@ public class CobaBlender {
                 objects.draw(camera, projection);
             }
             for (Sphere objects : this.kamera)
+            {
+                //gambar sekalian child
+                objects.draw(camera, projection);
+            }for (Sphere objects : this.pintuenvi2masukpenjara)
             {
                 //gambar sekalian child
                 objects.draw(camera, projection);
