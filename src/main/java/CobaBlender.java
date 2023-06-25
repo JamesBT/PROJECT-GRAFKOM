@@ -61,6 +61,9 @@ public class CobaBlender {
     ArrayList<Sphere> lantai2 = new ArrayList<>();
 
     ArrayList<Sphere> character = new ArrayList<>();
+    ArrayList<Sphere> pintuenvi2keluar = new ArrayList();
+    ArrayList<Sphere> pintuenvi2keluarpenjara = new ArrayList<>();
+    ArrayList<Sphere> pintuenvi2masukpenjara = new ArrayList<>();
 
     private MouseInput mouseInput;
     static float rot = 0f;
@@ -695,63 +698,91 @@ public class CobaBlender {
                         "resources/models/enviroment/ruangbelakang/env2-lantai.obj"
                 )
         );
-        enviroment2.add(new Sphere
+
+//        pintu enviroment 2 - keluar tempat
+        pintuenvi2keluar.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.501960f, 0.474509f, 0.38431f, 1.0f),
+                        new Vector4f(0.00258f, 0.56078f, 0.56078f, 1.0f),
+                        "resources/models/enviroment/ruangbelakang/envi2-pintu-3-1.obj"
+                )
+        );
+        pintuenvi2keluar.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.384313f, 0.47450f, 0.607843f, 1.0f),
+                        "resources/models/enviroment/ruangbelakang/envi2-pintu-3-2.obj"
+                )
+        );
+        pintuenvi2keluar.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.435294f, 0.611764f, 0.654901f, 1.0f),
+                        "resources/models/enviroment/ruangbelakang/envi2-pintu-3-3.obj"
+                )
+        );
+//        pintu enviroment 2 - keluar
+        pintuenvi2keluarpenjara.add(new Sphere
+                (
+                        Arrays.asList
+                                (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
+                        new ArrayList<>(),
+                        new Vector4f(0.435294f, 0.611764f, 0.654901f, 1.0f),
                         "resources/models/enviroment/ruangbelakang/env2-pintu1-1.obj"
                 )
         );
-        enviroment2.add(new Sphere
+        pintuenvi2keluarpenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.501960f, 0.474509f, 0.38431f, 1.0f),
+                        new Vector4f(0.384313f, 0.47450f, 0.607843f, 1.0f),
                         "resources/models/enviroment/ruangbelakang/env2-pintu1-2.obj"
                 )
         );
-        enviroment2.add(new Sphere
+        pintuenvi2keluarpenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.501960f, 0.474509f, 0.38431f, 1.0f),
+                        new Vector4f(0.00258f, 0.56078f, 0.56078f, 1.0f),
                         "resources/models/enviroment/ruangbelakang/env2-pintu1-3.obj"
                 )
         );
-        enviroment2.add(new Sphere
+//        pintu enviroment 2 - masuk penjara
+        pintuenvi2masukpenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.501960f, 0.474509f, 0.38431f, 1.0f),
+                        new Vector4f(0.435294f, 0.611764f, 0.654901f, 1.0f),
                         "resources/models/enviroment/ruangbelakang/env2-pintu2-1.obj"
                 )
         );
-        enviroment2.add(new Sphere
+        pintuenvi2masukpenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.501960f, 0.474509f, 0.38431f, 1.0f),
+                        new Vector4f(0.384313f, 0.47450f, 0.607843f, 1.0f),
                         "resources/models/enviroment/ruangbelakang/env2-pintu2-2.obj"
                 )
         );
-        enviroment2.add(new Sphere
+        pintuenvi2masukpenjara.add(new Sphere
                 (
                         Arrays.asList
                                 (new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER), new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER)),
                         new ArrayList<>(),
-                        new Vector4f(0.501960f, 0.474509f, 0.38431f, 1.0f),
+                        new Vector4f(0.00258f, 0.56078f, 0.56078f, 1.0f),
                         "resources/models/enviroment/ruangbelakang/env2-pintu2-3.obj"
                 )
         );
-
-
-
 //        menu
 //        19
         enviroment.add(new Sphere
@@ -866,7 +897,6 @@ public class CobaBlender {
                         "resources/models/enviroment/krustykrab/listchandelier.obj"
                 )
         );
-
 
 
 
@@ -1435,6 +1465,21 @@ public class CobaBlender {
                 objects.draw(camera, projection);
             }
             for (Sphere objects : this.lantai2)
+            {
+                //gambar sekalian child
+                objects.draw(camera, projection);
+            }
+            for (Sphere objects : this.pintuenvi2keluar)
+            {
+                //gambar sekalian child
+                objects.draw(camera, projection);
+            }
+            for (Sphere objects : this.pintuenvi2keluarpenjara)
+            {
+                //gambar sekalian child
+                objects.draw(camera, projection);
+            }
+            for (Sphere objects : this.pintuenvi2masukpenjara)
             {
                 //gambar sekalian child
                 objects.draw(camera, projection);
