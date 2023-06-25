@@ -17,7 +17,7 @@ https://docs.google.com/document/d/162DLOrLTnVBzN_FUnT5DUfa7xDxTyAvTg78tEv22-Ls/
 
 
 ## LINK VIDEO:
-
+https://youtu.be/MkaVdj7kha4
 
 
 
