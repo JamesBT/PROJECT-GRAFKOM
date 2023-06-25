@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL13;
 
 import java.io.FileInputStream;
 import java.nio.ByteBuffer;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -67,8 +68,21 @@ public class SkyBoxCube extends ShaderProgram
                     size, -size,  size
             };
 
-    private final static String[] TEXTURE_FILE_NAMES = {"resources/skybox/right.png", "resources/skybox/left.png", "resources/skybox/top.png",
-            "resources/skybox/bottom.png", "resources/skybox/front.png", "resources/skybox/back.png"};
+    private static String[] TEXTURE_FILE_NAMES = {"resources/skybox/tengah2.png", "resources/skybox/kiri.png", "resources/skybox/atas.png",
+            "resources/skybox/bawah.png", "resources/skybox/tengah1.png", "resources/skybox/kanan.png"};
+
+    public void gantiWaktu(int waktu){
+        if(waktu==3250){
+            TEXTURE_FILE_NAMES = new String[]{"resources/skybox/spongebobrt.png", "resources/skybox/spongeboblf.png", "resources/skybox/spongebobup.png",
+                    "resources/skybox/spongebobdn.png", "resources/skybox/spongebobft.png", "resources/skybox/spongebobbk.png"};
+        }else if(waktu==65){
+            TEXTURE_FILE_NAMES = new String[]{"resources/skybox/tengah2.png", "resources/skybox/kiri.png", "resources/skybox/atas.png",
+                    "resources/skybox/bawah.png", "resources/skybox/tengah1.png", "resources/skybox/kanan.png"};
+        }
+        textureId = loadCubeMap(TEXTURE_FILE_NAMES);
+    }
+
+
 
     int vao, vbo, textureId;
     UniformsMap uniformsMap;
@@ -79,7 +93,7 @@ public class SkyBoxCube extends ShaderProgram
                 new ShaderModuleData("resources/shaders/skybox.frag", GL_FRAGMENT_SHADER)));
         uniformsMap = new UniformsMap(getProgramId());
         textureId = loadCubeMap(TEXTURE_FILE_NAMES);
-        System.out.println(textureId);
+
         setupVAOVBO();
     }
 
@@ -88,14 +102,12 @@ public class SkyBoxCube extends ShaderProgram
         //setup vao
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
-
         //setup vbo
         vbo = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, VERTICES, GL_STATIC_DRAW);
     }
 
-    //draw setup pake kamera
     public void drawSetup(Camera camera, Projection projection)
     {
         bind();
@@ -192,5 +204,6 @@ class TextureData
     public ByteBuffer getBuffer() {
         return data;
     }
+
 }
 

@@ -21,15 +21,15 @@ import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 
 public class Sphere extends Circle
 {
-    List<Integer> index = new ArrayList<>();
+    List<Integer> index;
     ArrayList<Vector2f> texture;
     ArrayList<Vector3f> normal;
 
     String filename = "";
 
-    int ibo, nbo, stackCount, sectorCount;
+    int ibo, nbo;
     double cpz;
-    float radiusX, radiusY, radiusZ;
+
 
 
     public Sphere(List<ShaderModuleData> shaderModuleDataList, List<Vector3f> vertices, Vector4f color, String filePath)
@@ -89,7 +89,6 @@ public class Sphere extends Circle
 
     public void rotateObject(float degree, float offsetX, float offsetY, float offsetZ)
     {
-        //offset x, y, sama z itu maksudnya rotasi terhadap sumbunya misal z=1 berarti rotasi thd sb z
         model = new Matrix4f().rotate((float)(Math.toRadians(degree)), offsetX, offsetY, offsetZ).mul(new Matrix4f(model));
 
         float newcpx =(float) (cpx * Math.cos((double) degree) - cpy * Math.sin((double) degree));
@@ -225,26 +224,5 @@ public class Sphere extends Circle
         {
             i.draw(camera, projection);
         }
-    }
-
-    public float getCpz()
-    {
-        return (float) cpz;
-    }
-
-    public float getRadiusX() {
-        return radiusX;
-    }
-
-    public float getRadiusY() {
-        return radiusY;
-    }
-
-    public float getRadiusZ() {
-        return radiusZ;
-    }
-
-    public String getFilename() {
-        return filename;
     }
 }

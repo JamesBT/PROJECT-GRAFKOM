@@ -50,7 +50,7 @@ public class ObjLoader
                 y = Float.valueOf(splitted[2]);
                 z = Float.valueOf(splitted[3]);
                 result.normals.add(new Vector3f(x, y, z));
-//                System.out.println(x + " " + y + " " + z);
+
             }
             else if(line.startsWith("f "))
             {
@@ -60,15 +60,10 @@ public class ObjLoader
                 result.vertexIndices.add(Integer.parseInt(splitted[2].split("/")[0])-1);
                 result.vertexIndices.add(Integer.parseInt(splitted[3].split("/")[0])-1);
 
-//                result.indices.add(Integer.parseInt(splitted[1].split("/")[1]));
-//                result.indices.add(Integer.parseInt(splitted[2].split("/")[1]));
-//                result.indices.add(Integer.parseInt(splitted[3].split("/")[1]));
-
                 result.normalIndices.add(Integer.parseInt(splitted[1].split("/")[2])-1);
                 result.normalIndices.add(Integer.parseInt(splitted[2].split("/")[2])-1);
                 result.normalIndices.add(Integer.parseInt(splitted[3].split("/")[2])-1);
 
-//                System.out.println(result.indices.get(result.indices.size()-1));
             }
         }
         reader.close();

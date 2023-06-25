@@ -19,13 +19,6 @@ public class Object extends ShaderProgram
 
     int vao, vbo, vboColor;
 
-    public Vector4f getColor() {
-        return color;
-    }
-
-    public void setColor(Vector4f color) {
-        this.color = color;
-    }
 
     Vector4f color;
     List<Vector3f> verticesColor;
